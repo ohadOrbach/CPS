@@ -14,6 +14,14 @@ public class SimpleServer extends AbstractServer {
 		
 	}
 
+	private void SafeSendToClient(Object obj, ConnectionToClient client){
+		try {
+			client.sendToClient(obj);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		String msgString = msg.toString();
@@ -26,6 +34,13 @@ public class SimpleServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
+		if (msgString.startsWith("#update")) {
+			String[] args = (msgString.split(":", 2)[1]).split(",", -1);
+			switch (args[0]) {
+				case "ItemPrice" -> { // update item price #update:ItemPrice,itemId,newPrice
+					App.ParkingLot.changePrice(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+				}
+			}
 
 	}
 
