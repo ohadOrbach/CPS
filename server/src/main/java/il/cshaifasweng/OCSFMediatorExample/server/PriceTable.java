@@ -1,11 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.PriceTableData;
-import il.cshaifasweng.OCSFMediatorExample.entities.PriceTableData;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 @Entity
 @Table(name = "PriceTable")
 public class PriceTable {
