@@ -17,6 +17,15 @@ public class ParkingPrices {
         this.fullySubscriptionPrice = fullySubscriptionPrice;
     }
 
+    public ParkingPrices(){
+        this.parkingLotId = 0;
+        this.parkingPrice = 0;
+        this.orderedParkingPrice = 0;
+        this.regularSubscriptionPrice = 0;
+        this.regularSubscriptionMultiCarsPrice = 0;
+        this.fullySubscriptionPrice = 0;
+    }
+
     public void setParkingLotId(int parkingLotId){
         this.parkingLotId = parkingLotId;
     }

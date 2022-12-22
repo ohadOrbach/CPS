@@ -24,24 +24,27 @@ public class SimpleServer extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		String msgString = msg.toString();
-		if (msgString.startsWith("#warning")) {
-			Warning warning = new Warning("Warning from server!");
-			try {
-				client.sendToClient(warning);
-				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (msgString.startsWith("#update")) {
-			String[] args = (msgString.split(":", 2)[1]).split(",", -1);
-			switch (args[0]) {
-				case "ItemPrice" -> { // update item price #update:ItemPrice,itemId,newPrice
-					App.ParkingLot.changePrice(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+		if (String.class.equals(msg.getClass())) {
+			String msgString = msg.toString();
+			System.out.format("    data: " + msgString + "\n");
+			if (msgString.startsWith("#warning")) {
+				Warning warning = new Warning("Warning from server!");
+				try {
+					client.sendToClient(warning);
+					System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
-
+			if (msgString.startsWith("#update")) {
+				String[] args = (msgString.split(":", 2)[1]).split(",", -1);
+				switch (args[0]) {
+					case "ParkingPrice" -> { // update item price #update:ItemPrice,itemId,newPrice
+						App.parkinglots.changePrice(Integer.parseInt(args[1]), Double.parseDouble(args[2]));
+					}
+				}
+			}
+		}
 	}
 
 }

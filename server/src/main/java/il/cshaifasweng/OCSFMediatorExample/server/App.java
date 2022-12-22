@@ -1,5 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotId;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotList;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPrices;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,16 +17,21 @@ public class App
 	
 	private static SimpleServer server;
     public static Session session;
+    public static ParkingLots parkinglots;
     public static void main( String[] args ) throws IOException
     {
         session = getSessionFactory().openSession();
+        parkinglots = new ParkingLots();
+        parkinglots.pullParkingLots();
         server = new SimpleServer(3000);
         server.listen();
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
-
+        configuration.addAnnotatedClass(ParkingLotId.class);
+        configuration.addAnnotatedClass(ParkingLotList.class);
+        configuration.addAnnotatedClass(ParkingPrices.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
