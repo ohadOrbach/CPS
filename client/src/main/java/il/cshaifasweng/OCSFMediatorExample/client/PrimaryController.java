@@ -1,20 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
+import java.io.IOException;
 
 public class PrimaryController {
 
+    @FXML // fx:id="parkBtn"
+    private Button parkBtn; // Value injected by FXMLLoader
+
     @FXML
-    void sendWarning(ActionEvent event) {
-    	try {
-			SimpleClient.getClient().sendToServer("#warning");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    void showParkingLotList(ActionEvent event) throws IOException {
+        App.setRoot("ParkingLotList");
     }
 
 }
