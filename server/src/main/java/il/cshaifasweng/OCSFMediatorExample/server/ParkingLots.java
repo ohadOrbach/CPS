@@ -47,7 +47,7 @@ public class ParkingLots {
         parkingLots.addAll(data);
     }
 
-    public void changePrice(int id,double newPrice)
+    public void changePrice(int id,double newPrice,String type)
     {
         App.SafeStartTransaction();
         ParkingLot temp=new ParkingLot();
@@ -58,7 +58,7 @@ public class ParkingLots {
                 temp=pl;
             }
         }
-        temp.setParkingPrice(newPrice);
+        temp.setParkingPrice(newPrice,type);
         App.session.save(temp);
         App.session.flush();
         App.SafeCommit();

@@ -11,7 +11,7 @@ public class SimpleServer extends AbstractServer {
 
 	public SimpleServer(int port) {
 		super(port);
-		
+
 	}
 
 	private void SafeSendToClient(Object obj, ConnectionToClient client){
@@ -40,7 +40,7 @@ public class SimpleServer extends AbstractServer {
 				String[] args = (msgString.split(":", 2)[1]).split(",", -1);
 				switch (args[0]) {
 					case "ParkingPrice" -> { // update item price #update:ItemPrice,itemId,newPrice
-						App.parkinglots.changePrice(Integer.parseInt(args[1]), Double.parseDouble(args[2]));
+						App.parkinglots.changePrice(Integer.parseInt(args[1]), Double.parseDouble(args[2]), args[3]);
 					}
 				}
 			}

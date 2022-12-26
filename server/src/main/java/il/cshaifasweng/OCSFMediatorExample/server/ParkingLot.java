@@ -60,8 +60,28 @@ public class ParkingLot {
    public int getSize(){
       return this.size;
    }
-   public void setParkingPrice(double parkingPrice){
-      this.parkingPrice = parkingPrice;
+   public void setParkingPrice(double newPrice, String type)
+   {
+      if(type=="parking")
+      {
+         parkingPrice = newPrice;
+      }
+      else if(type=="ordered")
+      {
+         orderedParkingPrice = newPrice;
+      }
+      else if(type=="regularSubscription")
+      {
+         regularSubscriptionPrice = newPrice;
+      }
+      else if(type=="regularSubscriptionMultiCars")
+      {
+         regularSubscriptionMultiCarsPrice = newPrice;
+      }
+      else
+      {
+         fullySubscriptionPrice = newPrice;
+      }
    }
    public double getParkingPrice(){
       return this.parkingPrice;
