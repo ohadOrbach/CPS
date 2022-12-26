@@ -8,13 +8,13 @@ public class ParkingPrices {
     private double regularSubscriptionMultiCarsPrice;
     private double fullySubscriptionPrice;
 
-    public ParkingPrices(int parkingLotId, int parkingPrice, int orderedParkingPrice, int regularSubscriptionPrice, int regularSubscriptionMultiCarsPrice, int fullySubscriptionPrice){
+    public ParkingPrices(int parkingLotId, int parkingPrice, int orderedParkingPrice){
         this.parkingLotId = parkingLotId;
         this.parkingPrice = parkingPrice;
         this.orderedParkingPrice = orderedParkingPrice;
-        this.regularSubscriptionPrice = regularSubscriptionPrice;
-        this.regularSubscriptionMultiCarsPrice = regularSubscriptionMultiCarsPrice;
-        this.fullySubscriptionPrice = fullySubscriptionPrice;
+        this.regularSubscriptionPrice = orderedParkingPrice * 60;
+        this.regularSubscriptionMultiCarsPrice = orderedParkingPrice * 54;
+        this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
 
     public ParkingPrices(){
@@ -42,28 +42,20 @@ public class ParkingPrices {
 
     public void setOrderedParkingPrice(int orderedParkingPrice){
         this.orderedParkingPrice = orderedParkingPrice;
+        this.regularSubscriptionPrice = orderedParkingPrice * 60;
+        this.regularSubscriptionMultiCarsPrice = orderedParkingPrice * 54;
+        this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
     public double getOrderedParkingPrice(){
         return this.orderedParkingPrice;
     }
 
-    public void setRegularSubscriptionPrice(int regularSubscriptionPrice){
-        this.regularSubscriptionPrice = regularSubscriptionPrice;
-    }
     public double getRegularSubscriptionPrice(){
         return this.regularSubscriptionPrice;
     }
 
-    public void setRegularSubscriptionMultiCarsPrice(int regularSubscriptionMultiCarsPrice){
-        this.regularSubscriptionMultiCarsPrice = regularSubscriptionMultiCarsPrice;
-    }
-    public double getRegularSubscriptionMultiCarsPrice(){
-        return this.regularSubscriptionMultiCarsPrice;
-    }
+    public double getRegularSubscriptionMultiCarsPrice() { return this.regularSubscriptionMultiCarsPrice;}
 
-    public void setFullySubscriptionPrice(int fullySubscriptionPrice){
-        this.fullySubscriptionPrice = fullySubscriptionPrice;
-    }
     public double getFullySubscriptionPrice(){
         return this.fullySubscriptionPrice;
     }
