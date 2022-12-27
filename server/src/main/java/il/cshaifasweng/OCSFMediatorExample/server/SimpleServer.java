@@ -1,13 +1,16 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.SubscribedClient;
 
 import java.io.IOException;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
+import java.util.ArrayList;
 
 public class SimpleServer extends AbstractServer {
+
+	private static ArrayList<SubscribedClient> SubscribersList = new ArrayList<>();
 
 	public SimpleServer(int port) {
 		super(port);
@@ -36,14 +39,30 @@ public class SimpleServer extends AbstractServer {
 					e.printStackTrace();
 				}
 			}
-			if (msgString.startsWith("#update")) {
+			else if (msgString.startsWith("#update")) {
 				String[] args = (msgString.split(":", 2)[1]).split(",", -1);
 				switch (args[0]) {
-					case "ParkingPrice" -> { // update item price #update:ItemPrice,itemId,newPrice
+					case " parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
 						App.parkinglots.changePrice(Integer.parseInt(args[1]), Double.parseDouble(args[2]), args[3]);
 					}
 				}
+			}else if (msgString.startsWith("#request")) {
+				String[] args = (msgString.split(":")[1]).split(",");
+				switch (args[0]) {
+					case " parking lots data" -> {
+						ParkingLotListData parkingLotListData =
+								App.parkinglots.getParkingLotList();
+						SafeSendToClient(parkingLotListData, client);
+					}
+
+					case " prices table" -> {
+						PricesList parkingPrices = App.parkinglots.getParkingLotsPrices();
+						SafeSendToClient(parkingPrices, client);
+					}
+
+				}
 			}
+
 		}
 	}
 
