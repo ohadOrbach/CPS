@@ -85,6 +85,6 @@ public class ParkingLot {
 
    public ParkingPricesData getAllPricesData() {
       return new ParkingPricesData(parkingPrices.getParkingLotId(), parkingPrices.getParkingPrice()
-      , parkingPrices.getOrderedParkingPrice());
+              , parkingPrices.getOrderedParkingPrice());
    }
 }

@@ -19,7 +19,7 @@ public class SimpleClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		if (msg.getClass().equals(Warning.class)) {
-			EventBus.getDefault().post(new WarningEvent((Warning) msg));
+			Platform.runLater(() -> EventBus.getDefault().post(new WarningEvent((Warning) msg)));
 		}
 		else if(msg.getClass().equals(ParkingLotListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
@@ -57,7 +57,7 @@ public class SimpleClient extends AbstractClient {
 
 	public void changePrice(int price, ParkingLotData parkingLot, String priceType) {
 		try {
-			client.sendToServer("#update:ItemPrice," + parkingLot.getParkingLotId() + "," + priceType + "," + Integer.toString(price)); //"update:price,<item id>,<new price>"
+			client.sendToServer("#update:ItemPrice," + parkingLot.getParkingLotId() + "," + priceType + "," + Integer.toString(price));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

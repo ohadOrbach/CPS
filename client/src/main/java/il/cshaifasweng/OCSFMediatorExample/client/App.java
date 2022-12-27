@@ -29,6 +29,7 @@ public class App extends Application {
     	client.openConnection();
         scene = new Scene(loadFXML("primary"), 800, 480);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
