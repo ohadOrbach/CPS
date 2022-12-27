@@ -28,10 +28,10 @@ public class ParkingLotList {
     @FXML // fx:id="idCol"
     private TableColumn<ParkingLotData, Integer> idCol; // Value injected by FXMLLoader
 
-    @FXML // fx:id="casualCol"
-    private TableColumn<ParkingLotData, Integer> rows; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<ParkingLotData, Integer> rowsNum; // Value injected by FXMLLoader
 
-    @FXML // fx:id="fullSubCol"
+    @FXML
     private TableColumn<ParkingLotData, Integer> size; // Value injected by FXMLLoader
 
 
@@ -46,20 +46,18 @@ public class ParkingLotList {
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException{
         List<ParkingLotData> eventList = event.getParkingLotDataList();
-        System.out.println("in !\n");
         for(int i = 0; i < eventList.size(); i++){
             parkingList.add(eventList.get(i));
-            System.out.println("in !\n");
         }
         buildListTable();
     }
 
     private void buildListTable(){
         idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
-        rows.setCellValueFactory(new PropertyValueFactory("rows"));
+        rowsNum.setCellValueFactory(new PropertyValueFactory("rowsNum"));
         size.setCellValueFactory(new PropertyValueFactory("size"));
 
-        table.getColumns().addAll(idCol, rows, size);
+        table.getColumns().addAll(idCol, rowsNum, size);
         table.setItems(parkingList);
         Vbox.getChildren().clear();
         Vbox.getChildren().add(table);

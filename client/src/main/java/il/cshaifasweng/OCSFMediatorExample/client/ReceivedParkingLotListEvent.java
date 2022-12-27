@@ -10,12 +10,11 @@ public class ReceivedParkingLotListEvent {
     private List<ParkingLotData> parkingLotDataList;
 
     public ReceivedParkingLotListEvent(ParkingLotListData parkingLotList) {
-        System.out.println("in !!!");
         this.parkingLotDataList = new ArrayList<>();
         List<ParkingLotData> dataList = parkingLotList.getParkingLotListData();
         for (ParkingLotData parking : dataList) {
             parkingLotDataList.add(parking);
-            System.out.println("adding " + parking.getParkingLotId());
+//            System.out.println("adding " + parking.getParkingLotId());
         }
     }
 

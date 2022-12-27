@@ -24,7 +24,7 @@ public class SimpleClient extends AbstractClient {
 		else if(msg.getClass().equals(ParkingLotListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedParkingLotListEvent((ParkingLotListData) msg)));
-			System.out.println("get it");
+//			System.out.println("get it");
 		}
 		else if(msg.getClass().equals(PricesList.class)) {
 			Platform.runLater(() -> EventBus.getDefault().

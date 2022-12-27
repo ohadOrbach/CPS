@@ -20,7 +20,7 @@
                                         <TableView fx:id="ParkingLotsList" layoutX="6.0" layoutY="-1.0" prefHeight="434.0" prefWidth="788.0">
                                             <columns>
                                                 <TableColumn fx:id="idCol" editable="false" prefWidth="271.99998170137405" text="Parking Lot ID" />
-                                                <TableColumn fx:id="rows" editable="false" prefWidth="267.20001220703125" text="Parking In Each Row" />
+                                                <TableColumn fx:id="rowsNum" editable="false" prefWidth="267.20001220703125" text="Parking In Each Row" />
                                                 <TableColumn fx:id="size" editable="false" prefWidth="247.20001220703125" text="Total Size" />
                                             </columns>
                                         </TableView>
