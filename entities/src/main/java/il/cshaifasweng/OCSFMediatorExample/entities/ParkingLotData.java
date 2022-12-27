@@ -7,10 +7,10 @@ public class ParkingLotData implements Serializable {
     public int rows;
     public int size;
 
-    public ParkingLotData(int id, int rows, int size) {
+    public ParkingLotData(int id, int rows, int rowNum) {
         this.id = id;
         this.rows = rows;
-        this.size = size;
+        this.size = rows*rowNum;
     }
 
     public void setParkingLotId(int parkingLotId){
@@ -19,11 +19,11 @@ public class ParkingLotData implements Serializable {
     public int getParkingLotId(){
         return this.id;
     }
-    public void setSize(int size){
-        this.size = size;
-    }
     public int getSize(){
         return this.size;
+    }
+    public int getRows(){
+        return this.rows;
     }
 
 }

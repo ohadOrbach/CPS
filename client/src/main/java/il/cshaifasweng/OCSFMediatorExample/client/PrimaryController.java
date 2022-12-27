@@ -49,6 +49,7 @@ public class PrimaryController {
 	public void showParkingLotList(ActionEvent event) {
 		try {
 			SimpleClient.getClient().sendToServer("#request: parking lots list");
+			App.setRoot("ParkingLotList");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,10 +60,7 @@ public class PrimaryController {
 	void openShowPriceTableScene(ActionEvent event) throws IOException {
 		try {
 			SimpleClient.getClient().sendToServer("#request: prices table");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("ParkingLotTable" + ".fxml"));
-			Stage stage = new Stage();
-			stage.setScene(new Scene(loader.load()));
-			stage.show();
+			App.setRoot("ParkingLotTable");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -49,15 +49,14 @@ public class SimpleServer extends AbstractServer {
 			}else if (msgString.startsWith("#request")) {
 				String[] args = (msgString.split(":")[1]).split(",");
 				switch (args[0]) {
-					case " parking lots data" -> {
-						ParkingLotListData parkingLotListData =
-								App.parkinglots.getParkingLotList();
+					case " parking lots list" -> {
+						ParkingLotListData parkingLotListData = App.parkinglots.getParkingLotList();
 						SafeSendToClient(parkingLotListData, client);
 					}
 
 					case " prices table" -> {
-						PricesList parkingPrices = App.parkinglots.getParkingLotsPrices();
-						SafeSendToClient(parkingPrices, client);
+						PricesList parkingPricesList = App.parkinglots.getParkingLotsPrices();
+						SafeSendToClient(parkingPricesList, client);
 					}
 
 				}

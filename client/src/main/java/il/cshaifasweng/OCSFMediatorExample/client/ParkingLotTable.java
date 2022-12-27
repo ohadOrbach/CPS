@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
 import il.cshaifasweng.OCSFMediatorExample.server.ParkingPrices;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,43 +57,21 @@ public class ParkingLotTable {
     @FXML // fx:id="newPriceTxt"
     private TextField newPriceTxt; // Value injected by FXMLLoader
 
-    ObservableList<ParkingPricesData> pricesList;
+    ObservableList<ParkingPricesData> pricesList = FXCollections.observableArrayList();
+
+    @FXML
+    private Button MainMenuButton;
 
     @Subscribe
     public void onReceivedPrices(ReceivedParkingPricesEvent event) throws IOException{
-        ObservableList<ParkingPricesData> pricesList = null;
-        List<ParkingPricesData> eventList = event.getPricesList();
+        List<ParkingPricesData> eventList = event.getParkingPrices();
         for(int i = 0; i < eventList.size(); i++){
             pricesList.add(eventList.get(i));
         }
-        this.pricesList = pricesList;
-        table.setItems(pricesList);
-        for (int i = 0; i < pricesList.size(); i++) {
-            idList.getItems().add((pricesList.get(i)).getParkingLotId());
-        }
-        System.out.println("Received prices table\n");
+        buildPricesTable();
     }
 
-
-    private ObservableList<ParkingPricesData> getUserList() {
-
-//        // need to add creation of Observable<ParkingPrinces> list from the database
-//
-//        // only for example, should be deleted later
-//        ParkingPrices ParkLot1 = new ParkingPrices(1, 8, 7);
-//        ParkingPrices ParkLot2 = new ParkingPrices(2, 7, 7);
-//        ParkingPrices ParkLot3 = new ParkingPrices(3, 7, 6);
-//        ObservableList<ParkingPrices> list = FXCollections.observableArrayList(ParkLot1, ParkLot2, ParkLot3);
-//        //end of example
-
-        return pricesList;
-    }
-
-    @FXML
-    void initialize() throws IOException {
-        if(!(EventBus.getDefault().isRegistered(this))){
-            EventBus.getDefault().register(this);
-        }
+    private void buildPricesTable(){
         idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
         casualCol.setCellValueFactory(new PropertyValueFactory("parkingPrice"));
         orderedCol.setCellValueFactory(new PropertyValueFactory("orderedParkingPrice"));
@@ -99,14 +79,35 @@ public class ParkingLotTable {
         multyCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionMultiCarsPrice"));
         fullSubCol.setCellValueFactory(new PropertyValueFactory("fullySubscriptionPrice"));
 
-        table.getColumns().addAll(idCol, casualCol, orderedCol, regSubCol,multyCol ,fullSubCol );
-        Vbox.getChildren().addAll(table);
-
+        table.getColumns().addAll(idCol, casualCol, orderedCol, regSubCol,multyCol ,fullSubCol);
+        table.setItems(pricesList);
+        Vbox.getChildren().clear();
+        Vbox.getChildren().add(table);
         assert typeList != null : "fx:id=\"typeList\" was not injected: check your FXML file 'primary.fxml'.";
         assert idList != null : "fx:id=\"idList\" was not injected: check your FXML file 'primary.fxml'.";
 
         typeList.getItems().add("Casual");
         typeList.getItems().add("Ordered");
+
+        if(pricesList != null) {
+            for (int i = 0; i < pricesList.size(); i++) {
+                idList.getItems().add((pricesList.get(i)).getParkingLotId());
+            }
+        }
+    }
+
+    private ObservableList<ParkingPricesData> getUserList() {
+        return pricesList;
+    }
+
+    @FXML
+    void initialize() throws IOException {
+        EventBus.getDefault().register(this);
+    }
+
+    @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        App.setRoot("primary");
     }
 
     @FXML

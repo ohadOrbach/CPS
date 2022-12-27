@@ -25,23 +25,22 @@ public class ParkingLots {
         Random random = new Random();
         ParkingLot namal1 = new ParkingLot("namal1", 1, 5);
         App.session.save(namal1);
-        ParkingPrices prices1 = new ParkingPrices(1, 5, 7, namal1);
+        ParkingPrices prices1 = new ParkingPrices(1, 7, 5, namal1);
         namal1.setParkingPrices(prices1);
         ParkingLot namal2 = new ParkingLot("namal2", 2, 10);
         App.session.save(namal2);
-        ParkingPrices prices2 = new ParkingPrices(1, 5, 7, namal2);
-        namal1.setParkingPrices(prices2);
+        ParkingPrices prices2 = new ParkingPrices(2, 8, 7, namal2);
+        namal2.setParkingPrices(prices2);
         ParkingLot namal3 = new ParkingLot("namal3", 3, 20);
         App.session.save(namal3);
-        ParkingPrices prices3 = new ParkingPrices(1, 5, 7, namal3);
-        namal1.setParkingPrices(prices3);
+        ParkingPrices prices3 = new ParkingPrices(3, 10, 7, namal3);
+        namal3.setParkingPrices(prices3);
         ParkingLot namal4 = new ParkingLot("namal4", 4, 50);
-        App.session.save(namal4);
-        ParkingPrices prices4 = new ParkingPrices(1, 5, 7, namal4);
-        namal1.setParkingPrices(prices4);
+        ParkingPrices prices4 = new ParkingPrices(4, 11, 8, namal4);
+        namal4.setParkingPrices(prices4);
         ParkingLot namal5 = new ParkingLot("namal5", 5, 5);
-        ParkingPrices prices5 = new ParkingPrices(1, 5, 7,namal4);
-        namal1.setParkingPrices(prices5);
+        ParkingPrices prices5 = new ParkingPrices(5, 9, 8,namal4);
+        namal5.setParkingPrices(prices5);
         App.session.save(namal1);
         App.session.save(prices1);
         App.session.save(namal2);
@@ -53,6 +52,7 @@ public class ParkingLots {
         App.session.save(namal5);
         App.session.save(prices5);
         App.session.flush();
+//        System.out.println("all in server");
         App.SafeCommit();
     }
 
@@ -63,6 +63,7 @@ public class ParkingLots {
         List<ParkingLot> data = App.session.createQuery(query).getResultList();
         parkingLots.clear();
         parkingLots.addAll(data);
+//        System.out.println("add parking " + data.size() + "list size: " + parkingLots.size());
     }
 
     public void changePrice(int id, double newPrice, String type) {
@@ -79,7 +80,7 @@ public class ParkingLots {
         App.SafeCommit();
     }
 
-    public void addParkingLot(String name, int rowNum, int rowSize, double price, double orderedPrice) {
+    public void addParkingLot(String name, int rowNum, int rowSize) {
         App.SafeStartTransaction();
         ParkingLot parkingLot = new ParkingLot(name, rowNum, rowSize);
         App.session.save(parkingLot);
@@ -91,28 +92,27 @@ public class ParkingLots {
 
     public ParkingLotData getParkingLotData(ParkingLot parkingLot)
     {
-        ParkingLotData parkingLotData =
-                new ParkingLotData(parkingLot.getParkingLotId(), parkingLot.getRows(), parkingLot.getSize());
-        return parkingLotData;
+        return new ParkingLotData(parkingLot.getParkingLotId(), parkingLot.getRows(), parkingLot.getSize());
     }
 
     public ParkingLotListData getParkingLotList() {
-        List<ParkingLotData> list = new ArrayList<>();
+        List<ParkingLotData> dataList = new ArrayList<>();
+        System.out.println("in this");
         for(ParkingLot parkingLot: parkingLots){
             ParkingLotData parkingLotData = getParkingLotData(parkingLot);
-            list.add(parkingLotData);
+            System.out.println("add parking " + parkingLotData.getParkingLotId());
+            dataList.add(parkingLotData);
         }
-        return new ParkingLotListData(list);
+        return new ParkingLotListData(dataList);
     }
 
     public PricesList getParkingLotsPrices() {
-        App.SafeStartTransaction();
-        List<ParkingPricesData> list = new ArrayList<>();
-        for(ParkingLot parkingLot: parkingLots){
-            ParkingPricesData parkingPrices = parkingLot.getAllPricesData();
-            list.add(parkingPrices);
+        List<ParkingPricesData> dataList = new ArrayList<>();
+        for(int i = 0; i < parkingLots.size(); i++){
+            ParkingPricesData parkingPricesData = parkingLots.get(i).getAllPricesData();
+            dataList.add(parkingPricesData);
+//            System.out.println("add parking " + parkingPricesData.getParkingLotId() + " ,price: " + parkingPricesData.getParkingPrice());
         }
-        App.SafeCommit();
-        return new PricesList(list);
+        return new PricesList(dataList);
     }
 }

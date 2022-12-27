@@ -25,6 +25,7 @@ public class ParkingLot {
       this.name = name;
       this.rowsNum = rowsNum;
       this.rowSize = rowSize;
+      this.size = rowSize*rowsNum;
    }
 
    public void setParkingPrices(ParkingPrices parkingPrices){

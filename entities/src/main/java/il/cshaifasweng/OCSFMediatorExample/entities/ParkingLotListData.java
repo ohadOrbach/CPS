@@ -5,15 +5,20 @@ import java.util.List;
 import java.io.Serializable;
 
 public class ParkingLotListData implements Serializable{
-    public List<ParkingLotData> parkingLotList;
-    public ParkingLotListData(List<ParkingLotData> list)
-    {
-        parkingLotList = new ArrayList<ParkingLotData>();
+    public List<ParkingLotData> pricesList;
+    public ParkingLotListData(){ this.pricesList = new ArrayList<>(); }
+
+    public ParkingLotListData(List<ParkingLotData> dataList){
+        this.pricesList = new ArrayList<>();
+        for(ParkingLotData parkingLotData: dataList){
+            pricesList.add(parkingLotData);
+        }
+
     }
-    public void setParkingLotsList(List<ParkingLotData> complaints) {
-        this.parkingLotList = parkingLotList;
+
+    public List<ParkingLotData> getParkingLotListData() {
+        return this.pricesList;
     }
-    public List<ParkingLotData> getParkingLots() {
-        return parkingLotList;
-    }
+
 }
+

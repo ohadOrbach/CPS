@@ -22,6 +22,7 @@ public class App
            session = getSessionFactory().openSession();
            parkinglots = new ParkingLots();
            parkinglots.generateParkingLots();
+           parkinglots.pullParkingLots();
            server = new SimpleServer(3000);
            server.listen();
     }
