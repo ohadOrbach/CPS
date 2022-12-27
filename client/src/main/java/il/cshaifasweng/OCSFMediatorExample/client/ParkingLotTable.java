@@ -3,9 +3,11 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
 import il.cshaifasweng.OCSFMediatorExample.server.ParkingPrices;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -13,15 +15,18 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 
-public class ParkingLotTable {
+public class ParkingLotTable implements Initializable {
     String updateType = "";
     int updateID = -1;
 
     TableView<ParkingPricesData> table = new TableView<ParkingPricesData>();
 
+    public Button MainMenuButton;
     @FXML // fx:id="idCol"
     private TableColumn<ParkingPricesData, Integer> idCol; // Value injected by FXMLLoader
 
@@ -64,7 +69,7 @@ public class ParkingLotTable {
         for(int i = 0; i < eventList.size(); i++){
             pricesList.add(eventList.get(i));
         }
-        this.pricesList = pricesList;
+        this.pricesList = FXCollections.observableArrayList(pricesList);
         table.setItems(pricesList);
         for (int i = 0; i < pricesList.size(); i++) {
             idList.getItems().add((pricesList.get(i)).getParkingLotId());
@@ -72,7 +77,10 @@ public class ParkingLotTable {
         System.out.println("Received prices table\n");
     }
 
-
+    @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        App.setRoot("primary");
+    }
     private ObservableList<ParkingPricesData> getUserList() {
 
 //        // need to add creation of Observable<ParkingPrinces> list from the database
@@ -87,20 +95,29 @@ public class ParkingLotTable {
         return pricesList;
     }
 
-    @FXML
-    void initialize() throws IOException {
-        if(!(EventBus.getDefault().isRegistered(this))){
-            EventBus.getDefault().register(this);
-        }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<ParkingPricesData> pricesList =  FXCollections.observableArrayList(
+        new ParkingPricesData(1, 10, 12),
+        new ParkingPricesData(2, 10, 12));
+        table.setItems(pricesList);
+        idCol =  new TableColumn<>("parkingLotId");
         idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
+        casualCol =  new TableColumn<>("parkingPrice");
         casualCol.setCellValueFactory(new PropertyValueFactory("parkingPrice"));
+        orderedCol =  new TableColumn<>("orderedParkingPrice");
         orderedCol.setCellValueFactory(new PropertyValueFactory("orderedParkingPrice"));
+        regSubCol =  new TableColumn<>("regularSubscriptionPrice");
         regSubCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionPrice"));
+        multyCol =  new TableColumn<>("regularSubscriptionMultiCarsPrice");
         multyCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionMultiCarsPrice"));
+        fullSubCol =  new TableColumn<>("fullySubscriptionPrice");
         fullSubCol.setCellValueFactory(new PropertyValueFactory("fullySubscriptionPrice"));
 
         table.getColumns().addAll(idCol, casualCol, orderedCol, regSubCol,multyCol ,fullSubCol );
+        Vbox.getChildren().removeAll();
         Vbox.getChildren().addAll(table);
+
 
         assert typeList != null : "fx:id=\"typeList\" was not injected: check your FXML file 'primary.fxml'.";
         assert idList != null : "fx:id=\"idList\" was not injected: check your FXML file 'primary.fxml'.";
