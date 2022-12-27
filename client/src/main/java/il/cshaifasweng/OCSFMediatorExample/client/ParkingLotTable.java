@@ -9,7 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -96,6 +99,19 @@ public class ParkingLotTable {
         }
     }
 
+    //update function
+    public void changeCasualPrice(TableColumn.CellEditEvent editedCell){
+        ParkingPricesData priceSelected = table.getSelectionModel().getSelectedItem();
+        priceSelected.setParkingPrice(Double.parseDouble(editedCell.getNewValue().toString()));
+    }
+
+    public void changeOrderPrice(TableColumn.CellEditEvent editedCell){
+        ParkingPricesData priceSelected = table.getSelectionModel().getSelectedItem();
+        priceSelected.setOrderedParkingPrice(Double.parseDouble(editedCell.getNewValue().toString()));
+    }
+
+
+
     private ObservableList<ParkingPricesData> getUserList() {
         return pricesList;
     }
@@ -103,6 +119,12 @@ public class ParkingLotTable {
     @FXML
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
+
+        //allow to change cells
+        table.setEditable(true);
+        casualCol.setCellFactory(TextFieldTableCell.<ParkingPricesData, Double>forTableColumn(new DoubleStringConverter()));
+        orderedCol.setCellFactory(TextFieldTableCell.<ParkingPricesData, Double>forTableColumn(new DoubleStringConverter()));
+
     }
 
     @FXML

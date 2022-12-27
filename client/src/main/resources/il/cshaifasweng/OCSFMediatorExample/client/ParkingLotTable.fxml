@@ -25,8 +25,8 @@
                               <TableView fx:id="ParkingTable" prefHeight="434.0" prefWidth="788.0">
                                  <columns>
                                     <TableColumn fx:id="idCol" editable="false" prefWidth="87.0" text="Parking Lot ID" />
-                                    <TableColumn fx:id="casualCol" editable="false" prefWidth="79.0" text="Casual Price" />
-                                    <TableColumn fx:id="orderedCol" editable="false" prefWidth="84.0" text="Ordered Price" />
+                                    <TableColumn fx:id="casualCol" onEditCommit="#changeCasualPrice" prefWidth="79.0" text="Casual Price" />
+                                    <TableColumn fx:id="orderedCol" onEditCommit="#changeOrderPrice" prefWidth="84.0" text="Ordered Price" />
                                     <TableColumn fx:id="regSubCol" editable="false" prefWidth="164.0" text="Regular Subscription Price" />
                                     <TableColumn fx:id="multyCol" editable="false" minWidth="0.0" prefWidth="218.0" text="Regular Subscription Multi Cars Price" />
                                     <TableColumn fx:id="fullSubCol" editable="false" minWidth="0.0" prefWidth="168.0" text="Fully Subscription Price" />
