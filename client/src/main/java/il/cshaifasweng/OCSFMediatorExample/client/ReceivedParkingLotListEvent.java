@@ -1,14 +1,24 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotList;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotListData;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReceivedParkingLotListEvent {
-    private ParkingLotListData parkingLotList;
-    public ParkingLotListData getParkingLotList() { return parkingLotList; }
+    private List<ParkingLotData> parkingLotDataList;
 
     public ReceivedParkingLotListEvent(ParkingLotListData parkingLotList) {
-        this.parkingLotList = parkingLotList;
+        this.parkingLotDataList = new ArrayList<>();
+        List<ParkingLotData> dataList = parkingLotList.getParkingLotListData();
+        for (ParkingLotData parking : dataList) {
+            parkingLotDataList.add(parking);
+//            System.out.println("adding " + parking.getParkingLotId());
+        }
+    }
+
+    public List<ParkingLotData> getParkingLotDataList() {
+        return this.parkingLotDataList;
     }
 }

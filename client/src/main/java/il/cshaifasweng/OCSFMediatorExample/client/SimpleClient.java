@@ -21,9 +21,10 @@ public class SimpleClient extends AbstractClient {
 		if (msg.getClass().equals(Warning.class)) {
 			Platform.runLater(() -> EventBus.getDefault().post(new WarningEvent((Warning) msg)));
 		}
-		else if(msg.getClass().equals(ParkingLotList.class)) {
+		else if(msg.getClass().equals(ParkingLotListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedParkingLotListEvent((ParkingLotListData) msg)));
+//			System.out.println("get it");
 		}
 		else if(msg.getClass().equals(PricesList.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
@@ -53,6 +54,7 @@ public class SimpleClient extends AbstractClient {
 			e.printStackTrace();
 		}
 	}
+
 	public void changePrice(int price, ParkingLotData parkingLot, String priceType) {
 		try {
 			client.sendToServer("#update:ItemPrice," + parkingLot.getParkingLotId() + "," + priceType + "," + Integer.toString(price));

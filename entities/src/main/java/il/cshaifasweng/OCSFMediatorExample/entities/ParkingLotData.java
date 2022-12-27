@@ -3,27 +3,38 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 import java.io.Serializable;
 
 public class ParkingLotData implements Serializable {
-    public int id;
-    public int rows;
-    public int size;
+    private int id;
+    private int rowsNum;
+    private int size;
 
-    public ParkingLotData(int id, int rows, int size) {
+    public ParkingLotData(int id, int rows, int rowNum) {
         this.id = id;
-        this.rows = rows;
-        this.size = size;
+        this.rowsNum = rows;
+        this.size = rows*rowNum;
     }
 
-    public void setParkingLotId(int parkingLotId){
-        this.id = parkingLotId;
+    public int getParkingLotId() {
+        return id;
     }
-    public int getParkingLotId(){
-        return this.id;
+
+    public void setParkingLotId(int id) {
+        this.id = id;
     }
-    public void setSize(int size){
+
+    public int getRowsNum() {
+        return rowsNum;
+    }
+
+    public void setRowsNum(int rowsNum) {
+        this.rowsNum = rowsNum;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
         this.size = size;
-    }
-    public int getSize(){
-        return this.size;
     }
 
 }
