@@ -5,9 +5,9 @@ import java.util.List;
 import java.io.Serializable;
 
 public class ParkingLotList implements Serializable{
-    public List<ParkingLotId> parkinglotlist;
+    public List<ParkingLotData> parkingLotList;
     public ParkingLotList()
     {
-        parkinglotlist = new ArrayList<ParkingLotId>();
+        parkingLotList = new ArrayList<>();
     }
 }

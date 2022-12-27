@@ -1,15 +1,20 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-public class ParkingPrices {
-    private int parkingLotId;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+
+public class ParkingPricesData implements Serializable {
+    private int id;
     private double parkingPrice;
     private double orderedParkingPrice;
     private double regularSubscriptionPrice;
     private double regularSubscriptionMultiCarsPrice;
     private double fullySubscriptionPrice;
 
-    public ParkingPrices(int parkingLotId, int parkingPrice, int orderedParkingPrice){
-        this.parkingLotId = parkingLotId;
+    public ParkingPricesData(int parkingLotId, double parkingPrice, double orderedParkingPrice){
+        this.id = parkingLotId;
         this.parkingPrice = parkingPrice;
         this.orderedParkingPrice = orderedParkingPrice;
         this.regularSubscriptionPrice = orderedParkingPrice * 60;
@@ -17,8 +22,8 @@ public class ParkingPrices {
         this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
 
-    public ParkingPrices(){
-        this.parkingLotId = 0;
+    public ParkingPricesData(List<ParkingPricesData> list){
+        this.id = 0;
         this.parkingPrice = 0;
         this.orderedParkingPrice = 0;
         this.regularSubscriptionPrice = 0;
@@ -26,11 +31,12 @@ public class ParkingPrices {
         this.fullySubscriptionPrice = 0;
     }
 
+
     public void setParkingLotId(int parkingLotId){
-        this.parkingLotId = parkingLotId;
+        this.id = parkingLotId;
     }
     public int getParkingLotId(){
-        return this.parkingLotId;
+        return this.id;
     }
 
     public void setParkingPrice(int parkingPrice){

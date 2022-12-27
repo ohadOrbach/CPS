@@ -1,57 +1,48 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import javax.persistence.*;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotId;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPrices;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
+
+import java.util.Objects;
 
 @Entity
-@Table(name = "ParkingLot")
+@Table(name = "parkingLot")
 public class ParkingLot {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int parkingLotId;
+   private int id;
    private String name;
-   private int size;
-   @Column(name = "regular_price")
-   private double parkingPrice;
-   @Column(name = "ordered_price")
-   private double orderedParkingPrice;
-   @Column(name = "regular_sub_price")
-   private double regularSubscriptionPrice;
-   @Column(name = "multi_sub_price")
-   private double regularSubscriptionMultiCarsPrice;
-   @Column(name = "fully_sub_price")
-   private double fullySubscriptionPrice;
+   private int rowsNum = 0;
+   private int rowSize = 0;
+   private int size = 0;
 
+   @OneToOne(mappedBy = "parkingLot")
+   private ParkingPrices parkingPrices;
 
-   public ParkingLot(String name, int size){
+   public ParkingLot(String name, int rowsNum, int rowSize){
       this.name = name;
-      this.size = size;
-      this.parkingPrice = 0;
-      this.orderedParkingPrice = 0;
-      this.regularSubscriptionPrice = 0;
-      this.regularSubscriptionMultiCarsPrice = 0;
-      this.fullySubscriptionPrice = 0;
+      this.rowsNum = rowsNum;
+      this.rowSize = rowSize;
    }
-   public ParkingLot(ParkingLotId parkingLotId){
-      this.name = parkingLotId.getName();
-      this.size = parkingLotId.getSize();
-      this.parkingPrice = parkingLotId.getPrices().getParkingPrice();
-      this.orderedParkingPrice =  parkingLotId.getPrices().getOrderedParkingPrice();
-      this.regularSubscriptionPrice =  parkingLotId.getPrices().getRegularSubscriptionPrice();
-      this.regularSubscriptionMultiCarsPrice =  parkingLotId.getPrices().getRegularSubscriptionMultiCarsPrice();
-      this.fullySubscriptionPrice =  parkingLotId.getPrices().getFullySubscriptionPrice();
+
+   public void setParkingPrices(ParkingPrices parkingPrices){
+
+      this.parkingPrices = parkingPrices;
+      parkingPrices.setParkingLot(this);
    }
-   public ParkingLot(){
-      this.size = 0;
-      this.parkingPrice = 0;
-      this.orderedParkingPrice = 0;
-      this.regularSubscriptionPrice = 0;
-      this.regularSubscriptionMultiCarsPrice = 0;
-      this.fullySubscriptionPrice = 0;
-   }
+
+//   public ParkingLot(ParkingLotData parkingLotData){
+//      this.row = parkingLotData.getName();
+//      this.size = parkingLotData.getSize();
+//      this.parkingPrices = parkingLot.getPrices();
+//   }
+
+   public ParkingLot() {}
+
    public int getParkingLotId(){
-      return this.parkingLotId;
+      return this.id;
    }
 
    public void setSize(int size){
@@ -62,53 +53,37 @@ public class ParkingLot {
    }
    public void setParkingPrice(double newPrice, String type)
    {
-      if(type=="parking")
+      if(Objects.equals(type, "parking"))
       {
-         parkingPrice = newPrice;
+         parkingPrices.setParkingPrice(newPrice);
       }
-      else if(type=="ordered")
+      else if(Objects.equals(type, "ordered"))
       {
-         orderedParkingPrice = newPrice;
+         parkingPrices.setOrderedParkingPrice(newPrice);
       }
-      else if(type=="regularSubscription")
+      else if(Objects.equals(type, "regularSubscription"))
       {
-         regularSubscriptionPrice = newPrice;
+         parkingPrices.setRegularSub(newPrice);
       }
-      else if(type=="regularSubscriptionMultiCars")
+      else if(Objects.equals(type, "regularSubscriptionMultiCars"))
       {
-         regularSubscriptionMultiCarsPrice = newPrice;
+         parkingPrices.setRegularSubMulti(newPrice);
       }
       else
       {
-         fullySubscriptionPrice = newPrice;
+         parkingPrices.setFullSubPrice(newPrice);
       }
    }
-   public double getParkingPrice(){
-      return this.parkingPrice;
-   }
-   public void setOrderedParkingPrice(double orderedParkingPrice){
-      this.orderedParkingPrice = orderedParkingPrice;
-   }
-   public double getOrderedParkingPrice(){
-      return this.orderedParkingPrice;
-   }
-   public void setRegularSubscriptionPrice(double regularSubscriptionPrice){
-      this.regularSubscriptionPrice = regularSubscriptionPrice;
-   }
-   public double getRegularSubscriptionPrice(){
-      return this.regularSubscriptionPrice;
-   }
-   public void setRegularSubscriptionMultiCarsPrice(double regularSubscriptionMultiCarsPrice){
-      this.regularSubscriptionMultiCarsPrice = regularSubscriptionMultiCarsPrice;
-   }
-   public double getRegularSubscriptionMultiCarsPrice(){
-      return this.parkingPrice;
-   }
-   public void setFullySubscriptionPrice(double fullySubscriptionPrice){
-      this.fullySubscriptionPrice = fullySubscriptionPrice;
-   }
-   public double getFullySubscriptionPrice(){
-      return this.fullySubscriptionPrice;
+   public String getName() { return this.name; }
+
+   public ParkingPrices getAllPrices() {
+      return this.parkingPrices;
    }
 
+   public int getRows() { return this.rowsNum; }
+
+   public ParkingPricesData getAllPricesData() {
+      return new ParkingPricesData(parkingPrices.getParkingLotId(), parkingPrices.getParkingPrice()
+      , parkingPrices.getOrderedParkingPrice());
+   }
 }

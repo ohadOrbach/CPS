@@ -1,13 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotId;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotList;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPrices;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.application.Platform;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
 
 import java.io.IOException;
 
@@ -26,13 +23,12 @@ public class SimpleClient extends AbstractClient {
 		}
 		else if(msg.getClass().equals(ParkingLotList.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
-					post(new ReceivedParkingLotListEvent((ParkingLotList) msg)));
+					post(new ReceivedParkingLotListEvent((ParkingLotListData) msg)));
 		}
-		else if(msg.getClass().equals(ParkingPrices.class)) {
+		else if(msg.getClass().equals(PricesList.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
-					post(new ReceivedParkingPricesEvent((ParkingPrices) msg)));
+					post(new ReceivedParkingPricesEvent((PricesList) msg)));
 		}
-
 	}
 	
 	public static SimpleClient getClient() {
@@ -57,7 +53,7 @@ public class SimpleClient extends AbstractClient {
 			e.printStackTrace();
 		}
 	}
-	public void changePrice(int price, ParkingLotId parkingLot, String priceType) {
+	public void changePrice(int price, ParkingLotData parkingLot, String priceType) {
 		try {
 			client.sendToServer("#update:ItemPrice," + parkingLot.getParkingLotId() + "," + priceType + "," + Integer.toString(price)); //"update:price,<item id>,<new price>"
 		} catch (IOException e) {
