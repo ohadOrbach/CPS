@@ -41,9 +41,11 @@ public class SimpleServer extends AbstractServer {
 			}
 			else if (msgString.startsWith("#update")) {
 				String[] args = (msgString.split(":", 2)[1]).split(",", -1);
+				System.out.println("im in update mode");
 				switch (args[0]) {
-					case " parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
-						App.parkinglots.changePrice(Integer.parseInt(args[1]), Double.parseDouble(args[2]), args[3]);
+					case "parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
+						App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+						App.parkingPrices.pullParkingPrices();
 					}
 				}
 			}else if (msgString.startsWith("#request")) {

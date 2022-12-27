@@ -14,10 +14,11 @@ import java.util.Random;
 
 public class ParkingLots {
     public List<ParkingLot> parkingLots;
+    public List<ParkingPrices> parkingPrices;
 
     public ParkingLots() {
         parkingLots = new ArrayList<>();
-
+        parkingPrices = new ArrayList<>();
     }
 
     public void generateParkingLots() {
@@ -66,15 +67,26 @@ public class ParkingLots {
 //        System.out.println("add parking " + data.size() + "list size: " + parkingLots.size());
     }
 
-    public void changePrice(int id, double newPrice, String type) {
+    public void pullParkingPrices() {
+        CriteriaBuilder builder = App.session.getCriteriaBuilder();
+        CriteriaQuery<ParkingPrices> query = builder.createQuery(ParkingPrices.class);
+        query.from(ParkingPrices.class);
+        List<ParkingPrices> data = App.session.createQuery(query).getResultList();
+        parkingPrices.clear();
+        parkingPrices.addAll(data);
+//        System.out.println("add parking " + data.size() + "list size: " + parkingLots.size());
+    }
+
+    public void changePrice(int id, String type, int newPrice) {
         App.SafeStartTransaction();
-        ParkingLot temp = new ParkingLot();
-        for (ParkingLot pl : parkingLots) {
+        ParkingPrices temp = new ParkingPrices();
+        for (ParkingPrices pl : parkingPrices) {
             if (pl.getParkingLotId() == id) {
                 temp = pl;
             }
         }
-        temp.setParkingPrice(newPrice, type);
+        if (type.equals("Casual")){temp.setParkingPrice(newPrice);}
+        else{temp.setOrderedParkingPrice(newPrice);}
         App.session.save(temp);
         App.session.flush();
         App.SafeCommit();

@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
+import il.cshaifasweng.OCSFMediatorExample.entities.PricesList;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,13 +17,16 @@ public class App
 	private static SimpleServer server;
     public static Session session;
     public static ParkingLots parkinglots;
+    public static ParkingLots parkingPrices;
 
     public static void main( String[] args ) throws IOException
     {
            session = getSessionFactory().openSession();
            parkinglots = new ParkingLots();
+           parkingPrices = new ParkingLots();
            parkinglots.generateParkingLots();
            parkinglots.pullParkingLots();
+           parkingPrices.pullParkingPrices();
            server = new SimpleServer(3000);
            server.listen();
     }

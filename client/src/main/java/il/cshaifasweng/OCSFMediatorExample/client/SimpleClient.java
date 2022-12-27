@@ -55,9 +55,10 @@ public class SimpleClient extends AbstractClient {
 		}
 	}
 
-	public void changePrice(int price, ParkingLotData parkingLot, String priceType) {
+	public void changePrice(int price, int parkingLotId, String priceType) {
 		try {
-			client.sendToServer("#update:ItemPrice," + parkingLot.getParkingLotId() + "," + priceType + "," + Integer.toString(price));
+
+			client.sendToServer("#update:parking price," + parkingLotId + "," + priceType + "," + price);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

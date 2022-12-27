@@ -19,6 +19,7 @@ public class ParkingPrices implements Serializable {
     @JoinColumn(name = "parkinglot", referencedColumnName = "id")
     private ParkingLot parkingLot;
 
+
     public ParkingPrices(int parkingLotId, double parkingPrice, double orderedParkingPrice, ParkingLot parkingLot){
         this.id = parkingLotId;
         this.parkingPrice = parkingPrice;
@@ -41,7 +42,6 @@ public class ParkingPrices implements Serializable {
     public ParkingPrices() {
 
     }
-
     public void setParkingLotId(int parkingLotId){
         this.id = parkingLotId;
     }

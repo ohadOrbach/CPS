@@ -39,14 +39,14 @@ public class ParkingPricesData implements Serializable {
         return this.id;
     }
 
-    public void setParkingPrice(int parkingPrice){
+    public void setParkingPrice(double parkingPrice){
         this.parkingPrice = parkingPrice;
     }
     public double getParkingPrice(){
         return this.parkingPrice;
     }
 
-    public void setOrderedParkingPrice(int orderedParkingPrice){
+    public void setOrderedParkingPrice(double orderedParkingPrice){
         this.orderedParkingPrice = orderedParkingPrice;
         this.regularSubscriptionPrice = orderedParkingPrice * 60;
         this.regularSubscriptionMultiCarsPrice = orderedParkingPrice * 54;

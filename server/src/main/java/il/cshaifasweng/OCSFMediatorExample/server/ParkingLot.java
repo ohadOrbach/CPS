@@ -54,25 +54,12 @@ public class ParkingLot {
    }
    public void setParkingPrice(double newPrice, String type)
    {
-      if(Objects.equals(type, "parking"))
+      if(Objects.equals(type, "Casual"))
       {
          parkingPrices.setParkingPrice(newPrice);
       }
-      else if(Objects.equals(type, "ordered"))
-      {
+      else if(Objects.equals(type, "Ordered")) {
          parkingPrices.setOrderedParkingPrice(newPrice);
-      }
-      else if(Objects.equals(type, "regularSubscription"))
-      {
-         parkingPrices.setRegularSub(newPrice);
-      }
-      else if(Objects.equals(type, "regularSubscriptionMultiCars"))
-      {
-         parkingPrices.setRegularSubMulti(newPrice);
-      }
-      else
-      {
-         parkingPrices.setFullSubPrice(newPrice);
       }
    }
    public String getName() { return this.name; }
