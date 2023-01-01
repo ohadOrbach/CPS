@@ -18,6 +18,7 @@ public class App
     public static Session session;
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
+    public static Complaints complaints;
 
     public static void main( String[] args ) throws IOException
     {
@@ -27,6 +28,8 @@ public class App
            parkinglots.generateParkingLots();
            parkinglots.pullParkingLots();
            parkingPrices.pullParkingPrices();
+           complaints = new Complaints();
+           complaints.pullComplaints();
            server = new SimpleServer(3000);
            server.listen();
     }
@@ -35,6 +38,8 @@ public class App
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(ParkingLot.class);
         configuration.addAnnotatedClass(ParkingPrices.class);
+        configuration.addAnnotatedClass(Complaint.class);
+        configuration.addAnnotatedClass(Complaints.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

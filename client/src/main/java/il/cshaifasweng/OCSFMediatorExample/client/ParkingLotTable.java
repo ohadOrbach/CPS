@@ -119,9 +119,9 @@ public class ParkingLotTable {
         catch (NumberFormatException ex){
             ex.printStackTrace();
         }
-        System.out.println("Sending update to the server ");
-        SimpleClient.getClient().changePrice(newPrice, updateID, updateType);
-        System.out.println("Update of prices sent to the server");
+        SimpleClient myclient=SimpleClient.getClient();
+        System.out.format("Sending update to the server \n");
+        myclient.changePrice(newPrice, updateID, updateType);
         //database should be updated here
 
         ObservableList<ParkingPricesData> list = getUserList();

@@ -38,6 +38,12 @@ public class SimpleClient extends AbstractClient {
 		}
 		return client;
 	}
+	public static SimpleClient getClient(String ip,int port) {
+		if (client == null) {
+			client = new SimpleClient(ip, port);
+		}
+		return client;
+	}
 
 	public void requestParkingLotList(){
 		try {
@@ -57,8 +63,15 @@ public class SimpleClient extends AbstractClient {
 
 	public void changePrice(int price, int parkingLotId, String priceType) {
 		try {
-
 			client.sendToServer("#update:parking price," + parkingLotId + "," + priceType + "," + price);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendComplaint(ComplaintData complaint){
+		try {
+			client.sendToServer(complaint);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -26,6 +26,8 @@ public class PrimaryController {
 
 	@FXML // fx:id="ShowParkingLotsListBtn"
 	private Button ShowParkingLotsListBtn; // Value injected by FXMLLoader
+	@FXML
+	private Button makeComplaintBtn;
 
 	@FXML
 	void sendWarning(ActionEvent event) {
@@ -38,14 +40,6 @@ public class PrimaryController {
 	}
 
 	@FXML
-	void openChangePricesScene(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("changePrice.fxml"));
-		Stage stage = new Stage();
-		stage.setScene(new Scene(loader.load()));
-		stage.show();
-	}
-
-	@FXML
 	public void showParkingLotList(ActionEvent event) {
 		try {
 			SimpleClient.getClient().sendToServer("#request: parking lots list");
@@ -55,7 +49,16 @@ public class PrimaryController {
 		}
 	}
 
-
+	@FXML
+	void openMakeComplaintScene(ActionEvent event) throws IOException {
+		App.setRoot("Complaint");
+		/**
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Complaint.fxml"));
+		Stage stage = new Stage();
+		stage.setScene(new Scene(loader.load()));
+		stage.show();
+		 */
+	}
 	@FXML
 	void openShowPriceTableScene(ActionEvent event) throws IOException {
 		try {
@@ -71,7 +74,7 @@ public class PrimaryController {
 	void initialize() {
 		assert ShowParkingLotsListBtn != null : "fx:id=\"ShowParkingLotsListBtn\" was not injected: check your FXML file 'primary.fxml'.";
 		assert showPricesBtn != null : "fx:id=\"showPricesBtn\" was not injected: check your FXML file 'primary.fxml'.";
-
+		assert makeComplaintBtn != null : "fx:id=\"makeComplaintBtn\" was not injected: check your FXML file 'primary.fxml'.";
 	}
 
 
