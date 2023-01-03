@@ -32,5 +32,10 @@
             <Font name="Bernard MT Condensed" size="42.0" />
          </font>
       </Label>
+      <Button fx:id="makeComplaintBtn" layoutX="452.0" layoutY="275.0" mnemonicParsing="false" onAction="#openMakeComplaintScene" prefHeight="39.0" prefWidth="252.0" text="Make A Complaint">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

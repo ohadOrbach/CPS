@@ -24,6 +24,7 @@ import java.util.List;
 public class ParkingLotTable {
     String updateType = "";
     int updateID = -1;
+    int newPrice = 0;
 
     TableView<ParkingPricesData> table = new TableView<ParkingPricesData>();
 
@@ -134,28 +135,20 @@ public class ParkingLotTable {
 
     @FXML
     void updatePrices(ActionEvent event) throws IOException {
-
+        try{
+            newPrice = Integer.parseInt(newPriceTxt.getText());
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+        SimpleClient myclient=SimpleClient.getClient();
+        System.out.format("Sending update to the server \n");
+        myclient.changePrice(newPrice, updateID, updateType);
         //database should be updated here
 
         ObservableList<ParkingPricesData> list = getUserList();
 
         // only for example, should be deleted later:
-        for (ParkingPricesData park: list){
-            if (park.getParkingLotId() == -1){
-                throw new RuntimeException("Error: please choose id");
-            }
-            if (park.getParkingLotId() == updateID){
-                if (updateType.equals("")){
-                    throw new RuntimeException("Error: please choose type");
-                }
-                if(updateType.equals("Casual")){
-                    park.setParkingPrice(Integer.parseInt(newPriceTxt.getText()));
-                } else{
-                    park.setOrderedParkingPrice(Integer.parseInt(newPriceTxt.getText()));
-                }
-            }
-        }
-        //end of example
 
         table.setItems(list);
         Vbox.getChildren().addAll(table);
