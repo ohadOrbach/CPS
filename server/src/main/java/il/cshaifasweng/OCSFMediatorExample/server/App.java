@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.PricesList;
 import org.hibernate.HibernateException;
@@ -19,6 +20,7 @@ public class App
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
+    public static Orders orders;
 
     public static void main( String[] args ) throws IOException
     {
@@ -30,6 +32,7 @@ public class App
            parkingPrices.pullParkingPrices();
            complaints = new Complaints();
            complaints.pullComplaints();
+           orders = new Orders();
            server = new SimpleServer(3000);
            server.listen();
     }
@@ -39,6 +42,7 @@ public class App
         configuration.addAnnotatedClass(ParkingLot.class);
         configuration.addAnnotatedClass(ParkingPrices.class);
         configuration.addAnnotatedClass(Complaint.class);
+        configuration.addAnnotatedClass(ParkingOrder.class);
         configuration.addAnnotatedClass(Complaints.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())

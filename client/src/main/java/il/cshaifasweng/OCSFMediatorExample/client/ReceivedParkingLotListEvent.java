@@ -14,7 +14,6 @@ public class ReceivedParkingLotListEvent {
         List<ParkingLotData> dataList = parkingLotList.getParkingLotListData();
         for (ParkingLotData parking : dataList) {
             parkingLotDataList.add(parking);
-//            System.out.println("adding " + parking.getParkingLotId());
         }
     }
 
