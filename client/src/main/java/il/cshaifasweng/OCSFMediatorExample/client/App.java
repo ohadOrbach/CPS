@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 /**
  * JavaFX App
  */
+
 public class App extends Application {
 
     private static Scene scene;
@@ -46,7 +48,6 @@ public class App extends Application {
 
     @Override
 	public void stop() throws Exception {
-		// TODO Auto-generated method stub
     	EventBus.getDefault().unregister(this);
 		super.stop();
 	}
@@ -61,8 +62,24 @@ public class App extends Application {
         	);
         	alert.show();
     	});
-    	
     }
+
+    // TODO: check way timestamp not added to msg
+    @Subscribe
+    public void onMessageEvent(MessageEvent message) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION,
+                    String.format("%s\nTimestamp: %s\n",
+                            message.getMessage().getMessage(),
+                            message.getMessage().getTimeStamp().toString())
+            );
+            alert.setTitle("new message");
+            alert.setHeaderText("New Message:");
+            alert.show();
+        });
+    }
+
 
 	public static void main(String[] args) {
         launch();

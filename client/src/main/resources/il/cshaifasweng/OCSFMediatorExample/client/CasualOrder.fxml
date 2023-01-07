@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="parent" prefHeight="480.0" prefWidth="800.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CasualOrder">
+   <children>
+      <TextField fx:id="IdText" layoutX="192.0" layoutY="98.0" prefHeight="26.0" prefWidth="433.0">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass></TextField>
+      <TextField fx:id="CarNumText" layoutX="194.0" layoutY="159.0" prefHeight="26.0" prefWidth="433.0">
+         <styleClass>
+            <String fx:value="round-border" />
+            <String fx:value="secondary-color" />
+         </styleClass></TextField>
+      <TextField fx:id="DepartureTimeText" layoutX="194.0" layoutY="222.0" prefHeight="26.0" prefWidth="433.0" promptText="HH:MM">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass></TextField>
+      <TextField fx:id="EmailText" layoutX="191.0" layoutY="282.0" prefHeight="26.0" prefWidth="440.0">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass></TextField>
+      <Button fx:id="BookParking" layoutX="350.0" layoutY="390.0" mnemonicParsing="false" onAction="#sendCasualOrder" prefHeight="30.0" prefWidth="103.0" text="Book Parking">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass></Button>
+      <Label layoutX="138.0" layoutY="102.0" prefHeight="18.0" prefWidth="54.0" text="Id:">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="98.0" layoutY="162.0" prefHeight="18.0" prefWidth="83.0" text="Car Number:">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label layoutX="30.0" layoutY="222.0" prefHeight="26.0" prefWidth="191.0" text="Estimated departure time:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="130.0" layoutY="285.0" prefHeight="18.0" prefWidth="83.0" text="Email:">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ToolBar accessibleRole="MENU" focusTraversable="false" prefHeight="52.0" prefWidth="803.0" styleClass="secondary-color">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </ToolBar>
+      <Button fx:id="BackToMain" layoutX="732.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="30.0" prefWidth="59.0" text="Back">
+         <styleClass>
+            <String fx:value="primary-color" />
+            <String fx:value="round-border" />
+            <String fx:value="text-field" />
+         </styleClass>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnMode" layoutX="14.0" layoutY="16.0" minWidth="32.0" mnemonicParsing="false" onAction="#changeMode" prefHeight="26.0" prefWidth="32.0">
+         <styleClass>
+            <String fx:value="primary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+         <graphic>
+            <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../images/LightMode2.png" />
+               </image>
+               <styleClass>
+                  <String fx:value="round-border" />
+                  <String fx:value="primary-color" />
+               </styleClass>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="80.0" layoutY="14.0" prefHeight="30.0" prefWidth="59.0" text="Time:">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </Label>
+      <TextField fx:id="timeTF" layoutX="125.0" layoutY="16.0" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0">
+         <styleClass>
+            <String fx:value="primary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </TextField>
+      <Label layoutX="98.0" layoutY="347.0" prefHeight="18.0" prefWidth="83.0" text="Parking Lot:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <VBox fx:id="parkingVbox" layoutX="194.0" layoutY="344.0" prefHeight="26.0" prefWidth="440.0">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+         <children>
+            <ChoiceBox fx:id="choiceBox" prefHeight="26.0" prefWidth="443.0">
+               <styleClass>
+                  <String fx:value="secondary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+            </ChoiceBox>
+         </children>
+      </VBox>
+      <DatePicker fx:id="leavingData" layoutX="438.0" layoutY="222.0" opacity="0.5">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </DatePicker>
+   </children>
+</AnchorPane>
