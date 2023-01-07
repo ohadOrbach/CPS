@@ -76,7 +76,6 @@ public class OrderData implements Serializable {
     public String getArrivalTime() {
         return this.arrivalTime;
     }
-
     public LocalDate getLeavingDate() {
         return this.leavingDate;
     }

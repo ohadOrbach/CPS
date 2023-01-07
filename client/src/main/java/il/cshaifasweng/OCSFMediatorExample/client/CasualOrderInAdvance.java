@@ -25,9 +25,8 @@ import java.util.List;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
+// TODO add TESTS fof inputs //
 public class CasualOrderInAdvance {
-
-
     @FXML
     private Button Back;
 
