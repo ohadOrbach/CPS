@@ -142,7 +142,7 @@ public class PrimaryController {
 	public static void setDarkMode(AnchorPane parent, ImageView imMode) {
 		parent.getStylesheets().remove("src/Styles/LightMode.css");
 		parent.getStylesheets().add("/Styles/DarkMode.css");
-		Image image = new Image("/Images/LightMode.png");
+		Image image = new Image("/Images/DarkMode.png");
 		imMode.setImage(image);
 	}
 

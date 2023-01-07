@@ -84,7 +84,7 @@
             <Insets left="20.0" />
          </opaqueInsets>
       </ToolBar>
-      <Label layoutX="300.0" layoutY="9.0" text="Main Menu">
+      <Label layoutX="300.0" layoutY="9.0" styleClass="secondary-color" text="Main Menu">
          <font>
             <Font name="Arial Black" size="24.0" />
          </font>
