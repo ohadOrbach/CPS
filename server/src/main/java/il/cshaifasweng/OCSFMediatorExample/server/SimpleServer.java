@@ -62,9 +62,8 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(parkingPricesList, client);
 					}
 
-
 					case " stastistical information list" -> {
-						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getgetStastisticalInformationList();
+						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getStastisticalInformationList();
 						SafeSendToClient(StastisticalInformationList, client);
 					}
 

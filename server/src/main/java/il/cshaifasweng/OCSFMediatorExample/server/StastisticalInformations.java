@@ -6,9 +6,11 @@ import il.cshaifasweng.OCSFMediatorExample.entities.StastisticalInformationListD
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class StastisticalInformations {
     public List<StastisticalInformation> stastisticalInformations;
@@ -42,7 +44,7 @@ public class StastisticalInformations {
         return new StastisticalInformationData(stastisticalInformation.getParkingLotId(),stastisticalInformation.getDate(), stastisticalInformation.getActualOrders(), stastisticalInformation.getCanceledOrders(),stastisticalInformation.getParkingLateNum());
     }
 
-    public StastisticalInformationListData getgetStastisticalInformationList() {
+    public StastisticalInformationListData getStastisticalInformationList() {
         List<StastisticalInformationData> dataList = new ArrayList<>();
         for(StastisticalInformation stastisticalInformation: stastisticalInformations){
             StastisticalInformationData stastisticalInformationData = getStastisticalInformationData(stastisticalInformation);
@@ -50,6 +52,8 @@ public class StastisticalInformations {
         }
         return new StastisticalInformationListData(dataList);
     }
+
+
 
 
 }

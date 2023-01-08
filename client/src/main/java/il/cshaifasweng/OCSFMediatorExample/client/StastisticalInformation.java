@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class StastisticalInformation {
 
-    TableView<ParkingLotData> table = new TableView<ParkingLotData>();
+    TableView<StastisticalInformationData> table = new TableView<StastisticalInformationData>();
 
     @FXML
     private TableColumn<StastisticalInformationData, Integer> CancledOrdersCol;
@@ -31,7 +32,7 @@ public class StastisticalInformation {
     private TableColumn<StastisticalInformationData, Integer> actualOrdersCol;
 
     @FXML
-    private TableColumn<StastisticalInformationData, Date> idCol;
+    private TableColumn<StastisticalInformationData, Integer> idCol;
 
     @FXML
     private TableColumn<StastisticalInformationData, Integer> parkingLotIdCol;
@@ -57,27 +58,30 @@ public class StastisticalInformation {
     }
 
     private void buildListTable(){
-        idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
-        parkingLotIdCol.setCellValueFactory(new PropertyValueFactory("rowsNum"));
-        parkingLotNameCol.setCellValueFactory(new PropertyValueFactory("size"));
-        CancledOrdersCol.setCellValueFactory(new PropertyValueFactory("rowsNum"));
-        LateParkingCol.setCellValueFactory(new PropertyValueFactory("rowsNum"));
-        actualOrdersCol.setCellValueFactory(new PropertyValueFactory("rowsNum"));
+        idCol.setCellValueFactory(new PropertyValueFactory("id"));
+        parkingLotIdCol.setCellValueFactory(new PropertyValueFactory("id"));
+        parkingLotNameCol.setCellValueFactory(new PropertyValueFactory("id"));
+        CancledOrdersCol.setCellValueFactory(new PropertyValueFactory("canceledOrders"));
+        LateParkingCol.setCellValueFactory(new PropertyValueFactory("parkingLateNum"));
+        actualOrdersCol.setCellValueFactory(new PropertyValueFactory("actualOrders"));
 
 
-        table.getColumns().addAll(idCol, rowsNum, size);
-        table.setItems(parkingList);
+        table.getColumns().addAll(idCol, parkingLotIdCol, parkingLotNameCol, CancledOrdersCol,LateParkingCol, actualOrdersCol);
+        table.setItems(stastisticalInformationList);
         Vbox.getChildren().clear();
         Vbox.getChildren().add(table);
     }
 
 
-
+    @FXML
+    void initialize() throws IOException {
+        EventBus.getDefault().register(this);
+    }
 
 
     @FXML
-    void goToMainMenu(ActionEvent event) {
-
+    void goToMainMenu(ActionEvent event) throws IOException {
+        App.setRoot("primary");
     }
 
 }

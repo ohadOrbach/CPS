@@ -23,6 +23,10 @@ public class ParkingLot {
    @OneToOne(mappedBy = "parkingLot")
    private ParkingPrices parkingPrices;
 
+   @OneToOne(mappedBy = "parkingLot")
+   private StastisticalInformation stastisticalInformation;
+
+
    public ParkingLot(String name, int rowsNum, int rowSize){
       this.name = name;
       this.rowsNum = rowsNum;
@@ -86,5 +90,13 @@ public class ParkingLot {
 
    public void setParkingLot(Collection<ParkingOrder> parkingLot) {
       this.parkingLot = parkingLot;
+   }
+
+   public StastisticalInformation getStastisticalInformation() {
+      return stastisticalInformation;
+   }
+
+   public void setStastisticalInformation(StastisticalInformation stastisticalInformation) {
+      this.stastisticalInformation = stastisticalInformation;
    }
 }

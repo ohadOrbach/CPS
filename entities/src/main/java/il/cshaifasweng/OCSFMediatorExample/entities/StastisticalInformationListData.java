@@ -17,7 +17,7 @@ public class StastisticalInformationListData implements Serializable {
 
     }
 
-    public List<StastisticalInformationData> getParkingLotListData() {
+    public List<StastisticalInformationData> getStastisticalInformationListData() {
         return this.stastisticalInformationList;
     }
 
