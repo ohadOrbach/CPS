@@ -2,11 +2,14 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class SimpleClient extends AbstractClient {
 	
@@ -24,7 +27,6 @@ public class SimpleClient extends AbstractClient {
 		else if(msg.getClass().equals(ParkingLotListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedParkingLotListEvent((ParkingLotListData) msg)));
-//			System.out.println("get it");
 		}
 		else if(msg.getClass().equals(PricesList.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
@@ -33,6 +35,20 @@ public class SimpleClient extends AbstractClient {
 		else if(msg.getClass().equals(StastisticalInformationListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedStastisticalInformationEvent((StastisticalInformationListData) msg)));
+		}
+
+		else if(msg.getClass().equals(PricesList.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedParkingPricesEvent((PricesList) msg)));
+		}
+
+		else if(msg.getClass().equals(OrdersListData.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedOrderList((OrdersListData) msg)));
+		}
+
+		else {
+			EventBus.getDefault().post(new MessageEvent((Message) msg));
 		}
 	}
 	
@@ -88,5 +104,7 @@ public class SimpleClient extends AbstractClient {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }

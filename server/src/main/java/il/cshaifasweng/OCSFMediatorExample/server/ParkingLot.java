@@ -5,6 +5,8 @@ import javax.persistence.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,11 +36,11 @@ public class ParkingLot {
       parkingPrices.setParkingLot(this);
    }
 
-//   public ParkingLot(ParkingLotData parkingLotData){
-//      this.row = parkingLotData.getName();
-//      this.size = parkingLotData.getSize();
-//      this.parkingPrices = parkingLot.getPrices();
-//   }
+   public ParkingLotData getParkingLotData()
+   {
+      return new ParkingLotData(this.id, this.rowsNum, this.size, this.name);
+   }
+
 
    public ParkingLot() {}
 
@@ -73,5 +75,16 @@ public class ParkingLot {
    public ParkingPricesData getAllPricesData() {
       return new ParkingPricesData(parkingPrices.getParkingLotId(), parkingPrices.getParkingPrice()
               , parkingPrices.getOrderedParkingPrice());
+   }
+
+   @OneToMany(mappedBy = "parkingLot")
+   private Collection<ParkingOrder> parkingLot;
+
+   public Collection<ParkingOrder> getParkingLot() {
+      return parkingLot;
+   }
+
+   public void setParkingLot(Collection<ParkingOrder> parkingLot) {
+      this.parkingLot = parkingLot;
    }
 }

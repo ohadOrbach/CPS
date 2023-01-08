@@ -62,6 +62,7 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(parkingPricesList, client);
 					}
 
+
 					case " stastistical information list" -> {
 						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getgetStastisticalInformationList();
 						SafeSendToClient(StastisticalInformationList, client);
@@ -69,10 +70,38 @@ public class SimpleServer extends AbstractServer {
 
 				}
 			}
-		}
-		else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
-			System.out.format("i got a new complaint");
+		} else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
+			System.out.format("i got a new complaint\n");
 			App.complaints.addComplaint((ComplaintData) msg);
+
+		} else if (OrderData.class.equals(msg.getClass())) { // Make an order
+			System.out.format("i got a new order\n");
+			String receivedMsg = App.orders.addOrder((OrderData) msg);
+			Message arrivalMsg = new Message(receivedMsg);
+			SafeSendToClient(arrivalMsg, client);
+
+		} else if (CancelOrderData.class.equals(msg.getClass())) { // find Cancel order
+			System.out.format("i got a new cancel order data\n");
+			OrdersListData ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
+			ordersListData.setMode("cancel");
+			SafeSendToClient(ordersListData, client);
+
+		} else if (OrdersListData.class.equals(msg.getClass())) { // Delete orders
+				System.out.format("i got a new cancel order data for delete\n");
+				Object obj = App.orders.deleteOrders((OrdersListData) msg);
+				SafeSendToClient(obj, client);
+
+
+		} else if (TrackingOrderData.class.equals(msg.getClass())) { // Tracking order
+			System.out.format("i got a new tracking data");
+			OrdersListData ordersListData = App.orders.trackOrder((TrackingOrderData) msg);
+			ordersListData.setMode("tracking");
+			System.out.format("i got a new tracking data11");
+			SafeSendToClient(ordersListData, client);
 		}
+
+
 	}
-}
+
+
+	}
