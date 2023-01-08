@@ -19,6 +19,7 @@ public class App
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
+    public static StastisticalInformations sastisticalInformations;
 
     public static void main( String[] args ) throws IOException
     {
@@ -30,7 +31,9 @@ public class App
            parkingPrices.pullParkingPrices();
            complaints = new Complaints();
            complaints.pullComplaints();
-           server = new SimpleServer(3000);
+           sastisticalInformations = new StastisticalInformations();
+          sastisticalInformations.pullStastisticalInformationFromDB();
+        server = new SimpleServer(3000);
            server.listen();
     }
 
@@ -40,6 +43,8 @@ public class App
         configuration.addAnnotatedClass(ParkingPrices.class);
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(Complaints.class);
+        configuration.addAnnotatedClass(StastisticalInformation.class);
+        configuration.addAnnotatedClass(StastisticalInformations.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

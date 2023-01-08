@@ -30,6 +30,10 @@ public class SimpleClient extends AbstractClient {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedParkingPricesEvent((PricesList) msg)));
 		}
+		else if(msg.getClass().equals(StastisticalInformationListData.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedStastisticalInformationEvent((StastisticalInformationListData) msg)));
+		}
 	}
 	
 	public static SimpleClient getClient() {
@@ -56,6 +60,14 @@ public class SimpleClient extends AbstractClient {
 	public void requestParkingPrices(){
 		try {
 			client.sendToServer("#request:parkingPrices");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void requestStastisticalInformationList(){
+		try {
+			client.sendToServer("#request:stastisticalinformationlist");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
