@@ -24,7 +24,7 @@ public class Complaints {
         complaints.clear();
         complaints.addAll(data);
     }
-    public void addComplaint(ComplaintData complaintData){
+    public String addComplaint(ComplaintData complaintData){
         App.SafeStartTransaction();
         Complaint com = new Complaint(complaintData);
         System.out.println("complaint in server:\n"+com.complaintTxt);
@@ -32,6 +32,7 @@ public class Complaints {
         App.session.flush();
         App.SafeCommit();
         complaints.add(com);
+        return com.Respond();
     }
     public ComplaintData GetComplaintData(Complaint c)
     {

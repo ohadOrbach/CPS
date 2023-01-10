@@ -67,7 +67,9 @@ public class SimpleServer extends AbstractServer {
 			}
 		} else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
 			System.out.format("i got a new complaint\n");
-			App.complaints.addComplaint((ComplaintData) msg);
+			String receivedMsg = App.complaints.addComplaint((ComplaintData) msg);
+			Message arrivalMsg = new Message(receivedMsg);
+			SafeSendToClient(arrivalMsg, client);
 
 		} else if (OrderData.class.equals(msg.getClass())) { // Make an order
 			System.out.format("i got a new order\n");

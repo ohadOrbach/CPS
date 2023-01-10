@@ -36,7 +36,6 @@ public class Complaint {
     void sendComplaint(ActionEvent event) {
         SimpleClient myclient=SimpleClient.getClient();
         ComplaintData cmp=new ComplaintData(newComplaintTxt.getText(),0);
-        System.out.format("complaint in client:\n"+cmp.complaintTxt);
         myclient.sendComplaint(cmp);
         newComplaintTxt.setText("");
     }
