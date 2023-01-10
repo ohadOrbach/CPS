@@ -26,7 +26,6 @@ public class Orders {
         return "Your order has been successfully received! Thank you and happy parking";
     }
 
-
     public OrderData getOrderData(ParkingOrder order) { return order.getOrderData(); }
 
     public void pullOrders() {

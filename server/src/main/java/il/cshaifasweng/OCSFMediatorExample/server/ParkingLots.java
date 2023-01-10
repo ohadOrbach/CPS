@@ -122,4 +122,17 @@ public class ParkingLots {
         }
         return new PricesList(dataList);
     }
+
+    ParkingLot getParkingLotByName(String name)
+    {
+        for(ParkingLot parkingLot : parkingLots)
+        {
+            if (name.equals(parkingLot.getName()))
+            {
+                return parkingLot;
+            }
+        }
+
+        return null;
+    }
 }
