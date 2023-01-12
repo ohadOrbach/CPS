@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.InitialCostumerWindow">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="28.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="135.0" fitWidth="145.0" layoutX="328.0" layoutY="51.0">
+         <image>
+            <Image url="@Images/lock.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="270.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" wrappingWidth="204.80343627929688">
+         <font>
+            <Font name="Agency FB Bold" size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="212.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="204.80343627929688">
+         <font>
+            <Font name="Agency FB Bold" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="id" layoutX="320.0" layoutY="216.0" prefHeight="27.0" prefWidth="194.0" />
+      <TextField fx:id="password" layoutX="320.0" layoutY="272.0" prefHeight="27.0" prefWidth="194.0" />
+      <Button fx:id="tryToLogIn" layoutX="360.0" layoutY="325.0" mnemonicParsing="false" onAction="#loginAttempt" prefHeight="35.0" prefWidth="95.0" style="-fx-background-color: #3053E1;" text="Log In" textFill="WHITE">
+         <font>
+            <Font name="Calibri Light" size="19.0" />
+         </font>
+      </Button>
+      <Label fx:id="errorLoginMassage" layoutX="372.0" layoutY="430.0" textFill="RED">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="newCostumer" layoutX="536.0" layoutY="534.0" onAction="#newUser" text=" Continue as a new Costumer " underline="true">
+         <font>
+            <Font name="Agency FB" size="25.0" />
+         </font>
+      </Hyperlink>
+      <Button fx:id="back" layoutX="28.0" layoutY="22.0" mnemonicParsing="false" onAction="#getBack" text="&lt;-back" />
+   </children>
+</AnchorPane>

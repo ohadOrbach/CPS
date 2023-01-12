@@ -171,4 +171,17 @@ public class ParkingLots {
         }
         return -1;  //we didnt find it
     }
+
+    ParkingLot getParkingLotByName(String name)
+    {
+        for(ParkingLot parkingLot : parkingLots)
+        {
+            if (name.equals(parkingLot.getName()))
+            {
+                return parkingLot;
+            }
+        }
+
+        return null;
+    }
 }

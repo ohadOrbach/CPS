@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +33,7 @@ public class ParkingOrder {
     private String orderTime = (LocalTime.now()).toString();
 
     @ManyToOne
-    @JoinColumn(name = "parkingLot")
+    @JoinColumn(name = "parkingLot_id")
     private ParkingLot parkingLot;
 
     public void setParkingLot(ParkingLot parkingLot) {

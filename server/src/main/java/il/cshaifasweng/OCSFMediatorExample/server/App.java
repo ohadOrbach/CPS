@@ -12,16 +12,19 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
 
-public class App 
+public class App
 {
-	
-	private static SimpleServer server;
+
+    private static SimpleServer server;
     public static Session session;
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
     public static StastisticalInformations sastisticalInformations;
     public static Orders orders;
+    public static Employees employees;
+    public static Costumers costumers;
+    public static Subscriptions subscriptions;
 
     public static void main( String[] args ) throws IOException
     {
@@ -35,10 +38,16 @@ public class App
            complaints.pullComplaints();
            sastisticalInformations = new StastisticalInformations();
           sastisticalInformations.pullStastisticalInformationFromDB();
-        server = new SimpleServer(3000);
-           orders = new Orders();
            server = new SimpleServer(3000);
-           server.listen();
+        orders = new Orders();
+        employees = new Employees();
+        employees.generateEmployees();
+        employees.pullEmployeesFromDB();
+        costumers = new Costumers();
+        costumers.generateCostumers();
+        subscriptions = new Subscriptions();
+        server = new SimpleServer(3000);
+        server.listen();
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {
@@ -50,6 +59,10 @@ public class App
         configuration.addAnnotatedClass(Complaints.class);
         configuration.addAnnotatedClass(StastisticalInformation.class);
         configuration.addAnnotatedClass(StastisticalInformations.class);
+        configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Costumer.class);
+        configuration.addAnnotatedClass(FullSubscription.class);
+        configuration.addAnnotatedClass(RegularSubscription.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

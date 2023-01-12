@@ -46,6 +46,19 @@ public class SimpleClient extends AbstractClient {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedOrderList((OrdersListData) msg)));
 		}
+		else if(msg.getClass().equals(EmployeeData.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new EmployeeLoginReceivedEvent((EmployeeData) msg)));
+		}
+
+		else if(msg.getClass().equals(CostumerData.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new CostumerLoginReceivedEvent((CostumerData) msg)));
+		}
+		else if(msg.getClass().equals(String.class)) {
+			Platform.runLater(() -> EventBus.getDefault().
+					post(msg));
+		}
 
 		else {
 			EventBus.getDefault().post(new MessageEvent((Message) msg));
@@ -97,6 +110,14 @@ public class SimpleClient extends AbstractClient {
 		}
 	}
 
+	public void employeeLogin(String id, String password) {
+		try {
+			client.sendToServer("employee login:"+id+","+password);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void sendComplaint(ComplaintData complaint){
 		try {
 			client.sendToServer(complaint);
@@ -104,6 +125,24 @@ public class SimpleClient extends AbstractClient {
 			e.printStackTrace();
 		}
 	}
+
+	public void costumerLogin(String id, String password) {
+		try {
+			client.sendToServer("costumer login:"+id+","+password);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void costumerRegister(String id, String password,String email) {
+		try {
+			client.sendToServer("costumer Register:"+id+","+password+","+email);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 
 
