@@ -27,6 +27,8 @@ public class ParkingLot {
    @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
    private List<StastisticalInformation> stastisticalInformation;
 
+   @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
+   private List<Parking> parkings;
 
 
    public ParkingLot(String name, int rowsNum, int rowSize){
@@ -35,6 +37,7 @@ public class ParkingLot {
       this.rowSize = rowSize;
       this.size = rowSize*rowsNum;
       this.stastisticalInformation = new ArrayList<>();
+      this.parkings = new ArrayList<>();
    }
 
    public void setParkingPrices(ParkingPrices parkingPrices){
@@ -103,4 +106,12 @@ public class ParkingLot {
    public void addStastisticalInformation(StastisticalInformation stastisticalInformation) {
       this.stastisticalInformation.add(stastisticalInformation);
    }
+
+   public List<Parking> getParkings() {
+      return parkings;
+   }
+   public void addParking(Parking parking) {
+      this.parkings.add(parking);
+   }
+
 }

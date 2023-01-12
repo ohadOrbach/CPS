@@ -25,6 +25,7 @@ public class App
     public static Employees employees;
     public static Costumers costumers;
     public static Subscriptions subscriptions;
+    public static Parkings parkings;
 
     public static void main( String[] args ) throws IOException
     {
@@ -38,7 +39,8 @@ public class App
            complaints.pullComplaints();
            sastisticalInformations = new StastisticalInformations();
           sastisticalInformations.pullStastisticalInformationFromDB();
-           server = new SimpleServer(3000);
+          parkings = new Parkings();
+          parkings.pullStastisticalInformationFromDB();
         orders = new Orders();
         employees = new Employees();
         employees.generateEmployees();
@@ -63,6 +65,8 @@ public class App
         configuration.addAnnotatedClass(Costumer.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
+        configuration.addAnnotatedClass(Parking.class);
+        configuration.addAnnotatedClass(Parkings.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

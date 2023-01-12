@@ -36,6 +36,10 @@ public class ParkingOrder {
     @JoinColumn(name = "parkingLot_id")
     private ParkingLot parkingLot;
 
+    @OneToOne(mappedBy = "parkingOrder")
+    private Parking parking;
+
+
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
@@ -82,4 +86,11 @@ public class ParkingOrder {
         return orderData;
     }
 
+    public Parking getParking() {
+        return parking;
+    }
+
+    public void setParking(Parking parking) {
+        this.parking = parking;
+    }
 }
