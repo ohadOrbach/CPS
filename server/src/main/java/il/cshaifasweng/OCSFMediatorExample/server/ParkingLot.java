@@ -5,6 +5,7 @@ import javax.persistence.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -23,8 +24,9 @@ public class ParkingLot {
    @OneToOne(mappedBy = "parkingLot")
    private ParkingPrices parkingPrices;
 
-   @OneToOne(mappedBy = "parkingLot")
-   private StastisticalInformation stastisticalInformation;
+   @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
+   private List<StastisticalInformation> stastisticalInformation;
+
 
 
    public ParkingLot(String name, int rowsNum, int rowSize){
@@ -32,6 +34,7 @@ public class ParkingLot {
       this.rowsNum = rowsNum;
       this.rowSize = rowSize;
       this.size = rowSize*rowsNum;
+      this.stastisticalInformation = new ArrayList<>();
    }
 
    public void setParkingPrices(ParkingPrices parkingPrices){
@@ -92,11 +95,12 @@ public class ParkingLot {
       this.parkingLot = parkingLot;
    }
 
-   public StastisticalInformation getStastisticalInformation() {
+
+   public List<StastisticalInformation> getStastisticalInformation() {
       return stastisticalInformation;
    }
 
-   public void setStastisticalInformation(StastisticalInformation stastisticalInformation) {
-      this.stastisticalInformation = stastisticalInformation;
+   public void addStastisticalInformation(StastisticalInformation stastisticalInformation) {
+      this.stastisticalInformation.add(stastisticalInformation);
    }
 }

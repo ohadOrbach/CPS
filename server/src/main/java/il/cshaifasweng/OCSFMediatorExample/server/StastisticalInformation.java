@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -12,26 +13,30 @@ public class StastisticalInformation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime date;
+    private int parkingLotId;
+    private String name;
+    private LocalDate date;
     private int actualOrders;
     private int canceledOrders;
     private int parkingLateNum;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parkinglot", referencedColumnName = "id")
     private ParkingLot parkingLot;
 
 
 
-    public StastisticalInformation(int id,LocalDateTime date,int actualOrders, int canceledOrders, int parkingLateNum) {
-        this.id = id;
+    public StastisticalInformation(int parkingLotId ,String name ,LocalDate date,int actualOrders, int canceledOrders, int parkingLateNum) {
+        this.parkingLotId = parkingLotId;
+        this.name = name;
         this.date = date;
         this.actualOrders = actualOrders;
         this.canceledOrders = canceledOrders;
         this.parkingLateNum = parkingLateNum;
     }
 
-    public StastisticalInformation(int id, LocalDateTime date,int actualOrders, int canceledOrders, int parkingLateNum, ParkingLot parkingLot) {
-        this.id = id;
+    public StastisticalInformation(int parkingLotId , LocalDate date,int actualOrders, int canceledOrders, int parkingLateNum, ParkingLot parkingLot) {
+        this.parkingLotId = parkingLotId;
+        this.name = parkingLot.getName();
         this.date = date;
         this.actualOrders = actualOrders;
         this.canceledOrders = canceledOrders;
@@ -51,9 +56,11 @@ public class StastisticalInformation implements Serializable {
     public StastisticalInformation(){}
 
 
-    public int getParkingLotId(){
+    public int getStatisticId(){
         return this.id;
     }
+
+    public int getParkingLotId(){ return this.parkingLotId;}
 
     public int getActualOrders() {
         return actualOrders;
@@ -87,11 +94,19 @@ public class StastisticalInformation implements Serializable {
         this.parkingLot = parkingLot;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

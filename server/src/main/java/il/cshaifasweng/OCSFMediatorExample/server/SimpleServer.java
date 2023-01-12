@@ -83,6 +83,9 @@ public class SimpleServer extends AbstractServer {
 			System.out.format("i got a new cancel order data\n");
 			OrdersListData ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
 			ordersListData.setMode("cancel");
+			App.sastisticalInformations.addStastisticalInformationForCancledOrder(ordersListData);
+			//TODO chack if its works
+			App.sastisticalInformations.pullStastisticalInformationFromDB();
 			SafeSendToClient(ordersListData, client);
 
 		} else if (OrdersListData.class.equals(msg.getClass())) { // Delete orders

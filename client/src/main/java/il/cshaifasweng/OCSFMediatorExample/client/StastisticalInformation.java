@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+
+
 public class StastisticalInformation {
 
     TableView<StastisticalInformationData> table = new TableView<StastisticalInformationData>();
@@ -38,7 +40,7 @@ public class StastisticalInformation {
     private TableColumn<StastisticalInformationData, Integer> parkingLotIdCol;
 
     @FXML
-    private TableColumn<StastisticalInformationData, Integer> parkingLotNameCol;
+    private TableColumn<StastisticalInformationData, String> parkingLotNameCol;
 
     @FXML
     private Button MainMenuButton;
@@ -59,8 +61,8 @@ public class StastisticalInformation {
 
     private void buildListTable(){
         idCol.setCellValueFactory(new PropertyValueFactory("id"));
-        parkingLotIdCol.setCellValueFactory(new PropertyValueFactory("id"));
-        parkingLotNameCol.setCellValueFactory(new PropertyValueFactory("id"));
+        parkingLotIdCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
+        parkingLotNameCol.setCellValueFactory(new PropertyValueFactory("name"));
         CancledOrdersCol.setCellValueFactory(new PropertyValueFactory("canceledOrders"));
         LateParkingCol.setCellValueFactory(new PropertyValueFactory("parkingLateNum"));
         actualOrdersCol.setCellValueFactory(new PropertyValueFactory("actualOrders"));

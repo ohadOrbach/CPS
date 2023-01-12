@@ -1,26 +1,31 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class StastisticalInformationData implements Serializable {
     private int id;
-    private LocalDateTime date;
+    private int parkingLotId;
+    private String name;
+    private LocalDate date;
     private int actualOrders;
     private int canceledOrders;
     private int parkingLateNum;
 
 
-    public StastisticalInformationData(int id,LocalDateTime date, int actualOrders, int canceledOrders, int parkingLateNum) {
+    public StastisticalInformationData(int id, int parkingLotId ,String name ,LocalDate date, int actualOrders, int canceledOrders, int parkingLateNum) {
         this.id = id;
+        this.parkingLotId = parkingLotId;
+        this.name = name;
         this.date = date;
         this.actualOrders = actualOrders;
         this.canceledOrders = canceledOrders;
         this.parkingLateNum = parkingLateNum;
     }
 
-
+    public StastisticalInformationData(){}
 
 
     public int getActualOrders() {
@@ -47,11 +52,11 @@ public class StastisticalInformationData implements Serializable {
         this.parkingLateNum = parkingLateNum;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -62,4 +67,22 @@ public class StastisticalInformationData implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getParkingLotId() {
+        return parkingLotId;
+    }
+
+    public void setParkingLotId(int parkingLotId) {
+        this.parkingLotId = parkingLotId;
+    }
+
+
 }
