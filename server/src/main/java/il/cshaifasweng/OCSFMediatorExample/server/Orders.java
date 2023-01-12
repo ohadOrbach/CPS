@@ -16,13 +16,31 @@ public class Orders {
     }
 
 
+
     public String addOrder(OrderData orderData) {
         App.SafeStartTransaction();
         ParkingOrder order = new ParkingOrder(orderData.getId(), orderData.getCarNumber(), orderData.getArrivalDate(), orderData.getArrivalTime(), orderData.getLeavingDate(), orderData.getLeavingTime(), orderData.getEmail(), orderData.getAdv(), orderData.getParkingName());
         App.session.save(order);
         App.session.flush();
+        String parkingLotName = orderData.getParkingName();
+        ParkingLot parkingLot = App.parkinglots.getParkingLotByName(parkingLotName);
+        boolean foundParking = false;
+        for(Parking parking: parkingLot.getParkings()) {
+            if(parking.getStatus() == 0){
+                //this parking is empty, so we set this order to be in this parking
+                parking.setParkingOrder(order);
+                parking.setStatus(1);       //this parking is occupied now
+                foundParking = true;
+                App.session.save(parking);
+                App.session.flush();
+                break;
+            }
+        }
         App.SafeCommit();
         ordersList.add(order);
+        if(foundParking == false)
+            return "error, we didnt find parking in this ParkingLot";
+
         return "Your order has been successfully received! Thank you and happy parking";
     }
 
