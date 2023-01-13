@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
+import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -23,13 +27,22 @@ public class App extends Application {
 
     private static Scene scene;
     private SimpleClient client;
+    static CostumerData costumer;
+    static EmployeeData employee;
+
+    boolean isCostumer = false;
+    boolean isEmployee = false;
+
+
+    public static List<String> history = new ArrayList<String>();
 
     @Override
     public void start(Stage stage) throws IOException {
     	EventBus.getDefault().register(this);
     	client = SimpleClient.getClient();
     	client.openConnection();
-        scene = new Scene(loadFXML("primary"), 800, 480);
+        scene = new Scene(loadFXML("CasualOrderInAdvance"), 800, 600);
+        history.add("InitialWindow");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

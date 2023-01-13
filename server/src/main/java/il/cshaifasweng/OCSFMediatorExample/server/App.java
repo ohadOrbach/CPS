@@ -12,29 +12,38 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
 
-public class App 
+public class App
 {
-	
-	private static SimpleServer server;
+
+    private static SimpleServer server;
     public static Session session;
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
     public static Orders orders;
+    public static Employees employees;
+    public static Costumers costumers;
+    public static Subscriptions subscriptions;
 
     public static void main( String[] args ) throws IOException
     {
-           session = getSessionFactory().openSession();
-           parkinglots = new ParkingLots();
-           parkingPrices = new ParkingLots();
-           parkinglots.generateParkingLots();
-           parkinglots.pullParkingLots();
-           parkingPrices.pullParkingPrices();
-           complaints = new Complaints();
-           complaints.pullComplaints();
-           orders = new Orders();
-           server = new SimpleServer(3000);
-           server.listen();
+        session = getSessionFactory().openSession();
+        parkinglots = new ParkingLots();
+        parkingPrices = new ParkingLots();
+        parkinglots.generateParkingLots();
+        parkinglots.pullParkingLots();
+        parkingPrices.pullParkingPrices();
+        complaints = new Complaints();
+        complaints.pullComplaints();
+        orders = new Orders();
+        employees = new Employees();
+        employees.generateEmployees();
+        employees.pullEmployeesFromDB();
+        costumers = new Costumers();
+        costumers.generateCostumers();
+        subscriptions = new Subscriptions();
+        server = new SimpleServer(3000);
+        server.listen();
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {
@@ -44,6 +53,10 @@ public class App
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(ParkingOrder.class);
         configuration.addAnnotatedClass(Complaints.class);
+        configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Costumer.class);
+        configuration.addAnnotatedClass(FullSubscription.class);
+        configuration.addAnnotatedClass(RegularSubscription.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
