@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +119,18 @@ public class Employee {
 
     public void setComplaints(List<Complaint> complaints) {
         this.complaints = complaints;
+    }
+    public String checkReminders() {
+        int comps = 0;
+        for (Complaint complaint : complaints) {
+            comps = comps + complaint.checkReminder();
+        }
+        if (comps>0){
+            return "Reminder, you have complaints to answer";
+        }
+        else{
+            return "You do not have any complaints to handle, good job!";
+        }
     }
     public void compensateCustomer() {
         // leave empty for now

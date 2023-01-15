@@ -99,4 +99,9 @@ public class Employees {
         int randomIndex = rand.nextInt(csEmployees.size());
         return csEmployees.get(randomIndex);
     }
+
+    public Employee findEmployeeById(int id) {
+        return employees.get(id);
+    }
+
 }

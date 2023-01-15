@@ -75,6 +75,12 @@ public class SimpleServer extends AbstractServer {
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
 				EmployeeData employee = App.employees.employeeLoginCheck(args[0],args[1]);
+				if (employee.getJob().equals("costumer service")){
+					Employee emp = App.employees.findEmployeeById(employee.getId());
+					String receivedMsg = emp.checkReminders();
+					Message arrivalMsg = new Message(receivedMsg);
+					SafeSendToClient(arrivalMsg, client);
+				}
 				SafeSendToClient(employee, client);
 
 			}

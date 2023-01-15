@@ -78,12 +78,13 @@ public class Complaint {
         this.handledBy = handledBy;
     }
 
-    public void checkReminder() {
+    public int checkReminder() {
         LocalDate now = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(date, now);
         if (daysBetween >= 1) {
-            System.out.println("Reminder: This complaint has not been resolved yet, please attend to it. ");
+            return 1;
         }
+        else {return 0;}
     }
 
 }
