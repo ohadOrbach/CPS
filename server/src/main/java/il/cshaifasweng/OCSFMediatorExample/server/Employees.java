@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 
@@ -80,5 +83,20 @@ public class Employees {
         System.out.format("Login Success");
 
         return empData;
+    }
+
+    public Employee getRandomCS() {
+        List<Employee> csEmployees = new ArrayList<>();
+        for (Employee e : employees.values()) {
+            if (e.getJob().equals("costumer service")) {
+                csEmployees.add(e);
+            }
+        }
+        if (csEmployees.isEmpty()) {
+            return null;
+        }
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(csEmployees.size());
+        return csEmployees.get(randomIndex);
     }
 }

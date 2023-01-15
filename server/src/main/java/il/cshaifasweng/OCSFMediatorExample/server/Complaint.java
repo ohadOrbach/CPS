@@ -4,6 +4,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "complaint")
@@ -15,20 +17,23 @@ public class Complaint {
     @Column(length=1000)
     public String complaintTxt;
     public LocalDate date;
-    
-/**
+
     @ManyToOne(fetch = FetchType.LAZY)
-    public User issuedBy;
-*/
+    public Costumer issuedBy;
+    @ManyToOne
+    private Employee handledBy;
+
     public Complaint() {}
-    public Complaint(ComplaintData com)
+    public Complaint(ComplaintData com, Employee emp)
     {
-        date= LocalDate.now();
-        complaintTxt=com.complaintTxt;
+        this.date= LocalDate.now();
+        this.complaintTxt=com.complaintTxt;
+        this.issuedBy = App.costumers.getCostumer((com.issuedBy.getId()));
+        this.handledBy = emp;
     }
     public ComplaintData getComplaintData()
     {
-        ComplaintData com = new ComplaintData(complaintTxt, id);
+        ComplaintData com = new ComplaintData(complaintTxt, id, issuedBy.getCostumerData());
         return com;
     }
     public int getId() {
@@ -50,19 +55,35 @@ public class Complaint {
     }
     public String Respond()
     {
-        return "We are very sorry to hear your complaint, we are going to check the incident and understand what we did wrong\nThank you for your understanding";
+        return "We are very sorry to hear your complaint\nWe will get back to you in 24 hours or less \nThank you for your understanding";
     }
     public void setcomplaintTxt(String complaintTxt) {
         this.complaintTxt = complaintTxt;
     }
 
-    /**
-    public User getIssuedBy() {
+
+    public Costumer getIssuedBy() {
         return issuedBy;
     }
 
-    public void setIssuedBy(User issuedBy) {
+    public void setIssuedBy(Costumer issuedBy) {
         this.issuedBy = issuedBy;
     }
-     */
+
+    public Employee getHandledBy() {
+        return handledBy;
+    }
+
+    public void setHandledBy(Employee handledBy) {
+        this.handledBy = handledBy;
+    }
+
+    public void checkReminder() {
+        LocalDate now = LocalDate.now();
+        long daysBetween = ChronoUnit.DAYS.between(date, now);
+        if (daysBetween >= 1) {
+            System.out.println("Reminder: This complaint has not been resolved yet, please attend to it. ");
+        }
+    }
+
 }

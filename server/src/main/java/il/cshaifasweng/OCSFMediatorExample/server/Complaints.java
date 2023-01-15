@@ -24,9 +24,9 @@ public class Complaints {
         complaints.clear();
         complaints.addAll(data);
     }
-    public String addComplaint(ComplaintData complaintData){
+    public String addComplaint(ComplaintData complaintData, Employee emp){
         App.SafeStartTransaction();
-        Complaint com = new Complaint(complaintData);
+        Complaint com = new Complaint(complaintData, emp);
         System.out.println("complaint in server:\n"+com.complaintTxt);
         App.session.save(com);
         App.session.flush();
@@ -36,7 +36,7 @@ public class Complaints {
     }
     public ComplaintData GetComplaintData(Complaint c)
     {
-        ComplaintData com=new ComplaintData(c.complaintTxt, c.getId());
+        ComplaintData com=new ComplaintData(c.complaintTxt, c.getId(), c.issuedBy.getCostumerData());
         return com;
     }
     public ComplaintListData GetComplaintListData()

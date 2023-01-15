@@ -18,6 +18,9 @@ public class Employee {
     private String branch;
     private boolean login;
 
+    @OneToMany(mappedBy = "handledBy")
+    private List<Complaint> complaints;
+
     public Employee(int id, String privateName, String sureName, String password, String email, String job, String branch) {
         this.id = id;
         this.privateName = privateName;
@@ -109,6 +112,13 @@ public class Employee {
         this.branch = branch;
     }
 
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
     public void compensateCustomer() {
         // leave empty for now
     }

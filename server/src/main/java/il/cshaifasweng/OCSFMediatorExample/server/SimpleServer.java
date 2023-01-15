@@ -128,7 +128,8 @@ public class SimpleServer extends AbstractServer {
 
 		} else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
 			System.out.format("i got a new complaint\n");
-			String receivedMsg = App.complaints.addComplaint((ComplaintData) msg);
+			Employee emp = App.employees.getRandomCS();
+			String receivedMsg = App.complaints.addComplaint((ComplaintData) msg, (Employee) emp);
 			Message arrivalMsg = new Message(receivedMsg);
 			SafeSendToClient(arrivalMsg, client);
 

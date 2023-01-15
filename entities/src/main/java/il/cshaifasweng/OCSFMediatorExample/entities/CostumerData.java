@@ -17,6 +17,12 @@ import java.io.Serializable;
 
             loggedIn = true;
         }
+        public CostumerData(String password, String email) {
+            this.password = password;
+            Email = email;
+
+            loggedIn = true;
+        }
 
 
         public CostumerData()

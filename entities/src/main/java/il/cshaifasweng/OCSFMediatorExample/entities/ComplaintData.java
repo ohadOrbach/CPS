@@ -5,10 +5,12 @@ import java.io.Serializable;
 public class ComplaintData implements Serializable {
     public int id;
     public String complaintTxt;
+    public CostumerData issuedBy;
 
-    public ComplaintData(String comp, int id) {
+    public ComplaintData(String comp, int id, CostumerData issuedBy) {
         this.id=id;
-        complaintTxt = comp;
+        this.complaintTxt = comp;
+        this.issuedBy = issuedBy;
     }
 
 }

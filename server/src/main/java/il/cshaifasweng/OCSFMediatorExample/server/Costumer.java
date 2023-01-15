@@ -28,7 +28,8 @@ public class Costumer {
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "full_subscriptions_id")
     public List<FullSubscription> fullSubscriptions = new ArrayList<>();
-
+    @OneToMany(mappedBy = "issuedBy")
+    private List<Complaint> complaints;
 
     public Costumer(int id, String email,String password) {
         this.id = id;
@@ -37,6 +38,9 @@ public class Costumer {
         login = true;
     }
 
+    public CostumerData getCostumerData(){
+        return new CostumerData(password, email);
+    }
     public boolean isLogin() {
         return login;
     }
@@ -83,6 +87,13 @@ public class Costumer {
 
     public void addRegularSubscriptions(RegularSubscription regularSubscription) {
         regularSubscriptions.add(regularSubscription);
+    }
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
     }
 
     public void addFullSubscriptions(FullSubscription fullSubscription) {
