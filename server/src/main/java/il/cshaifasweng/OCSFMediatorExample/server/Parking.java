@@ -1,8 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "parking")
@@ -10,37 +14,50 @@ public class Parking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int status;     //0 is free, 1 is occupied, 2 is reserved, -1 is broken
-    private int row;
-    private int column;
-    private int depth;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parkinglot", referencedColumnName = "id")
+
+    private int status2;     //0 is free, 1 is occupied, 2 is reserved, -1 is broken
+    private int row2;
+    private int column2;
+    private int depth2;
+
+    @ManyToOne
+    @JoinColumn(name = "parkingLot", referencedColumnName = "id")
     private ParkingLot parkingLot;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parkingOrder", referencedColumnName = "id")
-    private ParkingOrder parkingOrder;
+
+
+    @OneToMany(mappedBy = "parking_id2")
+    private List<ParkingOrder> parkingOrders2;
 
     public Parking(){}
 
     public Parking(int id,int status, int row, int column, int depth){
-        this.status = status;
-        this.row = row;
-        this.column = column;
-        this.depth = depth;
-        this.parkingLot = null;
-        this.parkingOrder = null;
+        this.status2 = status;
+        this.row2 = row;
+        this.column2 = column;
+        this.depth2 = depth;
+        this.parkingLot = new ParkingLot();
+        this.parkingOrders2 = new ArrayList<>();
     }
 
-    public Parking(int id,int status, int row, int column, int depth, ParkingLot parkingLot, ParkingOrder parkingOrder){
-        this.status = status;
-        this.row = row;
-        this.column = column;
-        this.depth = depth;
-        this.parkingLot = null;
-        this.parkingOrder = null;
+    public Parking(int id,int status, int row, int column, int depth, ParkingLot parkingLot, List<ParkingOrder> parkingOrders){
+        this.status2 = status;
+        this.row2 = row;
+        this.column2 = column;
+        this.depth2 = depth;
+        this.parkingLot = new ParkingLot();
+        this.parkingOrders2 = new ArrayList<>();
         this.parkingLot = parkingLot;
-        this.parkingOrder = parkingOrder;
+        this.parkingOrders2 = parkingOrders;
+    }
+
+    public Parking(int status, int row, int column, int depth, ParkingLot parkingLot){
+        this.status2 = status;
+        this.row2 = row;
+        this.column2 = column;
+        this.depth2 = depth;
+        this.parkingLot = new ParkingLot();
+        this.parkingOrders2 = new ArrayList<>();
+        this.parkingLot = parkingLot;
     }
 
 
@@ -53,35 +70,35 @@ public class Parking {
     }
 
     public int getStatus() {
-        return status;
+        return status2;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.status2 = status;
     }
 
     public int getRow() {
-        return row;
+        return row2;
     }
 
     public void setRow(int row) {
-        this.row = row;
+        this.row2 = row;
     }
 
     public int getColumn() {
-        return column;
+        return column2;
     }
 
     public void setColumn(int column) {
-        this.column = column;
+        this.column2 = column;
     }
 
     public int getDepth() {
-        return depth;
+        return depth2;
     }
 
     public void setDepth(int depth) {
-        this.depth = depth;
+        this.depth2 = depth;
     }
 
     public ParkingLot getParkingLot() {
@@ -92,11 +109,13 @@ public class Parking {
         this.parkingLot = parkingLot;
     }
 
-    public ParkingOrder getParkingOrder() {
-        return parkingOrder;
+    public List<ParkingOrder> getParkingOrder() {
+        return parkingOrders2;
     }
 
-    public void setParkingOrder(ParkingOrder parkingOrder) {
-        this.parkingOrder = parkingOrder;
+    public void setParkingOrder(List<ParkingOrder> parkingOrders) {
+        this.parkingOrders2 = parkingOrders;
     }
+
+    public void addParkingOrder(ParkingOrder parkingOrder){ this.parkingOrders2.add(parkingOrder); }
 }

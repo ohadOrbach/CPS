@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +29,7 @@ public class ParkingLot {
    @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
    private List<StastisticalInformation> stastisticalInformation;
 
-   @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "parkingLot")
    private List<Parking> parkings;
 
 
@@ -87,16 +89,6 @@ public class ParkingLot {
               , parkingPrices.getOrderedParkingPrice());
    }
 
-   @OneToMany(mappedBy = "parkingLot")
-   private Collection<ParkingOrder> parkingLot;
-
-   public Collection<ParkingOrder> getParkingLot() {
-      return parkingLot;
-   }
-
-   public void setParkingLot(Collection<ParkingOrder> parkingLot) {
-      this.parkingLot = parkingLot;
-   }
 
 
    public List<StastisticalInformation> getStastisticalInformation() {

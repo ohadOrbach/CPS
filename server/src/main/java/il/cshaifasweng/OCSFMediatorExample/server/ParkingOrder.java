@@ -3,6 +3,8 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotListData;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,22 +29,16 @@ public class ParkingOrder {
     private String email;
     private String advance;
     private LocalDate arrivalDate = LocalDate.now();
-    private String arrivalTime = (LocalTime.now()).toString();
+    private String arrivalTime = (LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()).toString();
     private LocalDate leavingDate;
     private String leavingTime;
     private String orderTime = (LocalTime.now()).toString();
 
     @ManyToOne
-    @JoinColumn(name = "parkingLot_id")
-    private ParkingLot parkingLot;
-
-    @OneToOne(mappedBy = "parkingOrder")
-    private Parking parking;
+    @JoinColumn(name = "parking_id2" , referencedColumnName = "id")
+    private Parking parking_id2;
 
 
-    public void setParkingLot(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
-    }
 
     public ParkingOrder(int userId, int carNumber,  LocalDate arrivalDate, String arrivalTime,LocalDate leavingDate, String leavingTime, String email, String advance, String parkingLotName){
         this.userId = userId;
@@ -50,11 +46,11 @@ public class ParkingOrder {
         this.leavingTime = leavingTime;
         this.email = email;
         this.advance = advance;
-        this.parkingLot = findParkingByName(parkingLotName);
         this.arrivalTime = arrivalTime;
         this.leavingDate = leavingDate;
         this.arrivalDate = arrivalDate;
     }
+
 
     private ParkingLot findParkingByName(String parkingLotName) {
         List<ParkingLot> parkingLotList = App.parkinglots.getParkingLots();
@@ -65,32 +61,50 @@ public class ParkingOrder {
         }
         return null;
     }
+    private String findParkingLotName() {
+        return parking_id2.getParkingLot().getName();
+    }
 
 
     public ParkingOrder() {
     }
 
 
+    public String getArrivalTime() {return this.arrivalTime;}
     public String getEmail(){ return this.email; }
     public String getLeavingTime(){ return this.leavingTime; }
     public int getUserId() { return this.userId; }
     public int getCarNumber() { return this.carNumber; }
     public int getOrderId() { return this.orderId; }
-    public ParkingLot getParkingLot() { return this.parkingLot; }
 
     public String getOrderTime() { return orderTime; }
 
     public OrderData getOrderData() {
         OrderData orderData = new OrderData(orderId ,Integer.toString(userId),
-                Integer.toString(carNumber), arrivalDate, arrivalTime, leavingDate, leavingTime, email, advance, parkingLot.getName());
+                Integer.toString(carNumber), arrivalDate, arrivalTime, leavingDate, leavingTime, email, advance, findParkingLotName());
         return orderData;
     }
 
+    public LocalDate getArrivalDate(){ return this.arrivalDate; }
+
+    public LocalDate getLeavingDate(){ return this.leavingDate; }
+
+
     public Parking getParking() {
-        return parking;
+        return parking_id2;
     }
 
     public void setParking(Parking parking) {
-        this.parking = parking;
+        this.parking_id2 = parking;
     }
+
+    public int getId() {
+        return orderId;
+    }
+
+    public void setId(int orderId) {
+        this.orderId = orderId;
+    }
+
+
 }

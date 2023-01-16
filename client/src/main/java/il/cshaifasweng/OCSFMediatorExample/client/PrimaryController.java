@@ -84,6 +84,17 @@ public class PrimaryController {
 		}
 	}
 
+	@FXML
+	void openKioskMenu(ActionEvent event) {
+		try {
+			SimpleClient.getClient().sendToServer("#request: parking lots list");
+			System.out.println();
+			App.setRoot("Kiosk");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	@FXML
 	void openMakeComplaintScene(ActionEvent event) throws IOException {

@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.Error;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Orders {
         for(Parking parking: parkingLot.getParkings()) {
             if(parking.getStatus() == 0){
                 //this parking is empty, so we set this order to be in this parking
-                parking.setParkingOrder(order);
+                parking.addParkingOrder(order);
                 parking.setStatus(1);       //this parking is occupied now
                 foundParking = true;
                 App.session.save(parking);
@@ -36,6 +37,43 @@ public class Orders {
                 break;
             }
         }
+        // if we didn't find an empty parking space
+        if(foundParking == false){
+            // if its advanced order, we might be able to find empty parking space in those hours
+            //if(orderData.getAdv().compareTo("true") == 0){
+                for(Parking parking: parkingLot.getParkings()){
+                    // we check if this parking is occupied in these date and hours
+                    List<ParkingOrder> parkingOrders = parking.getParkingOrder();
+                    boolean collusionFlag = false;
+                    for(ParkingOrder parkingOrder: parkingOrders){
+                        // first we convert the order and parking Arrival and Leaving DateTime and it's Time to LocalDateTime object
+                        LocalDateTime orderArrivalTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getArrivalDate(),orderData.getArrivalTime());
+                        LocalDateTime orderLeavingTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getLeavingDate(),orderData.getLeavingTime());
+                        LocalDateTime parkingArrivalTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getArrivalDate(),parkingOrder.getArrivalTime());
+                        LocalDateTime parkingLeavingTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getLeavingDate(),parkingOrder.getLeavingTime());
+
+                        // we check if there is collusion between these 2 orders
+                        if((orderArrivalTime.isAfter(parkingArrivalTime) && orderArrivalTime.isBefore(parkingLeavingTime))
+                         || (orderLeavingTime.isAfter(parkingArrivalTime) && orderLeavingTime.isBefore(parkingLeavingTime))
+                        || (orderArrivalTime.isBefore(parkingArrivalTime) && orderLeavingTime.isAfter(parkingLeavingTime)))
+                        {
+                            // we found collusion with this order, we break and move to next parking
+                            collusionFlag = true;
+                            break;
+                        }
+                    }
+                    if(collusionFlag == false){
+                        // we didnt find any collusion in this parking spaces orders so we can add this order to this parking space
+                        parking.addParkingOrder(order);
+                        App.session.save(parking);
+                        App.session.flush();
+                        foundParking = true;
+                        break;
+                    }
+                }
+            //}
+        }
+
         App.SafeCommit();
         ordersList.add(order);
         if(foundParking == false)
@@ -69,7 +107,7 @@ public class Orders {
         return cancelOrders;
     }
 
-    private OrdersListData findOrderData(int id, int carNum) {
+    public OrdersListData findOrderData(int id, int carNum) {
         List<OrderData> list = new ArrayList<>();
         for(ParkingOrder parkingOrder: ordersList){
             if(parkingOrder.getUserId() == id && parkingOrder.getCarNumber() == carNum)

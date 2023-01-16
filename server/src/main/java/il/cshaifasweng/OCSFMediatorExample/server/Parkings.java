@@ -27,7 +27,11 @@ public class Parkings {
     }
     public ParkingData getparkingData(Parking parking)
     {
-        return new ParkingData(parking.getId(), parking.getStatus() , parking.getParkingLot().getParkingLotId() ,parking.getRow(), parking.getColumn(), parking.getDepth(),parking.getParkingOrder().getOrderId());
+        ArrayList<Integer> ordersId = new ArrayList<>();
+        for(ParkingOrder parkingOrder : parking.getParkingOrder()){
+            ordersId.add(parkingOrder.getOrderId());
+        }
+        return new ParkingData(parking.getId(), parking.getStatus() , parking.getParkingLot().getParkingLotId() ,parking.getRow(), parking.getColumn(), parking.getDepth(),ordersId);
     }
 
     public ParkingListData getParkingList() {
