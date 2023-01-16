@@ -10,7 +10,7 @@ public class OrderData implements Serializable {
     private int carNumber;
     private String email;
     private String leavingTime;
-    private String arrivalTime = LocalTime.now().toString();
+    private String arrivalTime = (LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()).toString();
     private String advanceOrder;
     private int orderId;
     private String parkingLotName;

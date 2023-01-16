@@ -139,7 +139,14 @@ public class Kiosk {
 
     @FXML
     void takeOutClientCar(ActionEvent event) {
-
+        try{
+            System.out.println("Take out Client Car \n");
+            String clientId = ClientId.getText();
+            String carId = CarId.getText();
+            SimpleClient.getClient().sendToServer("#Take out client car:" + clientId + ","  + carId + ","+ parkingLot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

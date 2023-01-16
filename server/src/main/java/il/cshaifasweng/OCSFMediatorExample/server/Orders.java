@@ -53,9 +53,9 @@ public class Orders {
                         LocalDateTime parkingLeavingTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getLeavingDate(),parkingOrder.getLeavingTime());
 
                         // we check if there is collusion between these 2 orders
-                        if((orderArrivalTime.isAfter(parkingArrivalTime) && orderArrivalTime.isBefore(parkingLeavingTime))
-                         || (orderLeavingTime.isAfter(parkingArrivalTime) && orderLeavingTime.isBefore(parkingLeavingTime))
-                        || (orderArrivalTime.isBefore(parkingArrivalTime) && orderLeavingTime.isAfter(parkingLeavingTime)))
+                        if(((orderArrivalTime.isAfter(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderArrivalTime.isBefore(parkingLeavingTime) || orderArrivalTime.isEqual(parkingLeavingTime)))
+                         || ((orderLeavingTime.isAfter(parkingArrivalTime) || orderLeavingTime.isEqual(parkingArrivalTime)) && (orderLeavingTime.isBefore(parkingLeavingTime) || orderLeavingTime.isEqual(parkingLeavingTime)))
+                        || ((orderArrivalTime.isBefore(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderLeavingTime.isAfter(parkingLeavingTime) || orderLeavingTime.isEqual(parkingLeavingTime))))
                         {
                             // we found collusion with this order, we break and move to next parking
                             collusionFlag = true;

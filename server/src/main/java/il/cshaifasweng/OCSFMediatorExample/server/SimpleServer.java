@@ -140,6 +140,17 @@ public class SimpleServer extends AbstractServer {
 				SafeSendToClient(answer, client);
 			}
 
+			// we got a requset from kiosk to take out client car
+			else if (msgString.startsWith("#Take out client car:"))
+			{
+				String[] args = (msgString.split(":")[1]).split(",");
+				String clientId = args[0];
+				String carId = args[1];
+				String parkingLotName = args[2];
+				String answer = App.kiosk.TakeOutCarInParkingLot(clientId,carId,parkingLotName);
+				SafeSendToClient(answer, client);
+			}
+
 
 		} else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
 			System.out.format("i got a new complaint\n");
