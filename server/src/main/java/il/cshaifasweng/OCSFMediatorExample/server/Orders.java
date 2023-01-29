@@ -34,6 +34,9 @@ public class Orders {
                 foundParking = true;
                 App.session.save(parking);
                 App.session.flush();
+                order.setParking(parking);
+                App.session.save(order);
+                App.session.flush();
                 break;
             }
         }
@@ -66,6 +69,9 @@ public class Orders {
                         // we didnt find any collusion in this parking spaces orders so we can add this order to this parking space
                         parking.addParkingOrder(order);
                         App.session.save(parking);
+                        App.session.flush();
+                        order.setParking(parking);
+                        App.session.save(order);
                         App.session.flush();
                         foundParking = true;
                         break;
@@ -141,6 +147,18 @@ public class Orders {
             }
         }
         return null;
+    }
+
+    public int findIndexByData(OrderData orderData) {
+        int index = 0;
+        for (ParkingOrder parkingOrder : ordersList) {
+            if (parkingOrder.getUserId() == orderData.getId()
+                    && parkingOrder.getCarNumber() == orderData.getCarNumber()) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
     }
 
 }

@@ -53,6 +53,50 @@ public class StastisticalInformations {
         return new StastisticalInformationListData(dataList);
     }
 
+    //method to add actual order to statistics information
+    public void addStastisticalInformationForActualOrder(OrderData orderData){
+        App.SafeStartTransaction();
+        LocalDate now = LocalDate.now();
+        int parkingLotId = App.parkinglots.findParkingLotId(orderData.getParkingName());
+        int statisticalInformationIndex = findStatisticalInformation(parkingLotId,now);
+        // if we didnt find statistical information for this date and parking lot id
+        if(statisticalInformationIndex == -1)
+        {
+            StastisticalInformation stastisticalInformation = new StastisticalInformation(parkingLotId ,orderData.getParkingName(),now, 1, 0, 0);
+            App.session.save(stastisticalInformation);
+            App.session.flush();
+            stastisticalInformations.add(stastisticalInformation);
+        }
+        else{
+            int currentActualOrders = stastisticalInformations.get(statisticalInformationIndex).getActualOrders();
+            stastisticalInformations.get(statisticalInformationIndex).setActualOrders(currentActualOrders+1);
+            App.session.flush();
+        }
+        App.SafeCommit();
+    }
+
+    //method to add late parking order to statistics information
+    public void addStastisticalInformationForLateParkingOrder(OrderData orderData){
+        App.SafeStartTransaction();
+        LocalDate now = LocalDate.now();
+        int parkingLotId = App.parkinglots.findParkingLotId(orderData.getParkingName());
+        int statisticalInformationIndex = findStatisticalInformation(parkingLotId,now);
+        // if we didnt find statistical information for this date and parking lot id
+        if(statisticalInformationIndex == -1)
+        {
+            StastisticalInformation stastisticalInformation = new StastisticalInformation(parkingLotId ,orderData.getParkingName(),now, 0, 0, 1);
+            App.session.save(stastisticalInformation);
+            App.session.flush();
+            stastisticalInformations.add(stastisticalInformation);
+        }
+        else{
+            int currenParkingLateOrders = stastisticalInformations.get(statisticalInformationIndex).getParkingLateNum();
+            stastisticalInformations.get(statisticalInformationIndex).setParkingLateNum(currenParkingLateOrders+1);
+            App.session.flush();
+        }
+        App.SafeCommit();
+    }
+
     //method to add today statistics information
     public void addStastisticalInformationForCancledOrder(OrdersListData ordersListData){
         if(ordersListData.getOrdersListData().size() < 1)

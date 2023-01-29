@@ -110,7 +110,7 @@ public class Kiosk {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.setRoot("MainMenuOrder");
+        App.setRoot("CasualOrder");
     }
 
 

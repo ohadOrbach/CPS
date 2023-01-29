@@ -33,6 +33,7 @@ public class ParkingOrder {
     private LocalDate leavingDate;
     private String leavingTime;
     private String orderTime = (LocalTime.now()).toString();
+    private int status2;     // 0 if we didn't fulfill the order, 1 if we inserted the car, -1 if its completed (we also removed it)
 
     @ManyToOne
     @JoinColumn(name = "parking_id2" , referencedColumnName = "id")
@@ -49,6 +50,7 @@ public class ParkingOrder {
         this.arrivalTime = arrivalTime;
         this.leavingDate = leavingDate;
         this.arrivalDate = arrivalDate;
+        this.status2 = 0;   //initilize
     }
 
 
@@ -82,6 +84,7 @@ public class ParkingOrder {
     public OrderData getOrderData() {
         OrderData orderData = new OrderData(orderId ,Integer.toString(userId),
                 Integer.toString(carNumber), arrivalDate, arrivalTime, leavingDate, leavingTime, email, advance, findParkingLotName());
+        orderData.setStatus(this.status2);
         return orderData;
     }
 
@@ -107,4 +110,11 @@ public class ParkingOrder {
     }
 
 
+    public int getStatus() {
+        return status2;
+    }
+
+    public void setStatus(int status2) {
+        this.status2 = status2;
+    }
 }

@@ -32,18 +32,34 @@ public class Kiosk {
                 LocalDateTime orderLeavingTime = convertLocalDateAndStringOfTime(orderData.getLeavingDate(),orderData.getLeavingTime());
 
                 // we check if this order is the order that the client ordered (check the time)
-                if(orderArrivalTime.isAfter(LocalDateTime.now())){
+                if(orderArrivalTime.isAfter(LocalDateTime.now()) && orderData.getStatus() == 0){
                     // update the flag that we found parking order in this parking lot that we are before its date
                     foundOrderInThisParkingLotFlag = true;
                     long noOfMinutes = LocalDateTime.now().until(orderArrivalTime, ChronoUnit.MINUTES);
                     // we check if the client is 3 minutes before his ordered time, if yes we enter his car
-                    if(noOfMinutes <= 3){
+                    if(noOfMinutes <= 3){/*
+                        int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
+                        ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
+                        updatedOrder.setStatus(1);
+                        App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);*/
+                        orderData.setStatus(1);/*
+                        App.session.save(updatedOrder);
+                        App.session.flush();*/
                         return "We entered your Car successfully!";
                     }
                 }
                 // we check if the client is late for his order
-                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now())){
+                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now()) && orderData.getStatus() == 0){
                     // we calculate how many minutes the client is late
+                    // ToDO change the status in the database
+                    /*
+                    int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
+                    ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
+                    updatedOrder.setStatus(1);
+                    App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);*/
+                    orderData.setStatus(1);/*
+                    App.session.save(updatedOrder);
+                    App.session.flush();*/
                     long noOfMinutes = orderArrivalTime.until(LocalDateTime.now(), ChronoUnit.MINUTES);
                     return "We entered your Car successfully! You are late " + noOfMinutes + " minutes to your order.";
                 }
@@ -66,17 +82,26 @@ public class Kiosk {
                 LocalDateTime orderArrivalTime = convertLocalDateAndStringOfTime(orderData.getArrivalDate(),orderData.getArrivalTime());
                 LocalDateTime orderLeavingTime = convertLocalDateAndStringOfTime(orderData.getLeavingDate(),orderData.getLeavingTime());
 
-                // we check if this order is the order that the client ordered (check the time)
-                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now())){
+                // we check if this order is the order that the client ordered (check the time and status)
+                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now()) && orderData.getStatus() == 1){
                     // update the flag that we found parking order in this parking lot that we are before its date
                     long noOfMinutes = LocalDateTime.now().until(orderArrivalTime, ChronoUnit.MINUTES);
+                    // we finished with this client order, set the status to -1
+                    orderData.setStatus(-1);
+                    //add to statistical information, that the client fulfilled his parking order
+                    App.sastisticalInformations.addStastisticalInformationForActualOrder(orderData);
+                    App.sastisticalInformations.pullStastisticalInformationFromDB();
                     return "We took out your car successfully! You are " + noOfMinutes + " minutes early";
                 }
                 // we check if the client is late for his order
-                // TODO make sure that when order of a customer is completed, we delete it from database.
-                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isBefore(LocalDateTime.now())){
+                if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isBefore(LocalDateTime.now()) && orderData.getStatus() == 1){
                     // the customer is late to take out his car
                     long noOfMinutes = orderLeavingTime.until(LocalDateTime.now(), ChronoUnit.MINUTES);
+                    // we finished with this client order, set the status to -1
+                    orderData.setStatus(-1);
+                    //add to statistical information, that the client was late for his parking order
+                    App.sastisticalInformations.addStastisticalInformationForLateParkingOrder(orderData);
+                    App.sastisticalInformations.pullStastisticalInformationFromDB();
                     return "We took out your Car successfully! You are late " + noOfMinutes + " minutes to your order.";
                 }
             }

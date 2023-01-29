@@ -137,7 +137,8 @@ public class SimpleServer extends AbstractServer {
 				String carId = args[1];
 				String parkingLotName = args[2];
 				String answer = App.kiosk.InsertCarIntoParkingLot(clientId,carId,parkingLotName);
-				SafeSendToClient(answer, client);
+				Message arrivalMsg = new Message(answer);
+				SafeSendToClient(arrivalMsg, client);
 			}
 
 			// we got a requset from kiosk to take out client car
@@ -148,7 +149,8 @@ public class SimpleServer extends AbstractServer {
 				String carId = args[1];
 				String parkingLotName = args[2];
 				String answer = App.kiosk.TakeOutCarInParkingLot(clientId,carId,parkingLotName);
-				SafeSendToClient(answer, client);
+				Message arrivalMsg = new Message(answer);
+				SafeSendToClient(arrivalMsg, client);
 			}
 
 
