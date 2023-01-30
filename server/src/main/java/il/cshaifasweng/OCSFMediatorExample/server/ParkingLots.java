@@ -62,6 +62,12 @@ public class ParkingLots {
         App.session.save(namal1);
         App.session.save(prices1);
         App.session.save(stastisticalInformation1);
+        for(int i=1; i<=5; i++){
+            Parking parking = new Parking(0,1,i,1,namal1);
+            App.session.save(parking);
+            namal1.addParking(parking);
+        }
+        App.session.save(namal1);
 
         App.session.save(namal2);
         App.session.save(prices2);

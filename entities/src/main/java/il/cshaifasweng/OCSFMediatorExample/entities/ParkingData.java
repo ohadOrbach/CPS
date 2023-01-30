@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
+import java.util.ArrayList;
+
 public class ParkingData {
     private int id;
     private int status; //0 is free, 1 is occupied, 2 is reserved, -1 is broken
@@ -7,9 +9,9 @@ public class ParkingData {
     private int row;
     private int column;
     private int depth;
-    private int orderId;
+    private ArrayList<Integer> orderId;
 
-    public ParkingData(int id, int status, int parkingLotId, int row, int column, int depth, int orderId) {
+    public ParkingData(int id, int status, int parkingLotId, int row, int column, int depth, ArrayList<Integer> orderId) {
         this.id = id;
         this.status = status;
         this.parkingLotId = parkingLotId;
@@ -67,11 +69,14 @@ public class ParkingData {
         this.depth = depth;
     }
 
-    public int getOrderId() {
+    public ArrayList<Integer> getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(ArrayList<Integer> orderId) {
         this.orderId = orderId;
+    }
+    public void addOrderId(int orderId){
+        this.orderId.add(orderId);
     }
 }

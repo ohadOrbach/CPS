@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -9,12 +10,13 @@ public class OrderData implements Serializable {
     private int carNumber;
     private String email;
     private String leavingTime;
-    private String arrivalTime = LocalTime.now().toString();
+    private String arrivalTime = (LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute()).toString();
     private String advanceOrder;
     private int orderId;
     private String parkingLotName;
     private LocalDate leavingDate;
     private LocalDate arrivalDate = LocalDate.now();
+    private int status;     // 0 if we didn't fulfill the order, 1 if we inserted the car, -1 if its completed (we also removed it)
 
     public OrderData(String id, String carNumber, String leavingTime, String email, String advanceOrder){
         this.id = Integer.parseInt(id);
@@ -22,6 +24,7 @@ public class OrderData implements Serializable {
         this.leavingTime = leavingTime;
         this.email = email;
         this.advanceOrder = advanceOrder;
+        this.status = 0;
     }
 
     public OrderData(int orderId, String id, String carNumber,LocalDate arrivalDate, String arrivalTime,LocalDate leavingDate, String leavingTime, String email, String advanceOrder, String parkingLotName){
@@ -35,6 +38,7 @@ public class OrderData implements Serializable {
         this.arrivalDate = arrivalDate;
         this.leavingTime = leavingTime;
         this.leavingDate = leavingDate;
+        this.status = 0;
     }
 
     public OrderData(String id, String carNumber,LocalDate leavingDate, String leavingTime, String email, String advanceOrder, String parkingLotName){
@@ -45,6 +49,7 @@ public class OrderData implements Serializable {
         this.advanceOrder = advanceOrder;
         this.parkingLotName = parkingLotName;
         this.leavingDate = leavingDate;
+        this.status = 0;
     }
 
     public OrderData(String id, String carNumber, LocalDate arrivalDate, String arrivalTime,LocalDate leavingDate, String leavingTime, String email, String advanceOrder, String parkingLotName){
@@ -57,6 +62,7 @@ public class OrderData implements Serializable {
         this.leavingDate = leavingDate;
         this.arrivalDate = arrivalDate;
         this.arrivalTime = arrivalTime;
+        this.status = 0;
     }
 
     public String getEmail(){ return this.email; }
@@ -78,5 +84,13 @@ public class OrderData implements Serializable {
     }
     public LocalDate getLeavingDate() {
         return this.leavingDate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

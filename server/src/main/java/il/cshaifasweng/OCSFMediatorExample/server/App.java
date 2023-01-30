@@ -26,20 +26,21 @@ public class App
     public static Costumers costumers;
     public static Subscriptions subscriptions;
     public static Parkings parkings;
+    public static Kiosk kiosk;
 
     public static void main( String[] args ) throws IOException
     {
            session = getSessionFactory().openSession();
            parkinglots = new ParkingLots();
            parkingPrices = new ParkingLots();
-           parkinglots.generateParkingLots();
+           parkings = new Parkings();
+        parkinglots.generateParkingLots();
            parkinglots.pullParkingLots();
            parkingPrices.pullParkingPrices();
            complaints = new Complaints();
            complaints.pullComplaints();
            sastisticalInformations = new StastisticalInformations();
           sastisticalInformations.pullStastisticalInformationFromDB();
-          parkings = new Parkings();
           parkings.pullStastisticalInformationFromDB();
         orders = new Orders();
         employees = new Employees();
@@ -48,6 +49,7 @@ public class App
         costumers = new Costumers();
         costumers.generateCostumers();
         subscriptions = new Subscriptions();
+        kiosk = new Kiosk();
         server = new SimpleServer(3000);
         server.listen();
     }
@@ -55,6 +57,7 @@ public class App
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(ParkingLot.class);
+        configuration.addAnnotatedClass(Parking.class);
         configuration.addAnnotatedClass(ParkingPrices.class);
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(ParkingOrder.class);
@@ -65,8 +68,6 @@ public class App
         configuration.addAnnotatedClass(Costumer.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
-        configuration.addAnnotatedClass(Parking.class);
-        configuration.addAnnotatedClass(Parkings.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
