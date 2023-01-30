@@ -74,6 +74,15 @@
                   <String fx:value="secondary-color" />
                </styleClass>
             </Button>
+            <Button fx:id="statisticsMenuBtn1" mnemonicParsing="false" onAction="#openStatisticsMenu" prefHeight="39.0" prefWidth="252.0" text="Daily Statistics" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="round-border" />
+                  <String fx:value="secondary-color" />
+               </styleClass>
+            </Button>
          </children>
       </GridPane>
       <ToolBar accessibleRole="MENU" focusTraversable="false" prefHeight="56.0" prefWidth="800.0" styleClass="secondary-color">

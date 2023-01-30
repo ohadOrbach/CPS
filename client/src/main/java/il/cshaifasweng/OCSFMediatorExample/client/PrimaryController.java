@@ -41,6 +41,9 @@ public class PrimaryController {
 	private Button makeComplaintBtn;
 
 	@FXML
+	private Button statisticsMenuBtn1;
+
+	@FXML
 	private AnchorPane parent;
 
 	@FXML
@@ -69,6 +72,18 @@ public class PrimaryController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	void openStatisticsMenu(ActionEvent event) {
+		try {
+			SimpleClient.getClient().sendToServer("#request: stastistical information list");
+			System.out.println();
+			App.setRoot("StastisticalInformation");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	@FXML
 	void openMakeComplaintScene(ActionEvent event) throws IOException {

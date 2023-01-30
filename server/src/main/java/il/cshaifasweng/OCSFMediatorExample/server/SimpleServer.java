@@ -69,6 +69,10 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(parkingPricesList, client);
 					}
 
+					case " stastistical information list" -> {
+						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getStastisticalInformationList();
+						SafeSendToClient(StastisticalInformationList, client);
+					}
 				}
 			}
 			else if (msgString.startsWith("employee login"))
@@ -149,6 +153,9 @@ public class SimpleServer extends AbstractServer {
 			System.out.format("i got a new cancel order data\n");
 			OrdersListData ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
 			ordersListData.setMode("cancel");
+			App.sastisticalInformations.addStastisticalInformationForCancledOrder(ordersListData);
+			//TODO chack if its works
+			App.sastisticalInformations.pullStastisticalInformationFromDB();
 			SafeSendToClient(ordersListData, client);
 
 		} else if (OrdersListData.class.equals(msg.getClass())) { // Delete orders
