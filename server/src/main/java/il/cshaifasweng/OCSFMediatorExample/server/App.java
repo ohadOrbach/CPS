@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.PricesList;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,10 +21,12 @@ public class App
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
+    public static StastisticalInformations sastisticalInformations;
     public static Orders orders;
     public static Employees employees;
     public static Costumers costumers;
     public static Subscriptions subscriptions;
+    public static Parkings parkings;
 
     public static void main( String[] args ) throws IOException
     {
@@ -35,6 +38,10 @@ public class App
         parkingPrices.pullParkingPrices();
         complaints = new Complaints();
         complaints.pullComplaints();
+        sastisticalInformations = new StastisticalInformations();
+        sastisticalInformations.pullStastisticalInformationFromDB();
+        parkings = new il.cshaifasweng.OCSFMediatorExample.server.Parkings();
+        parkings.pullStastisticalInformationFromDB();
         orders = new Orders();
         employees = new Employees();
         employees.generateEmployees();
@@ -53,10 +60,15 @@ public class App
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(ParkingOrder.class);
         configuration.addAnnotatedClass(Complaints.class);
+        configuration.addAnnotatedClass(StastisticalInformation.class);
+        configuration.addAnnotatedClass(StastisticalInformations.class);
         configuration.addAnnotatedClass(Employee.class);
         configuration.addAnnotatedClass(Costumer.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
+        configuration.addAnnotatedClass(ParkingOrder.class);
+        configuration.addAnnotatedClass(Parking.class);
+        configuration.addAnnotatedClass(Parkings.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

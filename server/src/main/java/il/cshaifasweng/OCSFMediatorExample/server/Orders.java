@@ -51,7 +51,7 @@ public class Orders {
         return cancelOrders;
     }
 
-    private OrdersListData findOrderData(int id, int carNum) {
+    OrdersListData findOrderData(int id, int carNum) {
         List<OrderData> list = new ArrayList<>();
         for(ParkingOrder parkingOrder: ordersList){
             if(parkingOrder.getUserId() == id && parkingOrder.getCarNumber() == carNum)

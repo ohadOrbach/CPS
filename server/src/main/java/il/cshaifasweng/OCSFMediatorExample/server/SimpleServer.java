@@ -69,6 +69,11 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(parkingPricesList, client);
 					}
 
+					case " stastistical information list" -> {
+						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getStastisticalInformationList();
+						SafeSendToClient(StastisticalInformationList, client);
+					}
+
 				}
 			}
 			else if (msgString.startsWith("employee login"))
@@ -100,9 +105,14 @@ public class SimpleServer extends AbstractServer {
 			}
 			else if (msgString.startsWith("new subscription"))
 			{
+				System.out.println("in new subscription");
+				String type = "~";
 				String ret = "";
+				System.out.println("in new subscription2");
 				String[] args = (msgString.split(":")[1]).split(",");
-				Costumer subCostumer = App.costumers.getCostumer(Integer.parseInt(args[0]));
+				System.out.println("in new subscription3");
+				Costumer subCostumer = App.costumers.getCostumer(Integer.valueOf(args[0]));
+				System.out.println("in new subscription4");
 				String dateString = args[2];
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate date = LocalDate.parse(dateString, formatter);
@@ -110,19 +120,20 @@ public class SimpleServer extends AbstractServer {
 				{
 					ParkingLot theParkingLot = App.parkinglots.getParkingLotByName(args[3]);
 					ret =  App.subscriptions.addNewRegularSubscription(subCostumer,args[1],date,theParkingLot,args[3]);
+					type = "regular";
 				}
 				else
 				{
 					ret =  App.subscriptions.addNewFullSubscription(subCostumer,args[1],date);
+					type = "full";
 				}
 
-				SafeSendToClient(ret, client);
+				SafeSendToClient((new SubscriptionData(type,args[1],date.plusMonths(1))),client);
 			}
 			else if (msgString.startsWith("logout costumer"))
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
 				App.costumers.logOutCostumer(args[0]);
-
 			}
 
 

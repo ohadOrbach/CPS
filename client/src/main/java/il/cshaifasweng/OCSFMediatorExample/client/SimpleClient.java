@@ -55,6 +55,11 @@ public class SimpleClient extends AbstractClient {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(msg));
 		}
+		else if(msg.getClass().equals(SubscriptionData.class))
+		{
+			Platform.runLater(() -> EventBus.getDefault().
+					post((SubscriptionData)msg));
+		}
 
 		else {
 			EventBus.getDefault().post(new MessageEvent((Message) msg));

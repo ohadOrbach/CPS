@@ -2,9 +2,14 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
@@ -54,6 +59,24 @@ public class CostumerMainMenu {
         assert logOut != null : "fx:id=\"logOut\" was not injected: check your FXML file 'CostumerMainMenu.fxml'.";
 
         costumerId.setText("Costumer Id: "+App.costumer.getId());
+
+        LocalDate currentDate = LocalDate.now();
+        if(!((App.costumer.getSubscriptions().isEmpty())))
+        {
+            Optional<SubscriptionData> expiredSubscription = App.costumer.getSubscriptions().keySet().stream()
+                    .filter(date -> date.isBefore(currentDate))
+                    .map(App.costumer.getSubscriptions()::get)
+                    .findFirst();
+            if (expiredSubscription.isPresent())
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Expired Subscription");
+                alert.setHeaderText("One of your subscriptions has expired");
+                alert.setContentText("Please renew or cancel your subscription");
+                alert.showAndWait();
+            }
+
+        }
 
     }
 

@@ -16,7 +16,9 @@ public class FullSubscription extends Subscription {
         super(subscriptionId, costumer, licencePlate, startingDate);
     }
 
-    public FullSubscription() {
+    public FullSubscription()
+    {
+
 
     }
 }

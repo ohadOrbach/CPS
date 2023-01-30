@@ -86,7 +86,10 @@ public class Costumers {
 
     Costumer getCostumer (int id)
     {
-        return costumers.get(id);
+        System.out.println("inside Get Costumer");
+        Costumer current = costumers.get(id);
+        System.out.println("inside Get Costumer after get(id)");
+        return current;
     }
 
     void logOutCostumer(String id)

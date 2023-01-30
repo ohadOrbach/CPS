@@ -21,7 +21,6 @@ public class ParkingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
-
     private int userId;
     private int carNumber;
     private String email;
@@ -35,6 +34,10 @@ public class ParkingOrder {
     @ManyToOne
     @JoinColumn(name = "parkingLot_id")
     private ParkingLot parkingLot;
+
+    @OneToOne(mappedBy = "parkingOrder")
+    private Parking parking;
+
 
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
@@ -82,4 +85,11 @@ public class ParkingOrder {
         return orderData;
     }
 
+    public Parking getParking() {
+        return parking;
+    }
+
+    public void setParking(Parking parking) {
+        this.parking = parking;
+    }
 }

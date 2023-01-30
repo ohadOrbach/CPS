@@ -5,6 +5,7 @@ import javax.persistence.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -23,11 +24,20 @@ public class ParkingLot {
    @OneToOne(mappedBy = "parkingLot")
    private ParkingPrices parkingPrices;
 
+   @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
+   private List<StastisticalInformation> stastisticalInformation;
+
+   @OneToMany(mappedBy = "parkingLot" , cascade = CascadeType.ALL)
+   private List<Parking> parkings;
+
+
    public ParkingLot(String name, int rowsNum, int rowSize){
       this.name = name;
       this.rowsNum = rowsNum;
       this.rowSize = rowSize;
       this.size = rowSize*rowsNum;
+      this.stastisticalInformation = new ArrayList<>();
+      this.parkings = new ArrayList<>();
    }
 
    public void setParkingPrices(ParkingPrices parkingPrices){
@@ -87,4 +97,21 @@ public class ParkingLot {
    public void setParkingLot(Collection<ParkingOrder> parkingLot) {
       this.parkingLot = parkingLot;
    }
+
+
+   public List<StastisticalInformation> getStastisticalInformation() {
+      return stastisticalInformation;
+   }
+
+   public void addStastisticalInformation(StastisticalInformation stastisticalInformation) {
+      this.stastisticalInformation.add(stastisticalInformation);
+   }
+
+   public List<Parking> getParkings() {
+      return parkings;
+   }
+   public void addParking(Parking parking) {
+      this.parkings.add(parking);
+   }
+
 }

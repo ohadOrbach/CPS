@@ -38,7 +38,5 @@ public class InitialWindow {
     void initialize() {
         assert costumers != null : "fx:id=\"costumers\" was not injected: check your FXML file 'InitialWindow.fxml'.";
         assert staff != null : "fx:id=\"staff\" was not injected: check your FXML file 'InitialWindow.fxml'.";
-
     }
-
 }

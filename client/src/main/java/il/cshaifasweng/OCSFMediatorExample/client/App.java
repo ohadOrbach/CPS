@@ -41,7 +41,7 @@ public class App extends Application {
     	EventBus.getDefault().register(this);
     	client = SimpleClient.getClient();
     	client.openConnection();
-        scene = new Scene(loadFXML("CasualOrderInAdvance"), 800, 600);
+        scene = new Scene(loadFXML("InitialWindow"), 800, 600);
         history.add("InitialWindow");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -92,6 +92,8 @@ public class App extends Application {
             alert.show();
         });
     }
+
+
 
 
 	public static void main(String[] args) {

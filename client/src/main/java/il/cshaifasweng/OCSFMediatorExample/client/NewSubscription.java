@@ -13,6 +13,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
         import java.util.ResourceBundle;
         import java.util.Vector;
 
+        import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
         import javafx.collections.FXCollections;
         import javafx.collections.ObservableList;
         import javafx.event.ActionEvent;
@@ -91,32 +92,26 @@ public class NewSubscription {
     }
 
     @FXML
-    void registerAttempt(ActionEvent event) throws IOException {
+    void subscribeAttempt(ActionEvent event) throws IOException {
         SimpleClient myClient = SimpleClient.getClient();
         String dateString = time.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         if(full.isSelected())
         {
-            myClient.sendToServer("new subscription full: "+App.costumer.getId()+","+licencePlate.getText()+","+dateString);
+            myClient.sendToServer("new subscription full:"+App.costumer.getId()+","+licencePlate.getText()+","+dateString);
         }
         else
         {
-            myClient.sendToServer("new subscription regular: "+App.costumer.getId()+","+licencePlate.getText()+
+            myClient.sendToServer("new subscription regular:"+App.costumer.getId()+","+licencePlate.getText()+
                     ","+dateString+","+parkingLot.getValue()+","+expectedDailyLeavingTime.getValue());
         }
     }
 
     @Subscribe
-    public void subscriptionAttempt(String event) throws IOException
+    public void subscriptionAttempt(SubscriptionData event) throws IOException
     {
-        if(event.equals("registration succeeded"))
-        {
-            subResult.setText("registration succeeded");
+        App.costumer.addSubscription(event);
+        subResult.setText("registration succeeded");
 
-        }
-        else
-        {
-            subResult.setText("registration failed");
-        }
     }
 
     @FXML

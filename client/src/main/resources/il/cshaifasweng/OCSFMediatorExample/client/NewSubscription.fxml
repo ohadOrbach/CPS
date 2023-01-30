@@ -65,7 +65,7 @@
       <ChoiceBox fx:id="expectedDailyLeavingTime" layoutX="566.0" layoutY="299.0" prefWidth="150.0" />
       <ButtonBar layoutX="487.0" layoutY="397.0" prefHeight="40.0" prefWidth="87.0">
         <buttons>
-          <Button fx:id="Register" mnemonicParsing="false" onAction="#registerAttempt" text="Register" />
+          <Button fx:id="Register" mnemonicParsing="false" onAction="#subscribeAttempt" text="Subscribe" />
         </buttons>
       </ButtonBar>
       <Text fx:id="subResult" fill="RED" layoutX="430.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="215.98516845703125">

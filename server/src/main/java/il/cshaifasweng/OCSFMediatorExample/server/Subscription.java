@@ -10,7 +10,7 @@ public class Subscription {
     @Id
     private int subscriptionId;
     @ManyToOne
-    @JoinColumn(name = "costumers")
+    @JoinColumn(name = "costumer_id")
     private Costumer costumer;
     private String licencePlate;
     private LocalDate start;

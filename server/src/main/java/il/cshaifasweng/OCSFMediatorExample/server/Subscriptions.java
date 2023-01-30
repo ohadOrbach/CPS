@@ -59,16 +59,19 @@ public class Subscriptions
     public String addNewRegularSubscription(Costumer costumer, String licencePlate, LocalDate
             startingDate, ParkingLot parkingLot, String expectedLeavingTime)
     {
+        System.out.println("in new subscriptions class");
         int subscriptionId =  (int)(Math.random() * 900000) + 100000;
         while((regularSubscriptions.get(subscriptionId))!=null)
         {
             subscriptionId =  (int)(Math.random() * 900000) + 100000;
         }
+        System.out.println("in new subscriptions class2");
         App.SafeStartTransaction();
         RegularSubscription subscription = new RegularSubscription(subscriptionId,costumer,licencePlate,startingDate,parkingLot,expectedLeavingTime);
         App.session.save(subscription);
         App.session.flush();
         App.SafeCommit();
+        System.out.println("in new subscriptions class3");
         regularSubscriptions.put(subscription.getSubscriptionId(),subscription);
         costumer.addRegularSubscriptions(subscription);
         return "new subscription made";
@@ -90,10 +93,4 @@ public class Subscriptions
         costumer.addFullSubscriptions(subscription);
         return "new full subscription made";
     }
-
-
-
-
-
-
 }
