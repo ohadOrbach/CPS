@@ -21,8 +21,6 @@ import org.w3c.dom.Text;
 
 public class CostumerMainWindow {
 
-    @FXML
-    private Text CostumerId;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -96,8 +94,6 @@ public class CostumerMainWindow {
         assert goToLogIn != null : "fx:id=\"goToLogIn\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         assert imMode != null : "fx:id=\"imMode\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         assert timeTF != null : "fx:id=\"timeTF\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
-
-        CostumerId.setTextContent("Costumer Id: "+App.costumer.getId());
 
 
         LocalDate currentDate = LocalDate.now();
