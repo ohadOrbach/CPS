@@ -50,10 +50,10 @@ public class InitialStaffWindow {
         }
         else
         {
-            errorLoginMassage.setText("Login Success");
             App.employee = event.getEmployee();
-            App.history.add("CostumerMainMenu");
-            App.setRoot("CostumerMainMenu");
+            errorLoginMassage.setText("Login Success");
+            App.history.add("EmployeesMainWindow");
+            App.setRoot("EmployeesMainWindow");
 
         }
     }
