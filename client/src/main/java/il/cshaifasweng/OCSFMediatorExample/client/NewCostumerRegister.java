@@ -66,7 +66,7 @@ public class NewCostumerRegister {
 
         SimpleClient myClient = SimpleClient.getClient();
 
-        myClient.sendToServer("costumer Register:"+id.getText()+","+email.getText()+","+password.getText());
+        myClient.sendToServer("costumer Register:"+id.getText()+","+password.getText()+","+email.getText());
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
