@@ -86,10 +86,13 @@ public class SimpleServer extends AbstractServer {
 			else if (msgString.startsWith("employee login"))
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
+				System.out.format("Employee tries to log in "+ msgString + "\n");
 				EmployeeData employee = App.employees.employeeLoginCheck(args[0],args[1]);
 				if (employee.getJob().equals("costumer service")){
+					System.out.format("Employee  is from costumer service \n");
 					Employee emp = App.employees.findEmployeeById(employee.getId());
 					String receivedMsg = emp.checkReminders();
+					System.out.format("print "+receivedMsg+"\n");
 					Message arrivalMsg = new Message(receivedMsg);
 					SafeSendToClient(arrivalMsg, client);
 				}

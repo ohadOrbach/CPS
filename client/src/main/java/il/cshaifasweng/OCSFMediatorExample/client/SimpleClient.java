@@ -21,6 +21,7 @@ public class SimpleClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
+		System.out.format("i got object from %s class\n", msg.getClass().getSimpleName());
 		if (msg.getClass().equals(Warning.class)) {
 			Platform.runLater(() -> EventBus.getDefault().post(new WarningEvent((Warning) msg)));
 		}

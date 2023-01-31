@@ -22,7 +22,7 @@ public class Employee {
     private boolean login;
 
     @OneToMany(mappedBy = "handledBy")
-    private List<Complaint> complaints;
+    private List<Complaint> complaints = new ArrayList<>();
 
     public Employee(int id, String privateName, String sureName, String password, String email, String job, String branch) {
         this.id = id;
@@ -128,10 +128,14 @@ public class Employee {
         this.complaints = complaints;
     }
     public String checkReminders() {
+
         int comps = 0;
+        System.out.println("costumer service check for complaintss "+ comps +"\n");
         for (Complaint complaint : complaints) {
+            System.out.println("costumer service check for complaints:  \n" + comps);
             comps = comps + complaint.checkReminder();
         }
+        System.out.println("costumer service check for complaints: \n" + comps);
         if (comps>0){
             return "Reminder, you have complaints to answer";
         }

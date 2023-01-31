@@ -90,7 +90,7 @@ public class Complaint {
     public int checkReminder() {
         LocalDate now = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(date, now);
-        if (daysBetween >= 1) {
+        if (daysBetween >= 1 && this.status .equals("open")) {
             return 1;
         }
         else {return 0;}
