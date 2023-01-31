@@ -4,6 +4,12 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,12 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class CostumerMainWindow {
 
