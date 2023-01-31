@@ -1,4 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
+import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
+import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -115,6 +117,11 @@ public class Employee {
 
     public List<Complaint> getComplaints() {
         return complaints;
+    }
+
+    public EmployeeData getEmployeeData(){
+
+        return new EmployeeData(id, privateName, sureName, password, Email, job, branch);
     }
 
     public void setComplaints(List<Complaint> complaints) {

@@ -37,9 +37,10 @@ public class SimpleClient extends AbstractClient {
 					post(new ReceivedStastisticalInformationEvent((StastisticalInformationListData) msg)));
 		}
 
-		else if(msg.getClass().equals(PricesList.class)) {
+		else if(msg.getClass().equals(ComplaintListData.class)) {
+			System.out.format("i got some complaints update");
 			Platform.runLater(() -> EventBus.getDefault().
-					post(new ReceivedParkingPricesEvent((PricesList) msg)));
+					post(new ReceivedComplaintsEvent((ComplaintListData) msg)));
 		}
 
 		else if(msg.getClass().equals(OrdersListData.class)) {
@@ -123,6 +124,16 @@ public class SimpleClient extends AbstractClient {
 	public void sendComplaint(ComplaintData complaint){
 		try {
 			client.sendToServer(complaint);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void changeCompStatus(int compValue, int compId) {
+		try {
+			client.sendToServer("#update:complaint status," + compId + "," + compValue);
+			client.sendToServer("#request: complaint table");
+			App.setRoot("ComplaintsEmployee");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -41,6 +41,9 @@ public class PrimaryController {
 	private Button makeComplaintBtn;
 
 	@FXML
+	private Button ComplainEmptBtn;
+
+	@FXML
 	private Button statisticsMenuBtn1;
 
 	@FXML
@@ -99,12 +102,16 @@ public class PrimaryController {
 	@FXML
 	void openMakeComplaintScene(ActionEvent event) throws IOException {
 		App.setRoot("Complaint");
-		/**
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Complaint.fxml"));
-		Stage stage = new Stage();
-		stage.setScene(new Scene(loader.load()));
-		stage.show();
-		 */
+	}
+
+	@FXML
+	void openComplaintsScene(ActionEvent event) throws IOException {
+		try {
+			SimpleClient.getClient().sendToServer("#request: complaint table");
+			App.setRoot("ComplaintsEmployee");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintListData;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -76,5 +75,28 @@ public class Complaints {
             c.issuedBy = Hibernate.unproxy(c.issuedBy, User.class);
         }
          */
+    }
+
+    public void changeStatus(int id, int compValue) {
+        App.SafeStartTransaction();
+        Complaint temp = new Complaint();
+        for (Complaint comp : complaints) {
+            if (comp.getId() == id) {
+                temp = comp;
+            }
+        }
+        temp.changeStatus();
+        App.session.save(temp);
+        App.session.flush();
+        App.SafeCommit();
+    }
+
+    public ComplaintListData getComplaints() {
+        List<ComplaintData> dataList = new ArrayList<>();
+        for(Complaint comp: complaints){
+            ComplaintData complaintData = comp.getComplaintData();
+            dataList.add(complaintData);
+        }
+        return new ComplaintListData(dataList);
     }
 }

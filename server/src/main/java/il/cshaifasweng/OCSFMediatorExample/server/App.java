@@ -30,18 +30,18 @@ public class App
 
     public static void main( String[] args ) throws IOException
     {
-           session = getSessionFactory().openSession();
-           parkinglots = new ParkingLots();
-           parkingPrices = new ParkingLots();
-           parkings = new Parkings();
+        session = getSessionFactory().openSession();
+        parkinglots = new ParkingLots();
+        parkingPrices = new ParkingLots();
+        parkings = new Parkings();
         parkinglots.generateParkingLots();
-           parkinglots.pullParkingLots();
-           parkingPrices.pullParkingPrices();
-           complaints = new Complaints();
-           complaints.pullComplaints();
-           sastisticalInformations = new StastisticalInformations();
-          sastisticalInformations.pullStastisticalInformationFromDB();
-          parkings.pullStastisticalInformationFromDB();
+        parkinglots.pullParkingLots();
+        parkingPrices.pullParkingPrices();
+        complaints = new Complaints();
+        complaints.pullComplaints();
+        sastisticalInformations = new StastisticalInformations();
+        sastisticalInformations.pullStastisticalInformationFromDB();
+        parkings.pullStastisticalInformationFromDB();
         orders = new Orders();
         employees = new Employees();
         employees.generateEmployees();
@@ -57,7 +57,11 @@ public class App
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(ParkingLot.class);
+        configuration.addAnnotatedClass(ParkingLots.class);
         configuration.addAnnotatedClass(Parking.class);
+        configuration.addAnnotatedClass(Parkings.class);
+        configuration.addAnnotatedClass(Orders.class);
+        configuration.addAnnotatedClass(Kiosk.class);
         configuration.addAnnotatedClass(ParkingPrices.class);
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(ParkingOrder.class);
@@ -65,7 +69,11 @@ public class App
         configuration.addAnnotatedClass(StastisticalInformation.class);
         configuration.addAnnotatedClass(StastisticalInformations.class);
         configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Employees.class);
         configuration.addAnnotatedClass(Costumer.class);
+        configuration.addAnnotatedClass(Costumers.class);
+        configuration.addAnnotatedClass(Subscription.class);
+        configuration.addAnnotatedClass(Subscriptions.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

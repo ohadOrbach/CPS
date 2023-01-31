@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Complaint {
     @Column(length=1000)
     public String complaintTxt;
     public LocalDate date;
-
+    public String status;
     @ManyToOne(fetch = FetchType.LAZY)
     public Costumer issuedBy;
     @ManyToOne
@@ -26,14 +27,15 @@ public class Complaint {
     public Complaint() {}
     public Complaint(ComplaintData com, Employee emp)
     {
-        this.date= LocalDate.now();
+        this.date= com.date;
         this.complaintTxt=com.complaintTxt;
         this.issuedBy = App.costumers.getCostumer((com.issuedBy.getId()));
         this.handledBy = emp;
+        this.status = com.status;
     }
     public ComplaintData getComplaintData()
     {
-        ComplaintData com = new ComplaintData(complaintTxt, id, issuedBy.getCostumerData());
+        ComplaintData com = new ComplaintData(complaintTxt, id, date, issuedBy.getCostumerData(), status, handledBy.getEmployeeData());
         return com;
     }
     public int getId() {
@@ -61,6 +63,13 @@ public class Complaint {
         this.complaintTxt = complaintTxt;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void changeStatus() {
+        this.status = "closed";
+    }
 
     public Costumer getIssuedBy() {
         return issuedBy;

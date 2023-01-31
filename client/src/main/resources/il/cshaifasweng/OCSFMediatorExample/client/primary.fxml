@@ -56,6 +56,15 @@
                   <String fx:value="secondary-color" />
                </styleClass>
             </Button>
+            <Button fx:id="ComplainEmptBtn" mnemonicParsing="false" onAction="#openComplaintsScene" prefHeight="39.0" prefWidth="252.0" text="All Complaint" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="round-border" />
+                  <String fx:value="secondary-color" />
+               </styleClass>
+            </Button>
             <Button fx:id="showPricesBtn" mnemonicParsing="false" onAction="#openShowPriceTableScene" prefHeight="39.0" prefWidth="252.0" text="Show Prices Table" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />

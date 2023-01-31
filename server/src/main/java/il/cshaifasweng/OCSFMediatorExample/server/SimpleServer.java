@@ -55,6 +55,10 @@ public class SimpleServer extends AbstractServer {
 						App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
 						App.parkingPrices.pullParkingPrices();
 					}
+					case "complaint status" -> {
+						App.complaints.changeStatus(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+						App.complaints.pullComplaints();
+					}
 				}
 			} else if (msgString.startsWith("#request")) {
 				String[] args = (msgString.split(":")[1]).split(",");
@@ -67,6 +71,10 @@ public class SimpleServer extends AbstractServer {
 					case " prices table" -> {
 						PricesList parkingPricesList = App.parkinglots.getParkingLotsPrices();
 						SafeSendToClient(parkingPricesList, client);
+					}
+					case " complaint table" -> {
+						ComplaintListData complaintsList = App.complaints.getComplaints();
+						SafeSendToClient(complaintsList, client);
 					}
 
 					case " stastistical information list" -> {
