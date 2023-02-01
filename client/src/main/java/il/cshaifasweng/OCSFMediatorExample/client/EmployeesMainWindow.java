@@ -86,7 +86,7 @@ public class EmployeesMainWindow {
     }
 
     @FXML
-    void button2Func(ActionEvent event) {
+    void button2Func(ActionEvent event) throws IOException{
 
         if(button1.getText().equals("Save Parking Spot"))
         {
@@ -94,13 +94,14 @@ public class EmployeesMainWindow {
         }
         else
         {
-
+            App.history.add("ParkingScreenController");
+            App.setRoot("ParkingScreenController");
         }
 
     }
 
     @FXML
-    void button3Func(ActionEvent event) {
+    void button3Func(ActionEvent event) throws IOException{
 
     }
 

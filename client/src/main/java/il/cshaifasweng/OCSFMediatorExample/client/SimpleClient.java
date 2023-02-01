@@ -37,6 +37,11 @@ public class SimpleClient extends AbstractClient {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedStastisticalInformationEvent((StastisticalInformationListData) msg)));
 		}
+		else if(msg.getClass().equals(ParkingListData.class)) {
+			System.out.format("i got parkings list");
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedParkings((ParkingListData) msg)));
+		}
 
 		else if(msg.getClass().equals(ComplaintListData.class)) {
 			System.out.format("i got some complaints update");
@@ -82,7 +87,7 @@ public class SimpleClient extends AbstractClient {
 
 	public void requestParkingLotList(){
 		try {
-			client.sendToServer("#request:parkingLots");
+			client.sendToServer("#request: parking lots list");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,6 +114,15 @@ public class SimpleClient extends AbstractClient {
 			client.sendToServer("#update:parking price," + parkingLotId + "," + priceType + "," + price);
 			client.sendToServer("#request: prices table");
 			App.setRoot("ParkingLotTable");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void getParkings(String name){
+		try {
+			System.out.println("sending "+name+"\n");
+			client.sendToServer("#update:parkings," + name);
+			//App.setRoot("ParkingScreenController");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

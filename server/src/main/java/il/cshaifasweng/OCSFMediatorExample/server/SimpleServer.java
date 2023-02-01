@@ -61,6 +61,13 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(arrivalMsg, c);
 						App.complaints.pullComplaints();
 					}
+					case "parkings" -> { // update parkings to  client screen
+						System.out.println("in update parkings  "+args[1]+"\n");
+						ParkingLot p = App.parkinglots.getParkingLotByName(args[1]);
+						Parkings plist = new Parkings(p.getParkings());
+						ParkingListData returnParkings = plist.getParkingList();
+						SafeSendToClient(returnParkings, client);
+					}
 				}
 			} else if (msgString.startsWith("#request")) {
 				String[] args = (msgString.split(":")[1]).split(",");

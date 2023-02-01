@@ -16,6 +16,12 @@ public class Parkings {
     {
         parkingList=new ArrayList<Parking>();
     }
+    public Parkings(List<Parking> p){
+        parkingList=new ArrayList<Parking>();
+        for(Parking parking : p){
+            parkingList.add(parking);
+        }
+    }
     public void pullStastisticalInformationFromDB()
     {
         CriteriaBuilder builder = App.session.getCriteriaBuilder();
