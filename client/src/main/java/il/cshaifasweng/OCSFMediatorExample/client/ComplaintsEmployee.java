@@ -9,16 +9,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ComplaintsEmployee {
@@ -30,10 +34,8 @@ public class ComplaintsEmployee {
 
     @FXML // fx:id="idCol"
     private TableColumn<ComplaintData, Integer> idCol; // Value injected by FXMLLoader
-
-    @FXML // fx:id="timeCol"
-    private TableColumn<ComplaintData, LocalDate> timeCol; // Value injected by FXMLLoader
-
+    @FXML // fx:id="TimeCol"
+    private TableColumn<ComplaintData, LocalDateTime> timeCol; // Value injected by FXMLLoader
     @FXML // fx:id="DescCol"
     private TableColumn<ComplaintData, String> DescCol; // Value injected by FXMLLoader
 
@@ -63,10 +65,10 @@ public class ComplaintsEmployee {
         for(int i = 0; i < eventList.size(); i++){
             complaintsList.add(eventList.get(i));
         }
-        buildPricesTable();
+        buildComplaintsTable();
     }
 
-    private void buildPricesTable(){
+    private void buildComplaintsTable(){
         idCol.setCellValueFactory(new PropertyValueFactory("id"));
         timeCol.setCellValueFactory(new PropertyValueFactory("date"));
         DescCol.setCellValueFactory(new PropertyValueFactory("complaintTxt"));
@@ -92,11 +94,13 @@ public class ComplaintsEmployee {
     @FXML
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
+        table.setEditable(true);
     }
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.setRoot("primary");
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
     @FXML
@@ -126,5 +130,7 @@ public class ComplaintsEmployee {
         int intChosen = idList.getSelectionModel().getSelectedItem(); //id combo box
         updateID = intChosen;
     }
+
+
 
 }

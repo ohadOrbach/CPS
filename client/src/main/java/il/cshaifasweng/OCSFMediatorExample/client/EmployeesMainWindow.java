@@ -5,10 +5,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -52,7 +56,9 @@ public class EmployeesMainWindow {
     }
 
     @FXML
-    public void goToLogIn(ActionEvent event) throws IOException {
+    public void LogOut(ActionEvent event) throws IOException {
+        SimpleClient myClient = SimpleClient.getClient();
+        myClient.sendToServer("logout employee:"+App.employee.getId());
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }
@@ -71,6 +77,7 @@ public class EmployeesMainWindow {
         }
         else
         {
+            SimpleClient.getClient().sendToServer("#request: complaint table");
             App.history.add("ComplaintsEmployee");
             App.setRoot("ComplaintsEmployee");
         }

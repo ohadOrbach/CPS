@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
@@ -17,7 +18,7 @@ public class Complaint {
     private int id;
     @Column(length=1000)
     public String complaintTxt;
-    public LocalDate date;
+    public LocalDateTime date;
     public String status;
     @ManyToOne(fetch = FetchType.LAZY)
     public Costumer issuedBy;
@@ -33,6 +34,7 @@ public class Complaint {
         this.handledBy = emp;
         this.status = com.status;
     }
+
     public ComplaintData getComplaintData()
     {
         ComplaintData com = new ComplaintData(complaintTxt, id, date, issuedBy.getCostumerData(), status, handledBy.getEmployeeData());
@@ -45,11 +47,11 @@ public class Complaint {
     public void setId(int id) {
         this.id = id;
     }
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
     public String getcomplaintTxt() {
@@ -88,9 +90,7 @@ public class Complaint {
     }
 
     public int checkReminder() {
-        LocalDate now = LocalDate.now();
-        long daysBetween = ChronoUnit.DAYS.between(date, now);
-        if (daysBetween >= 1 && this.status .equals("open")) {
+        if (this.status.equals("open")) {
             return 1;
         }
         else {return 0;}

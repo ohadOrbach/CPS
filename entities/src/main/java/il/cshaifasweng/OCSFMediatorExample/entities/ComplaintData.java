@@ -2,10 +2,12 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ComplaintData implements Serializable {
     public int id;
-    public LocalDate date;
+    public LocalDateTime date;
     public String complaintTxt;
     public CostumerData issuedBy;
     public EmployeeData handledBy;
@@ -13,14 +15,14 @@ public class ComplaintData implements Serializable {
 
     public ComplaintData(String comp, int id, CostumerData issuedBy) {
         this.id=id;
-        this.date= LocalDate.now();
+        this.date= LocalDateTime.now();
         this.complaintTxt = comp;
         this.issuedBy = issuedBy;
         this.status="open";
         this.handledBy = null;
     }
 
-    public ComplaintData(String comp, int id, LocalDate date, CostumerData issuedBy, String status, EmployeeData handledBy) {
+    public ComplaintData(String comp, int id, LocalDateTime date, CostumerData issuedBy, String status, EmployeeData handledBy) {
         this.id=id;
         this.date= date;
         this.complaintTxt = comp;
@@ -32,14 +34,50 @@ public class ComplaintData implements Serializable {
     public int getId() {
         return id;
     }
-}
 
-/**
- *  public UserData issuedBy;
- *
- *    public ComplaintData(String com, UserData us, int id) {
- *         this.id=id;
- *         complaintDescription = com;
- *         issuedBy = us;
- *     }
- * */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getComplaintTxt() {
+        return complaintTxt;
+    }
+
+    public void setComplaintTxt(String complaintTxt) {
+        this.complaintTxt = complaintTxt;
+    }
+
+    public CostumerData getIssuedBy() {
+        return issuedBy;
+    }
+
+    public void setIssuedBy(CostumerData issuedBy) {
+        this.issuedBy = issuedBy;
+    }
+
+    public EmployeeData getHandledBy() {
+        return handledBy;
+    }
+
+    public void setHandledBy(EmployeeData handledBy) {
+        this.handledBy = handledBy;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+}

@@ -118,6 +118,9 @@ public class Employee {
     public List<Complaint> getComplaints() {
         return complaints;
     }
+    public void addComplaimt(Complaint comp){
+        complaints.add(comp);
+    }
 
     public EmployeeData getEmployeeData(){
 
@@ -130,12 +133,10 @@ public class Employee {
     public String checkReminders() {
 
         int comps = 0;
-        System.out.println("costumer service check for complaintss "+ comps +"\n");
         for (Complaint complaint : complaints) {
-            System.out.println("costumer service check for complaints:  \n" + comps);
+            System.out.println("comp number: " +complaint.getId()+" total comps to handle: "+comps+"\n");
             comps = comps + complaint.checkReminder();
         }
-        System.out.println("costumer service check for complaints: \n" + comps);
         if (comps>0){
             return "Reminder, you have complaints to answer";
         }

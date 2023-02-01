@@ -73,14 +73,14 @@ public class Employees {
 
         if (employeesResult.isEmpty() || !employeesResult.get(0).getPassword().equals(password)||employeesResult.get(0).isLogin()) {
 
-            System.out.format("Login failed, employeesResult empty");
+            System.out.format("Login failed, employeesResult empty \n");
             return new EmployeeData();
         }
 
         Employee employee = employeesResult.get(0);
         EmployeeData empData = new EmployeeData(employee.getId(),employee.getPrivateName(),employee.getSureName(),employee.getPassword()
                 ,employee.getEmail(), employee.getJob(),employee.getBranch());
-        System.out.format("Login Success");
+        System.out.format("Login Success \n");
 
         return empData;
     }

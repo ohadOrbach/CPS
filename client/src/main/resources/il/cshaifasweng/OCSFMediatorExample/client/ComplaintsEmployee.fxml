@@ -29,10 +29,10 @@
                                     <children>
                                         <TableView fx:id="complaints" prefHeight="434.0" prefWidth="788.0" styleClass="primary-color">
                                             <columns>
-                                                <TableColumn fx:id="idCol" editable="false" prefWidth="87.0" text="Complaint ID" />
-                                                <TableColumn fx:id="timeCol" editable="false" prefWidth="184.0" text="time" />
-                                                <TableColumn fx:id="DescCol" editable="false" prefWidth="450.0" text="Description" />
-                                                <TableColumn fx:id="statusCol" editable="false" prefWidth="66.0" text="Status" />
+                                                <TableColumn fx:id="idCol" editable="false" prefWidth="39.0" text="Id" />
+                                    <TableColumn fx:id="timeCol" editable="false" prefWidth="200.0" text="Time" />
+                                                <TableColumn fx:id="DescCol" editable="false" prefWidth="432.0" text="Description" />
+                                                <TableColumn fx:id="statusCol" editable="false" prefWidth="102.0" text="Status" />
                                             </columns>
                                         </TableView>
                                     </children>

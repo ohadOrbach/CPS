@@ -146,7 +146,6 @@ public class ParkingLots {
 
     public ParkingLotListData getParkingLotList() {
         List<ParkingLotData> dataList = new ArrayList<>();
-        System.out.println("in this");
         for(ParkingLot parkingLot: parkingLots){
             ParkingLotData parkingLotData = parkingLot.getParkingLotData();
             System.out.println("add parking " + parkingLotData.getParkingLotId());

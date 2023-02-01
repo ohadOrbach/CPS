@@ -78,7 +78,7 @@ public class ParkingLotTable {
     private void buildPricesTable(){
         idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
         casualCol.setCellValueFactory(new PropertyValueFactory("parkingPrice"));
-        orderedCol.setCellValueFactory(new PropertyValueFactory("orderedParkingPrice"));
+        orderedCol.setCellValueFactory(new PropertyValueFactory(" "));
         regSubCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionPrice"));
         multyCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionMultiCarsPrice"));
         fullSubCol.setCellValueFactory(new PropertyValueFactory("fullySubscriptionPrice"));
