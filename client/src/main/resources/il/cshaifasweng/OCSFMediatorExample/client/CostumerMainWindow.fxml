@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CostumerMainWindow">
+<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="600.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CostumerMainWindow">
     <children>
         <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="59.0" prefWidth="800.0" styleClass="secondary-color" />
         <Label layoutX="261.0" layoutY="8.0" styleClass="secondary-color" text="Costumer menu">
@@ -55,7 +55,7 @@
         </Button>
         <Button fx:id="button1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToOrders" prefHeight="47.0" prefWidth="149.0" text="Orders Menu">
             <styleClass>
-                <String fx:value="primary-color" />
+                <String fx:value="secondary-color" />
                 <String fx:value="round-border" />
                 <String fx:value="text-field" />
             </styleClass>
@@ -65,7 +65,7 @@
         </Button>
         <Button fx:id="button2" layoutX="275.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="182.0" text="Join A Subscription!">
             <styleClass>
-                <String fx:value="primary-color" />
+                <String fx:value="secondary-color" />
                 <String fx:value="round-border" />
                 <String fx:value="text-field" />
             </styleClass>
@@ -75,7 +75,7 @@
         </Button>
       <Button fx:id="button3" layoutX="529.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToComplain" prefHeight="47.0" prefWidth="182.0" text="Complain">
          <styleClass>
-            <String fx:value="primary-color" />
+            <String fx:value="secondary-color" />
             <String fx:value="round-border" />
             <String fx:value="text-field" />
          </styleClass>

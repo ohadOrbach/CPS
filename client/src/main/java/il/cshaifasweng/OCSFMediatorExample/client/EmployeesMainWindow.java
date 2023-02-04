@@ -92,6 +92,12 @@ public class EmployeesMainWindow {
         {
 
         }
+        else if (button2.getText().equals("Make report"))
+        {
+            App.history.add("MakeReport");
+            App.setRoot("MakeReport");
+
+        }
         else
         {
             App.history.add("ParkingScreenController");
@@ -102,7 +108,11 @@ public class EmployeesMainWindow {
 
     @FXML
     void button3Func(ActionEvent event) throws IOException{
-
+        if(button3.getText().equals("View Reports"))
+        {
+            App.history.add("ViewReport");
+            App.setRoot("ViewReport");
+        }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -128,14 +138,14 @@ public class EmployeesMainWindow {
             case "company manager":
                 button1.setText("Statistical Information");
                 button2.setText("Get Parking Lot Status");
-                button3.setVisible(false);
+                button3.setText("View Reports");
                 button4.setVisible(false);
                 button5.setVisible(false);
                 button6.setVisible(false);
                 break;
             case "parking lot manager":
                 button1.setText("Statistical Information");
-                button2.setVisible(false);;
+                button2.setText("Make report");;
                 button3.setVisible(false);
                 button4.setVisible(false);
                 button5.setVisible(false);

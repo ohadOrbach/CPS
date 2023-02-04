@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.PrimaryController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -18,22 +19,10 @@ import java.time.format.DateTimeFormatter;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
-public class MainMenuOrder {
+public class ReportMenu {
 
     @FXML
     private Button BackToMain;
-
-    @FXML
-    private Button CancelOrder;
-
-    @FXML
-    private Button CasualOrder;
-
-    @FXML
-    private Button CasualOrderAdvance;
-
-    @FXML
-    private Button TrackingOrder;
 
     @FXML
     private Button btnMode;
@@ -42,45 +31,16 @@ public class MainMenuOrder {
     private ImageView imMode;
 
     @FXML
+    private Button makeReport;
+
+    @FXML
     private AnchorPane parent;
 
     @FXML
     private TextField timeTF;
 
     @FXML
-    void makeCasualOrderInAdvance(ActionEvent event) throws IOException {
-        App.history.add("CasualOrderInAdvance");
-        App.setRoot("CasualOrderInAdvance");
-    }
-
-    @FXML
-    void makeCasualOrder(ActionEvent event) throws IOException {
-        App.history.add("CasualOrder");
-        App.setRoot("CasualOrder");
-    }
-
-    @FXML
-    void cancelOrder(ActionEvent event) throws IOException {
-        App.history.add("CancelOrder");
-        App.setRoot("CancelOrder");
-    }
-
-    @FXML
-    void TrackingOrder(ActionEvent event) throws IOException {
-        App.history.add("TrackingOrder");
-        App.setRoot("TrackingOrder");
-    }
-
-    @FXML
-    void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
-    }
-
-    @FXML
-    public void changeMode(ActionEvent event){
-        PrimaryController.ChangeForAll(parent, imMode);
-    }
+    private Button viewReport;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -96,6 +56,29 @@ public class MainMenuOrder {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    @FXML
+    public void changeMode(ActionEvent event){
+        PrimaryController.ChangeForAll(parent, imMode);
+    }
+
+    @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        App.history.add("PrimaryController");
+        App.setRoot("PrimaryController");
+    }
+
+    @FXML
+    void goToMakeReport(ActionEvent event) throws IOException {
+        App.history.add("MakeReport");
+        App.setRoot("MakeReport");
+    }
+
+    @FXML
+    void goToViewReports(ActionEvent event) throws IOException  {
+        App.history.add("ViewReport");
+        App.setRoot("ViewReport");
     }
 
 }

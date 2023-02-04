@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ParkingScreenController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ParkingScreenController">
    <children>
-      <VBox fx:id="parkingVbox" layoutX="24.0" layoutY="20.0" prefHeight="357.0" prefWidth="533.0">
+      <VBox fx:id="parkingVbox" layoutY="58.0" prefHeight="423.0" prefWidth="800.0">
          <children>
             <HBox fx:id="hb1" alignment="CENTER" prefHeight="50.0" prefWidth="600.0" spacing="10.0">
                <children>
@@ -22,12 +28,20 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="parkingLotComboBox" prefWidth="200.0" />
+                  <ComboBox fx:id="parkingLotComboBox" prefWidth="200.0" stylesheets="@../../../../Styles/LightMode.css">
+                     <styleClass>
+                        <String fx:value="secondary-color" />
+                        <String fx:value="round-border" />
+                     </styleClass></ComboBox>
                </children>
             </HBox>
             <HBox fx:id="hb2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="600.0" spacing="10.0">
                <children>
-                  <Button fx:id="updateButton" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="updateButton" mnemonicParsing="false" stylesheets="@../../../../Styles/LightMode.css" text="Update">
+                     <styleClass>
+                        <String fx:value="secondary-color" />
+                        <String fx:value="round-border" />
+                     </styleClass></Button>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -47,5 +61,49 @@
             </GridPane>
          </children>
       </VBox>
+      <ToolBar accessibleRole="MENU" focusTraversable="false" prefHeight="59.0" prefWidth="800.0" styleClass="secondary-color">
+         <items>
+            <Button fx:id="btnMode" mnemonicParsing="false" onAction="#changeMode" prefHeight="36.0" prefWidth="33.0" stylesheets="@../../../../Styles/LightMode.css">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+               <graphic>
+                  <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../images/LightMode2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label prefHeight="30.0" prefWidth="43.0" stylesheets="@../../../../Styles/LightMode.css" text="Time:">
+               <styleClass>
+                  <String fx:value="secondary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+            </Label>
+            <TextField fx:id="timeTF" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0" stylesheets="@../../../../Styles/LightMode.css">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+            </TextField>
+            <Label layoutX="309.0" layoutY="12.0" styleClass="secondary-color" text="Save Parking Spot">
+               <font>
+                  <Font name="Arial Black" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToMain" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="25.0" prefWidth="59.0" stylesheets="@../../../../Styles/LightMode.css" text="Back">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+                  <String fx:value="text-field" />
+               </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
    </children>
 </AnchorPane>

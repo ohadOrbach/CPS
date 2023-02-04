@@ -1,25 +1,51 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
 public class ParkingScreenController {
     @FXML
     private ComboBox<String> parkingLotComboBox;
+
+    @FXML
+    private AnchorPane parent;
+
+    @FXML
+    private Button BackToMain;
+
+    @FXML
+    private Button btnMode;
+
+    @FXML
+    private ImageView imMode;
+
+    @FXML
+    private TextField timeTF;
 
     @FXML
     private Button updateButton;
@@ -59,6 +85,19 @@ public class ParkingScreenController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(!isLightMode){
+            PrimaryController.setDarkMode(parent, imMode);
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            LocalTime currentTime = LocalTime.now();
+            timeTF.setText(currentTime.format(dtf));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
+
     }
     @FXML
     void updateParkingLot() {
@@ -92,6 +131,17 @@ public class ParkingScreenController {
             int cols = parkingList.size();//need to divide by 9 after parking lots wil be correct
             parkingGridPane.add(label, i % cols, i / cols);
         }
+    }
+
+    @FXML
+    void changeMode(ActionEvent event) {
+        PrimaryController.ChangeForAll(parent, imMode);
+    }
+
+    @FXML
+    void goToMainMenu(ActionEvent event) throws IOException {
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 }
 

@@ -7,17 +7,26 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import org.w3c.dom.Text;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
 public class CostumerMainWindow {
 
@@ -40,6 +49,9 @@ public class CostumerMainWindow {
     @FXML // fx:id="button3"
     private Button button3; // Value injected by FXMLLoader
 
+    @FXML
+    private AnchorPane parent;
+
     @FXML // fx:id="goToLogIn"
     private Button goToLogIn; // Value injected by FXMLLoader
 
@@ -51,7 +63,7 @@ public class CostumerMainWindow {
 
     @FXML
     void changeMode(ActionEvent event) {
-
+        PrimaryController.ChangeForAll(parent, imMode);
     }
 
     @FXML
@@ -92,9 +104,20 @@ public class CostumerMainWindow {
         assert button2 != null : "fx:id=\"button2\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         assert button3 != null : "fx:id=\"button3\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         assert goToLogIn != null : "fx:id=\"goToLogIn\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
-        assert imMode != null : "fx:id=\"imMode\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
-        assert timeTF != null : "fx:id=\"timeTF\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
-
+        //assert imMode != null : "fx:id=\"imMode\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
+        //assert timeTF != null : "fx:id=\"timeTF\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
+        if(!isLightMode){
+            PrimaryController.setDarkMode(parent, imMode);
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            LocalTime currentTime = LocalTime.now();
+            timeTF.setText(currentTime.format(dtf));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
 
         LocalDate currentDate = LocalDate.now();
         if(!((App.costumer.getSubscriptions().isEmpty())))

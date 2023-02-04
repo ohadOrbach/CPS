@@ -89,6 +89,12 @@ public class SimpleServer extends AbstractServer {
 						SafeSendToClient(complaintsList, client);
 					}
 
+					case " reports list" -> {
+						System.out.format("i am in case request for report list\n");
+						ReportListData reportsListData = App.reports.getReportsList();
+						SafeSendToClient(reportsListData, client);
+					}
+
 					case " stastistical information list" -> {
 						System.out.format("i am in case request for stastistical information list\n");
 						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getStastisticalInformationList();
@@ -215,6 +221,12 @@ public class SimpleServer extends AbstractServer {
 			ordersListData.setMode("tracking");
 			System.out.format("i got a new tracking data11");
 			SafeSendToClient(ordersListData, client);
+
+		} else if (msg.getClass().equals(ReportData.class)) { // Make a report
+			System.out.format("i got a new report\n");
+			String receivedMsg = App.reports.addReport((ReportData) msg);
+			Message arrivalMsg = new Message(receivedMsg);
+			SafeSendToClient(arrivalMsg, client);
 		}
 
 

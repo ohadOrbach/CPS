@@ -30,6 +30,7 @@ public class App
     public static Subscriptions subscriptions;
     public static Parkings parkings;
     public static Kiosk kiosk;
+    public static  Reports reports;
 
     public static void main( String[] args ) throws IOException
     {
@@ -55,6 +56,8 @@ public class App
         kiosk = new Kiosk();
         server = new SimpleServer(3000);
         server.listen();
+        reports = new Reports();
+        reports.pullReports();
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {
@@ -79,6 +82,8 @@ public class App
         configuration.addAnnotatedClass(Subscriptions.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
+        configuration.addAnnotatedClass(Report.class);
+        configuration.addAnnotatedClass(Reports.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

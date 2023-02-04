@@ -49,6 +49,11 @@ public class SimpleClient extends AbstractClient {
 					post(new ReceivedComplaintsEvent((ComplaintListData) msg)));
 		}
 
+		else if(msg.getClass().equals(ReportListData.class)) {
+			System.out.format("i got some reports update\n");
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedReportsEvent((ReportListData) msg)));
+		}
 		else if(msg.getClass().equals(OrdersListData.class)) {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedOrderList((OrdersListData) msg)));
@@ -170,7 +175,13 @@ public class SimpleClient extends AbstractClient {
 		}
 	}
 
-
+	public void submitReport(ReportData report){
+		try {
+			client.sendToServer(report);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 
