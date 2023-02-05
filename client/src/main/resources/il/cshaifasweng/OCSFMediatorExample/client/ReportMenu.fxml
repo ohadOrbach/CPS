@@ -38,7 +38,7 @@
                   <String fx:value="text-field" />
                </styleClass>
             </Button>
-            <Button fx:id="makeReport" mnemonicParsing="false" onAction="#goToMakeReport" prefHeight="39.0" prefWidth="261.0" text="Make report" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="makeReport" mnemonicParsing="false" onAction="#goToMakeReport" prefHeight="39.0" prefWidth="261.0" text="report graph" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="secondary-color" />
                   <String fx:value="round-border" />

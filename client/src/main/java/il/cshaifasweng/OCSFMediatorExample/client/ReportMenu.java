@@ -65,14 +65,14 @@ public class ReportMenu {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.add("PrimaryController");
-        App.setRoot("PrimaryController");
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
     @FXML
     void goToMakeReport(ActionEvent event) throws IOException {
-        App.history.add("MakeReport");
-        App.setRoot("MakeReport");
+        App.history.add("reports");
+        App.setRoot("reports");
     }
 
     @FXML
