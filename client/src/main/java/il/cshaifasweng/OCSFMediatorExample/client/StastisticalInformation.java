@@ -83,7 +83,8 @@ public class StastisticalInformation {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.setRoot("primary");
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
 }

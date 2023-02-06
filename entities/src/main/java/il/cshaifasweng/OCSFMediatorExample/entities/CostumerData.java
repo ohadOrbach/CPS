@@ -9,15 +9,13 @@ public class CostumerData implements Serializable {
         private int id;
         private String password;
         private String Email;
-        private HashMap<LocalDate,SubscriptionData> subscriptions;
+        public HashMap<LocalDate,SubscriptionData> subscriptions = new HashMap<LocalDate,SubscriptionData>();
         private boolean loggedIn = false;
-
 
         public CostumerData(int id, String password, String email) {
             this.id = id;
             this.password = password;
-            Email = email;
-            subscriptions = new HashMap<LocalDate,SubscriptionData>();
+            this.Email = email;
 
             loggedIn = true;
         }
@@ -27,7 +25,6 @@ public class CostumerData implements Serializable {
 
             loggedIn = true;
         }
-
 
         public CostumerData()
         {
@@ -69,7 +66,6 @@ public class CostumerData implements Serializable {
         {
             subscriptions.put(sub.getEndingDate(),sub);
         }
-
         public SubscriptionData getSubscription(LocalDate date)
         {
             return (subscriptions.get(date));

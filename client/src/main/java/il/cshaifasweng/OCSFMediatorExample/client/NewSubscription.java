@@ -10,9 +10,12 @@ package il.cshaifasweng.OCSFMediatorExample.client;
         import java.time.LocalDate;
         import java.time.format.DateTimeFormatter;
         import java.util.ArrayList;
+        import java.util.List;
         import java.util.ResourceBundle;
         import java.util.Vector;
 
+        import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
+        import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
         import javafx.collections.FXCollections;
         import javafx.collections.ObservableList;
         import javafx.event.ActionEvent;
@@ -22,6 +25,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
         import javafx.scene.control.ChoiceBox;
         import javafx.scene.control.DatePicker;
         import javafx.scene.control.TextField;
+        import javafx.scene.layout.VBox;
         import javafx.scene.text.Text;
         import org.greenrobot.eventbus.EventBus;
         import org.greenrobot.eventbus.Subscribe;
@@ -58,9 +62,6 @@ public class NewSubscription {
     @FXML // fx:id="licencePlate"
     private TextField licencePlate; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkingLot"
-    private ChoiceBox<?> parkingLot; // Value injected by FXMLLoader
-
     @FXML // fx:id="subscriptionStartTimeText"
     private Text subscriptionStartTimeText; // Value injected by FXMLLoader
 
@@ -72,6 +73,34 @@ public class NewSubscription {
 
     @FXML
     private Button back;
+
+    @FXML
+    private VBox vboxParkingList;
+
+    @FXML // fx:id="parkingLot"
+    private ChoiceBox<String> parkingLot; // Value injected by FXMLLoader
+
+    ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
+    ObservableList<String> theParkingLotList = FXCollections.observableArrayList();
+    @Subscribe
+    public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException{
+        List<ParkingLotData> eventList = event.getParkingLotDataList();
+        for(int i = 0; i < eventList.size(); i++){
+            parkingList.add(eventList.get(i));
+        }
+        buildParkingList();
+    }
+
+    private void buildParkingList() {
+
+        for(ParkingLotData pl: parkingList)
+        {
+            theParkingLotList.add(pl.getParkingLotName());
+        }
+
+        parkingLot.setItems(theParkingLotList);
+
+    }
 
     @FXML
     void full(ActionEvent event)
@@ -94,15 +123,20 @@ public class NewSubscription {
     void registerAttempt(ActionEvent event) throws IOException {
         SimpleClient myClient = SimpleClient.getClient();
         String dateString = time.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String type = "";
         if(full.isSelected())
         {
-            myClient.sendToServer("new subscription full: "+App.costumer.getId()+","+licencePlate.getText()+","+dateString);
+            myClient.sendToServer("new subscription full:"+App.costumer.getId()+","+licencePlate.getText()+","+dateString);
+            type = "full";
         }
         else
         {
-            myClient.sendToServer("new subscription regular: "+App.costumer.getId()+","+licencePlate.getText()+
+            myClient.sendToServer("new subscription regular:"+App.costumer.getId()+","+licencePlate.getText()+
                     ","+dateString+","+parkingLot.getValue()+","+expectedDailyLeavingTime.getValue());
+            type = "regular";
         }
+        LocalDate endingDate = LocalDate.now().plusMonths(1);
+        App.currentSub = new SubscriptionData(type,licencePlate.getText(),endingDate,String.valueOf(App.costumer.getId()));
     }
 
     @Subscribe
@@ -111,6 +145,7 @@ public class NewSubscription {
         if(event.equals("registration succeeded"))
         {
             subResult.setText("registration succeeded");
+            App.costumer.addSubscription(App.currentSub);
 
         }
         else
@@ -153,6 +188,12 @@ public class NewSubscription {
         }
 
         expectedDailyLeavingTime.getItems().addAll(hours);
+
+        try {
+            SimpleClient.getClient().sendToServer("#request: parking lots list");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
