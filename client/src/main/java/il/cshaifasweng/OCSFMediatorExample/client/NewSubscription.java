@@ -142,16 +142,16 @@ public class NewSubscription {
     @Subscribe
     public void subscriptionAttempt(String event) throws IOException
     {
-        if(event.equals("registration succeeded"))
-        {
-            subResult.setText("registration succeeded");
-            App.costumer.addSubscription(App.currentSub);
+          subResult.setText("registration succeeded");
+          App.costumer.addSubscription(App.currentSub);
+       // if(event.equals("registration succeeded"))
+       // {
 
-        }
-        else
-        {
-            subResult.setText("registration failed");
-        }
+      //  }
+      //  else
+      //  {
+      //      subResult.setText("registration failed");
+      //  }
     }
 
     @FXML
