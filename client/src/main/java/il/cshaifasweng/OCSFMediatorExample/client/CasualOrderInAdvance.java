@@ -175,9 +175,9 @@ public class CasualOrderInAdvance {
 
     public boolean testInput() {
         // check time format HH:MM
-        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText()))
+        if (!Pattern.matches("^[0-2][0-3]:[0-5][0-9]$", DepartureTimeText.getText()))
             sendTextError("Incorrect Departure Time, please try again");
-        else if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", ArrivalTF.getText()))
+        else if (!Pattern.matches("^[0-2][0-3]:[0-5][0-9]$", ArrivalTF.getText()))
             sendTextError("Incorrect Arrival Time, please try again");
 
         LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));

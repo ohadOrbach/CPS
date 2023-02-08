@@ -112,7 +112,7 @@ public class Orders {
         return trackingOrders;
     }
 
-    //TODO add fine calculation and charge
+
     public OrdersListData findCancelOrder(CancelOrderData cancelOrderData) {
         App.SafeStartTransaction();
         OrdersListData cancelOrders = findOrderData(cancelOrderData.getId(), cancelOrderData.getCarNum());
@@ -122,10 +122,13 @@ public class Orders {
 
     public OrdersListData findOrderData(int id, int carNum) {
         List<OrderData> list = new ArrayList<>();
+        System.out.println("in find order data\n");
         for(ParkingOrder parkingOrder: ordersList){
             if(parkingOrder.getUserId() == id && parkingOrder.getCarNumber() == carNum)
                 list.add(parkingOrder.getOrderData());
         }
+        System.out.println("return list tracking\n");
+        System.out.println(list);
         return new OrdersListData(list);
     }
 
@@ -155,7 +158,7 @@ public class Orders {
     private double calculateFine(ParkingOrder parkingOrder) throws ParseException {
         // get arrival time and date - in format below
         SimpleDateFormat diffFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Date arrival = diffFormat.parse(parkingOrder.getOrderData().toString() +" "+ parkingOrder.getArrivalTime() + ":00");
+        Date arrival = diffFormat.parse(parkingOrder.getArrivalDate().toString() +" "+ parkingOrder.getArrivalTime() + ":00");
         Date current = diffFormat.parse(LocalDateTime.now().toString());
 
         // calculate diff in hours.
