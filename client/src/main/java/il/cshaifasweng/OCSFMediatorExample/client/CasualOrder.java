@@ -81,6 +81,7 @@ public class CasualOrder {
 
     ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
 
+    // on received parking list - build parking list for choice in order box.
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException{
         List<ParkingLotData> eventList = event.getParkingLotDataList();
@@ -88,6 +89,33 @@ public class CasualOrder {
             parkingList.add(eventList.get(i));
         }
         buildParkingList();
+    }
+
+    public boolean testInput() {
+        // check time format HH:MM
+        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText()))
+            sendTextError("Incorrect Departure Time, please try again");
+
+        LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+        // test ID - 9 digits.
+        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
+            sendTextError("Incorrect ID, please try again");
+
+            // test car num - only digits
+        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
+            sendTextError("Incorrect car number, please try again");
+
+            // test email - any chars + @ + dom name
+        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
+            sendTextError("Incorrect Email, please try again");
+
+            // test if leaving time is before now.
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
+            sendTextError("Incorrect Departure Time, please try again");
+        else
+            return true;
+
+        return false;
     }
 
 
@@ -102,26 +130,8 @@ public class CasualOrder {
         parkingVbox.getChildren().add(choiceBox);
     }
 
-    public boolean testInput() {
-        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText()))
-            sendTextError("Incorrect Departure Time, please try again");
 
-        LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-
-        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
-            sendTextError("Incorrect ID, please try again");
-        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
-            sendTextError("Incorrect car number, please try again");
-        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
-            sendTextError("Incorrect Email, please try again");
-        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
-            sendTextError("Incorrect Departure Time, please try again");
-        else
-            return true;
-
-        return false;
-    }
-
+    // error alert message.
     public void sendTextError(String text) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING,

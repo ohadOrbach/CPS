@@ -194,7 +194,9 @@ public class SimpleServer extends AbstractServer {
 			Message arrivalMsg = new Message(receivedMsg);
 			SafeSendToClient(arrivalMsg, client);
 
-		} else if (CancelOrderData.class.equals(msg.getClass())) { // find Cancel order
+
+		} else if (CancelOrderData.class.equals(msg.getClass())) {
+			// find Cancel order - return list of order that mach the id and car num of the client.
 			System.out.format("i got a new cancel order data\n");
 			OrdersListData ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
 			ordersListData.setMode("cancel");
@@ -203,9 +205,15 @@ public class SimpleServer extends AbstractServer {
 			App.sastisticalInformations.pullStastisticalInformationFromDB();
 			SafeSendToClient(ordersListData, client);
 
-		} else if (OrdersListData.class.equals(msg.getClass())) { // Delete orders
+
+		} else if (OrdersListData.class.equals(msg.getClass())) {
+			// Delete orders - after client send which orders deleting (after cancel request).
 			System.out.format("i got a new cancel order data for delete\n");
-			Object obj = App.orders.deleteOrders((OrdersListData) msg);
+
+			Object obj = null;
+			try { obj = App.orders.deleteOrders((OrdersListData) msg);
+				} catch (ParseException e) { e.printStackTrace(); }
+
 			SafeSendToClient(obj, client);
 
 
