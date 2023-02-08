@@ -84,6 +84,7 @@ public class App
                 .build();
 
         return configuration.buildSessionFactory(serviceRegistry);
+
     }
 
     private static int TransactionDepth = 0;
@@ -97,5 +98,6 @@ public class App
             session.getTransaction().commit();
         }
     }
+
 
 }

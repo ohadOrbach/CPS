@@ -78,6 +78,7 @@ public class Employees {
         }
 
         Employee employee = employeesResult.get(0);
+        employee.setLogin(true);
         EmployeeData empData = new EmployeeData(employee.getId(),employee.getPrivateName(),employee.getSureName(),employee.getPassword()
                 ,employee.getEmail(), employee.getJob(),employee.getBranch());
         System.out.format("Login Success \n");
@@ -98,6 +99,11 @@ public class Employees {
         Random rand = new Random();
         int randomIndex = rand.nextInt(csEmployees.size());
         return csEmployees.get(randomIndex);
+    }
+
+    public void logoutEmployee(String id)
+    {
+        employees.get(Integer.valueOf(id)).setLogin(false);
     }
 
     public Employee findEmployeeById(int id) {
