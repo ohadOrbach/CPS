@@ -191,9 +191,12 @@ public class Orders {
     public int findIndexByData(OrderData orderData) {
         int index = 0;
         for (ParkingOrder parkingOrder : ordersList) {
-            if (parkingOrder.getUserId() == orderData.getId()
-                    && parkingOrder.getCarNumber() == orderData.getCarNumber()) {
-                return index;
+            if (parkingOrder.getUserId() == orderData.getId() && parkingOrder.getCarNumber() == orderData.getCarNumber()) {
+                if(parkingOrder.getArrivalDate().compareTo(orderData.getArrivalDate()) == 0 && parkingOrder.getLeavingDate().compareTo(parkingOrder.getLeavingDate()) == 0){
+                    if(parkingOrder.getArrivalTime().compareTo(orderData.getArrivalTime()) == 0 && parkingOrder.getLeavingTime().compareTo(parkingOrder.getLeavingTime()) == 0){
+                        return index;
+                    }
+                }
             }
             index++;
         }

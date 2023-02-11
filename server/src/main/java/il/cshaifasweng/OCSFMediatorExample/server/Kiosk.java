@@ -21,6 +21,7 @@ public class Kiosk {
     }
 
     public String InsertCarIntoParkingLot(String clientId, String carId ,String parkingLotName){
+        App.SafeStartTransaction();
         OrdersListData ordersListData = App.orders.findOrderData(Integer.parseInt(clientId),Integer.parseInt(carId));
         List<OrderData> orderDataList = ordersListData.getOrdersListData();
         boolean foundOrderInThisParkingLotFlag = false;
@@ -37,14 +38,15 @@ public class Kiosk {
                     foundOrderInThisParkingLotFlag = true;
                     long noOfMinutes = LocalDateTime.now().until(orderArrivalTime, ChronoUnit.MINUTES);
                     // we check if the client is 3 minutes before his ordered time, if yes we enter his car
-                    if(noOfMinutes <= 3){/*
+                    if(noOfMinutes <= 3){
                         int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
                         ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
                         updatedOrder.setStatus(1);
-                        App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);*/
-                        orderData.setStatus(1);/*
+                        App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);
+                        orderData.setStatus(1);
                         App.session.save(updatedOrder);
-                        App.session.flush();*/
+                        App.session.flush();
+                        App.SafeCommit();
                         return "We entered your Car successfully!";
                     }
                 }
@@ -52,19 +54,21 @@ public class Kiosk {
                 if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now()) && orderData.getStatus() == 0){
                     // we calculate how many minutes the client is late
                     // ToDO change the status in the database
-                    /*
+
                     int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
                     ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
                     updatedOrder.setStatus(1);
-                    App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);*/
-                    orderData.setStatus(1);/*
+                    App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);
+                    orderData.setStatus(1);
                     App.session.save(updatedOrder);
-                    App.session.flush();*/
+                    App.session.flush();
                     long noOfMinutes = orderArrivalTime.until(LocalDateTime.now(), ChronoUnit.MINUTES);
+                    App.SafeCommit();
                     return "We entered your Car successfully! You are late " + noOfMinutes + " minutes to your order.";
                 }
             }
         }
+        App.SafeCommit();
         if(foundOrderInThisParkingLotFlag == true){
             return "You came to soon to your parking order, please come back later";
         }
@@ -73,6 +77,7 @@ public class Kiosk {
     }
 
     public String TakeOutCarInParkingLot(String clientId, String carId ,String parkingLotName){
+        App.SafeStartTransaction();
         OrdersListData ordersListData = App.orders.findOrderData(Integer.parseInt(clientId),Integer.parseInt(carId));
         List<OrderData> orderDataList = ordersListData.getOrdersListData();
         for(OrderData orderData: orderDataList){
@@ -85,12 +90,19 @@ public class Kiosk {
                 // we check if this order is the order that the client ordered (check the time and status)
                 if(orderArrivalTime.isBefore(LocalDateTime.now()) && orderLeavingTime.isAfter(LocalDateTime.now()) && orderData.getStatus() == 1){
                     // update the flag that we found parking order in this parking lot that we are before its date
-                    long noOfMinutes = LocalDateTime.now().until(orderArrivalTime, ChronoUnit.MINUTES);
+                    long noOfMinutes = LocalDateTime.now().until(orderLeavingTime, ChronoUnit.MINUTES);
                     // we finished with this client order, set the status to -1
+                    int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
+                    ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
+                    updatedOrder.setStatus(-1);
+                    App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);
                     orderData.setStatus(-1);
+                    App.session.save(updatedOrder);
+                    App.session.flush();
                     //add to statistical information, that the client fulfilled his parking order
                     App.sastisticalInformations.addStastisticalInformationForActualOrder(orderData);
                     App.sastisticalInformations.pullStastisticalInformationFromDB();
+                    App.SafeCommit();
                     return "We took out your car successfully! You are " + noOfMinutes + " minutes early";
                 }
                 // we check if the client is late for his order
@@ -98,16 +110,23 @@ public class Kiosk {
                     // the customer is late to take out his car
                     long noOfMinutes = orderLeavingTime.until(LocalDateTime.now(), ChronoUnit.MINUTES);
                     // we finished with this client order, set the status to -1
+                    int indexOfOrderInOrderList = App.orders.findIndexByData(orderData);
+                    ParkingOrder updatedOrder = App.orders.ordersList.get(indexOfOrderInOrderList);
+                    updatedOrder.setStatus(-1);
+                    App.orders.ordersList.set(indexOfOrderInOrderList,updatedOrder);
                     orderData.setStatus(-1);
+                    App.session.save(updatedOrder);
+                    App.session.flush();
                     //add to statistical information, that the client was late for his parking order
                     App.sastisticalInformations.addStastisticalInformationForLateParkingOrder(orderData);
                     App.sastisticalInformations.pullStastisticalInformationFromDB();
+                    App.SafeCommit();
                     return "We took out your Car successfully! You are late " + noOfMinutes + " minutes to your order.";
                 }
             }
         }
 
-
+        App.SafeCommit();
         return "We didnt find any car in the parking lot that associates with your id.";
     }
 
