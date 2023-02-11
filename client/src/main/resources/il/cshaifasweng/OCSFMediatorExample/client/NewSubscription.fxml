@@ -9,6 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -61,7 +62,6 @@
       </Text>
       <TextField fx:id="licencePlate" layoutX="565.0" layoutY="127.0" />
       <DatePicker fx:id="time" layoutX="565.0" layoutY="182.0" />
-      <ChoiceBox fx:id="parkingLot" layoutX="566.0" layoutY="239.0" prefWidth="150.0" />
       <ChoiceBox fx:id="expectedDailyLeavingTime" layoutX="566.0" layoutY="299.0" prefWidth="150.0" />
       <ButtonBar layoutX="487.0" layoutY="397.0" prefHeight="40.0" prefWidth="87.0">
         <buttons>
@@ -73,5 +73,10 @@
             <Font size="25.0" />
          </font>
       </Text>
+      <VBox fx:id="vboxParkingList" layoutX="565.0" layoutY="240.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <ChoiceBox fx:id="parkingLot" prefWidth="150.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

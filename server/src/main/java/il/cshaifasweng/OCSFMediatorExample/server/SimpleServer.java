@@ -113,8 +113,8 @@ public class SimpleServer extends AbstractServer {
 					SafeSendToClient(arrivalMsg, client);
 				}
 				SafeSendToClient(employee, client);
-
 			}
+
 			else if (msgString.startsWith("costumer login"))
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
@@ -146,7 +146,7 @@ public class SimpleServer extends AbstractServer {
 				if(msgString.startsWith("new subscription regular"))
 				{
 					ParkingLot theParkingLot = App.parkinglots.getParkingLotByName(args[3]);
-					ret =  App.subscriptions.addNewRegularSubscription(subCostumer,args[1],date,theParkingLot,args[3]);
+					ret =  App.subscriptions.addNewRegularSubscription(subCostumer,args[1],date,theParkingLot,args[4]+":00");
 				}
 				else
 				{
@@ -159,6 +159,12 @@ public class SimpleServer extends AbstractServer {
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
 				App.costumers.logOutCostumer(args[0]);
+
+			}
+			else if (msgString.startsWith("logout employee")) //*****************
+			{
+				String[] args = (msgString.split(":")[1]).split(",");
+				App.employees.logoutEmployee(args[0]);
 
 			}
 

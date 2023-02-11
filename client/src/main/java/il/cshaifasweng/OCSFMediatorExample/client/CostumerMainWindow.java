@@ -93,6 +93,8 @@ public class CostumerMainWindow {
     void LogOut(ActionEvent event) throws IOException {
         SimpleClient myClient = SimpleClient.getClient();
         myClient.sendToServer("logout costumer:"+App.costumer.getId());
+        App.costumer = null;
+        App.dontShow = false;
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }
@@ -119,33 +121,26 @@ public class CostumerMainWindow {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
-        LocalDate currentDate = LocalDate.now();
-        if(!((App.costumer.getSubscriptions().isEmpty())))
+        if(!App.dontShow)
         {
-            Optional<SubscriptionData> expiredSubscription = App.costumer.getSubscriptions().keySet().stream()
-                    .filter(date -> date.isBefore(currentDate))
-                    .map(App.costumer.getSubscriptions()::get)
-                    .findFirst();
-            if (expiredSubscription.isPresent())
-            {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Expired Subscription");
-                alert.setHeaderText("One of your subscriptions has expired");
-                alert.setContentText("Please renew or cancel your subscription");
-                alert.showAndWait();
+            LocalDate currentDate = LocalDate.now();
+            if(!((App.costumer.getSubscriptions().isEmpty()))) {
+                Optional<SubscriptionData> expiringSubscription = App.costumer.getSubscriptions().keySet().stream()
+                        .filter(date -> date.isBefore(currentDate.plusDays(7)))
+                        .filter(date -> date.isAfter(currentDate))
+                        .map(App.costumer.getSubscriptions()::get)
+                        .findFirst();
+                if (expiringSubscription.isPresent()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Subscription Expiring");
+                    alert.setHeaderText("One of your subscriptions is about to expire");
+                    alert.setContentText("Please renew or cancel your subscription");
+                    alert.showAndWait();
+                }
             }
 
+            App.dontShow = true;
         }
 
     }
-
-
-
-
-/*    SimpleClient myClient = SimpleClient.getClient();
-        myClient.sendToServer("logout costumer:"+App.costumer.getId());
-        App.setRoot("InitialWindow");*/
-
-
-
 }

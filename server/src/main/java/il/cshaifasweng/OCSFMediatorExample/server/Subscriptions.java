@@ -12,8 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import static il.cshaifasweng.OCSFMediatorExample.server.App.SafeStartTransaction;
-import static il.cshaifasweng.OCSFMediatorExample.server.App.employees;
+import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 
 public class Subscriptions
 {
@@ -39,8 +38,6 @@ public class Subscriptions
         {
             regularSubscriptions.put(sub.getSubscriptionId(),sub);
         }
-
-
         CriteriaQuery<FullSubscription> anotherQuery = builder.createQuery(FullSubscription.class);
         anotherQuery.from(FullSubscription.class);
         List<FullSubscription> moreData = session.createQuery(anotherQuery).getResultList();
@@ -59,11 +56,23 @@ public class Subscriptions
     public String addNewRegularSubscription(Costumer costumer, String licencePlate, LocalDate
             startingDate, ParkingLot parkingLot, String expectedLeavingTime)
     {
+
+        System.out.println("new regular 0");
+
+        if(costumer.subFound(licencePlate,parkingLot))
+        {
+            System.out.println(licencePlate);
+            return "already registered";
+        }
+
+        System.out.println("new regular 1");
+
         int subscriptionId =  (int)(Math.random() * 900000) + 100000;
         while((regularSubscriptions.get(subscriptionId))!=null)
         {
             subscriptionId =  (int)(Math.random() * 900000) + 100000;
         }
+
         App.SafeStartTransaction();
         RegularSubscription subscription = new RegularSubscription(subscriptionId,costumer,licencePlate,startingDate,parkingLot,expectedLeavingTime);
         App.session.save(subscription);
@@ -71,11 +80,17 @@ public class Subscriptions
         App.SafeCommit();
         regularSubscriptions.put(subscription.getSubscriptionId(),subscription);
         costumer.addRegularSubscriptions(subscription);
-        return "new subscription made";
+
+        return "registration succeeded";
     }
 
     public String addNewFullSubscription(Costumer costumer, String licencePlate, LocalDate start)
     {
+        if(costumer.subFound(licencePlate,null))
+        {
+            return "already registered";
+        }
+
         int subscriptionId =  (int)(Math.random() * 900000) + 100000;
         while((fullSubscriptions.get(subscriptionId))!=null)
         {

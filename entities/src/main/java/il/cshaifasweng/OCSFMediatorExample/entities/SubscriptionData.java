@@ -5,16 +5,20 @@ import java.time.LocalDate;
 
 public class SubscriptionData implements Serializable
 {
+
+    private String costumerId;
+
     private String type;
 
     private String carNum;
 
     private LocalDate endingDate;
 
-    public SubscriptionData(String type, String carNum, LocalDate endingDate) {
+    public SubscriptionData(String type, String carNum, LocalDate endingDate,String costumerId) {
         this.type = type;
         this.carNum = carNum;
         this.endingDate = endingDate;
+        this.costumerId = costumerId;
     }
 
 
@@ -36,6 +40,14 @@ public class SubscriptionData implements Serializable
 
     public LocalDate getEndingDate() {
         return endingDate;
+    }
+
+    public String getCostumerId() {
+        return costumerId;
+    }
+
+    public void setCostumerId(String costumerId) {
+        this.costumerId = costumerId;
     }
 
     public void setEndingDate(LocalDate endingDate) {

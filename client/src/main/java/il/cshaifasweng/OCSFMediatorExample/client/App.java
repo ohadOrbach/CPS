@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
 import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
+import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -27,8 +28,12 @@ public class App extends Application {
 
     private static Scene scene;
     private SimpleClient client;
-    static CostumerData costumer;
-    static EmployeeData employee;
+    static CostumerData costumer = null;
+    static EmployeeData employee = null;
+
+    static boolean dontShow = false;
+
+    static SubscriptionData currentSub = null;
 
     boolean isCostumer = false;
     boolean isEmployee = false;
@@ -56,11 +61,20 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    
-    
 
     @Override
 	public void stop() throws Exception {
+        // when clicking on "x" you logout.
+        SimpleClient myClient = SimpleClient.getClient();
+        if(!(costumer==null))
+        {
+            myClient.sendToServer("logout costumer:" + App.costumer.getId());
+        }
+        else if(!(employee==null))
+        {
+            myClient.sendToServer("logout employee:" + App.employee.getId());
+
+        }
     	EventBus.getDefault().unregister(this);
 		super.stop();
 	}

@@ -24,7 +24,6 @@ public class ParkingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
-
     private int userId;
     private int carNumber;
     private String email;
@@ -95,7 +94,6 @@ public class ParkingOrder {
     public LocalDate getArrivalDate(){ return this.arrivalDate; }
 
     public LocalDate getLeavingDate(){ return this.leavingDate; }
-
 
     public Parking getParking() {
         return parking_id2;
