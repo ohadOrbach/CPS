@@ -35,6 +35,6 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <Button fx:id="MainMenuButton" layoutX="628.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="26.0" prefWidth="130.0" text="Main Manu" />
+        <Button fx:id="MainMenuButton" layoutX="628.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="26.0" prefWidth="130.0" text="Back" />
     </children>
 </AnchorPane>

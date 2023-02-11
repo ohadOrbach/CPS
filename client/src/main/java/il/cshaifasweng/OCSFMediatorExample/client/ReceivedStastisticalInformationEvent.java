@@ -159,9 +159,9 @@ public class ReceivedStastisticalInformationEvent {
     private List<StastisticalInformationData> calcDailyMedianForThisWeek(){
         LocalDate now = LocalDate.now();
         List<StastisticalInformationData> weeklyAvgStastisticalInformationList = new ArrayList<>();
-        List<Integer> currentActualOrders = new ArrayList<>();
-        List<Integer> currentCancledOrders = new ArrayList<>();
-        List<Integer> currentLateParking = new ArrayList<>();
+        List<Double> currentActualOrders = new ArrayList<>();
+        List<Double> currentCancledOrders = new ArrayList<>();
+        List<Double> currentLateParking = new ArrayList<>();
         StastisticalInformationData currentAvgData = new StastisticalInformationData();
         currentAvgData.setParkingLotId(stastisticalInformationDataList.get(0).getParkingLotId());   //initilize
         currentAvgData.setName(stastisticalInformationDataList.get(0).getName());   //initilize

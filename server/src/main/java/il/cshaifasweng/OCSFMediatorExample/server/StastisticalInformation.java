@@ -16,9 +16,9 @@ public class StastisticalInformation implements Serializable {
     private int parkingLotId;
     private String name;
     private LocalDate date;
-    private int actualOrders;
-    private int canceledOrders;
-    private int parkingLateNum;
+    private double actualOrders;
+    private double canceledOrders;
+    private double parkingLateNum;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parkinglot", referencedColumnName = "id")
     private ParkingLot parkingLot;
@@ -62,27 +62,27 @@ public class StastisticalInformation implements Serializable {
 
     public int getParkingLotId(){ return this.parkingLotId;}
 
-    public int getActualOrders() {
+    public double getActualOrders() {
         return actualOrders;
     }
 
-    public void setActualOrders(int actualOrders) {
+    public void setActualOrders(double actualOrders) {
         this.actualOrders = actualOrders;
     }
 
-    public int getCanceledOrders() {
+    public double getCanceledOrders() {
         return canceledOrders;
     }
 
-    public void setCanceledOrders(int canceledOrders) {
+    public void setCanceledOrders(double canceledOrders) {
         this.canceledOrders = canceledOrders;
     }
 
-    public int getParkingLateNum() {
+    public double getParkingLateNum() {
         return parkingLateNum;
     }
 
-    public void setParkingLateNum(int parkingLateNum) {
+    public void setParkingLateNum(double parkingLateNum) {
         this.parkingLateNum = parkingLateNum;
     }
 
