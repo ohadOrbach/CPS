@@ -64,16 +64,16 @@
         </Label>
         <Label layoutX="29.0" layoutY="86.0" text="Currently you are at PakringLot number:" textAlignment="CENTER">
             <font>
-                <Font name="Bell MT Bold" size="21.0" />
+                <Font size="18.0" />
             </font>
         </Label>
-        <ChoiceBox fx:id="choiceBox" layoutX="418.0" layoutY="86.0" prefHeight="26.0" prefWidth="178.0">
+        <ChoiceBox fx:id="choiceBox" layoutX="354.0" layoutY="87.0" prefHeight="26.0" prefWidth="178.0">
             <styleClass>
                 <String fx:value="secondary-color" />
                 <String fx:value="round-border" />
             </styleClass>
         </ChoiceBox>
-        <Button fx:id="TakeInCarBtn" layoutX="278.0" layoutY="181.0" mnemonicParsing="false" onAction="#takeInClientCar" prefHeight="39.0" prefWidth="165.0" text="Take In My Car">
+        <Button fx:id="TakeInCarBtn" layoutX="90.0" layoutY="227.0" mnemonicParsing="false" onAction="#takeInClientCar" prefHeight="39.0" prefWidth="165.0" text="Take In My Car">
             <font>
                 <Font size="18.0" />
             </font>
@@ -82,17 +82,17 @@
                 <String fx:value="secondary-color" />
             </styleClass>
         </Button>
-        <Label layoutX="20.0" layoutY="187.0" text="I want to take in my car:" textAlignment="CENTER">
+        <Label layoutX="20.0" layoutY="187.0" textAlignment="CENTER">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="20.0" layoutY="266.0" textAlignment="CENTER">
             <font>
                 <Font name="Bell MT Bold" size="21.0" />
             </font>
         </Label>
-        <Label layoutX="20.0" layoutY="266.0" text="I want to take out my car:" textAlignment="CENTER">
-            <font>
-                <Font name="Bell MT Bold" size="21.0" />
-            </font>
-        </Label>
-        <Button fx:id="TakeOutCarBtn" layoutX="278.0" layoutY="260.0" mnemonicParsing="false" onAction="#takeOutClientCar" prefHeight="39.0" prefWidth="165.0" text="Take Out My Car">
+        <Button fx:id="TakeOutCarBtn" layoutX="293.0" layoutY="227.0" mnemonicParsing="false" onAction="#takeOutClientCar" prefHeight="39.0" prefWidth="165.0" text="Take Out My Car">
             <font>
                 <Font size="18.0" />
             </font>
@@ -101,12 +101,12 @@
                 <String fx:value="secondary-color" />
             </styleClass>
         </Button>
-        <Label layoutX="20.0" layoutY="352.0" text="I want to order parking here:" textAlignment="CENTER">
+        <Label layoutX="20.0" layoutY="352.0" textAlignment="CENTER">
             <font>
                 <Font name="Bell MT Bold" size="21.0" />
             </font>
         </Label>
-        <Button fx:id="OrderParkingBtn" layoutX="304.0" layoutY="346.0" mnemonicParsing="false" onAction="#makeClientOrder" prefHeight="39.0" prefWidth="165.0" text="Order Parking">
+        <Button fx:id="OrderParkingBtn" layoutX="501.0" layoutY="227.0" mnemonicParsing="false" onAction="#makeClientOrder" prefHeight="39.0" prefWidth="165.0" text="Order Parking">
             <font>
                 <Font size="18.0" />
             </font>
@@ -115,21 +115,25 @@
                 <String fx:value="secondary-color" />
             </styleClass>
         </Button>
-      <Button fx:id="MainMenuButton" layoutX="638.0" layoutY="17.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="26.0" prefWidth="130.0" text="Main Manu" />
+      <Button fx:id="MainMenuButton" layoutX="638.0" layoutY="17.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="26.0" prefWidth="130.0" text="Main Manu">
+         <styleClass>
+            <String fx:value="primary-color" />
+            <String fx:value="round-border" />
+         </styleClass></Button>
       <TextField fx:id="ClientId" layoutX="133.0" layoutY="137.0" prefHeight="26.0" prefWidth="186.0">
          <styleClass>
             <String fx:value="secondary-color" />
             <String fx:value="round-border" />
          </styleClass>
       </TextField>
-      <Label layoutX="32.0" layoutY="137.0" text="Client Id-" textAlignment="CENTER">
+      <Label layoutX="32.0" layoutY="137.0" text="Client ID:" textAlignment="CENTER">
          <font>
-            <Font name="Bell MT Bold" size="21.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="370.0" layoutY="137.0" text="Car Id-" textAlignment="CENTER">
+      <Label layoutX="392.0" layoutY="137.0" text="Car ID:" textAlignment="CENTER">
          <font>
-            <Font name="Bell MT Bold" size="21.0" />
+            <Font size="18.0" />
          </font>
       </Label>
       <TextField fx:id="CarId" layoutX="450.0" layoutY="137.0" prefHeight="26.0" prefWidth="186.0">
