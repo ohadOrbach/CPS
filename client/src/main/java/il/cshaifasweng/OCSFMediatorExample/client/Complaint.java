@@ -35,7 +35,7 @@ public class Complaint {
     @FXML
     void sendComplaint(ActionEvent event) {
         SimpleClient myclient=SimpleClient.getClient();
-        ComplaintData cmp=new ComplaintData(newComplaintTxt.getText(),0);
+        ComplaintData cmp=new ComplaintData(newComplaintTxt.getText(),0, App.costumer);
         myclient.sendComplaint(cmp);
         newComplaintTxt.setText("");
     }
@@ -50,6 +50,8 @@ public class Complaint {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.setRoot("primary");
+
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 }

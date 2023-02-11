@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class SimpleServer extends AbstractServer {
@@ -34,7 +35,6 @@ public class SimpleServer extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		System.out.format("i am in the server\n");
 		System.out.format("i got object from %s class\n", msg.getClass().getSimpleName());
 		if (String.class.equals(msg.getClass())) {
 			String msgString = msg.toString();
@@ -49,27 +49,48 @@ public class SimpleServer extends AbstractServer {
 				}
 			} else if (msgString.startsWith("#update")) {
 				String[] args = (msgString.split(":", 2)[1]).split(",", -1);
-				System.out.println("im in update mode");
+				System.out.println("im in update mode \n");
 				switch (args[0]) {
 					case "parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
 						App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
 						App.parkingPrices.pullParkingPrices();
+					}
+					case "complaint status" -> {
+						ConnectionToClient c = App.complaints.changeStatus(Integer.parseInt(args[1]));
+						Message arrivalMsg = new Message("Your complain is closed you got" +Integer.parseInt(args[2])+" compensation");
+						SafeSendToClient(arrivalMsg, c);
+						App.complaints.pullComplaints();
+					}
+					case "parkings" -> { // update parkings to  client screen
+						System.out.println("in update parkings  "+args[1]+"\n");
+						ParkingLot p = App.parkinglots.getParkingLotByName(args[1]);
+						Parkings plist = new Parkings(p.getParkings());
+						ParkingListData returnParkings = plist.getParkingList();
+						SafeSendToClient(returnParkings, client);
 					}
 				}
 			} else if (msgString.startsWith("#request")) {
 				String[] args = (msgString.split(":")[1]).split(",");
 				switch (args[0]) {
 					case " parking lots list" -> {
+						System.out.format("i am in case request for parking lots list\n");
 						ParkingLotListData parkingLotListData = App.parkinglots.getParkingLotList();
 						SafeSendToClient(parkingLotListData, client);
 					}
 
 					case " prices table" -> {
+						System.out.format("i am in case request for prices table\n");
 						PricesList parkingPricesList = App.parkinglots.getParkingLotsPrices();
 						SafeSendToClient(parkingPricesList, client);
 					}
+					case " complaint table" -> {
+						System.out.format("i am in case request for complaint table\n");
+						ComplaintListData complaintsList = App.complaints.getComplaints();
+						SafeSendToClient(complaintsList, client);
+					}
 
 					case " stastistical information list" -> {
+						System.out.format("i am in case request for stastistical information list\n");
 						StastisticalInformationListData StastisticalInformationList = App.sastisticalInformations.getStastisticalInformationList();
 						SafeSendToClient(StastisticalInformationList, client);
 					}
@@ -79,9 +100,15 @@ public class SimpleServer extends AbstractServer {
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
 				EmployeeData employee = App.employees.employeeLoginCheck(args[0],args[1]);
+				if (employee.getJob().equals("costumer service")){
+					Employee emp = App.employees.findEmployeeById(employee.getId());
+					String receivedMsg = emp.checkReminders();
+					Message arrivalMsg = new Message(receivedMsg);
+					SafeSendToClient(arrivalMsg, client);
+				}
 				SafeSendToClient(employee, client);
-
 			}
+
 			else if (msgString.startsWith("costumer login"))
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
@@ -113,7 +140,7 @@ public class SimpleServer extends AbstractServer {
 				if(msgString.startsWith("new subscription regular"))
 				{
 					ParkingLot theParkingLot = App.parkinglots.getParkingLotByName(args[3]);
-					ret =  App.subscriptions.addNewRegularSubscription(subCostumer,args[1],date,theParkingLot,args[3]);
+					ret =  App.subscriptions.addNewRegularSubscription(subCostumer,args[1],date,theParkingLot,args[4]+":00");
 				}
 				else
 				{
@@ -126,6 +153,12 @@ public class SimpleServer extends AbstractServer {
 			{
 				String[] args = (msgString.split(":")[1]).split(",");
 				App.costumers.logOutCostumer(args[0]);
+
+			}
+			else if (msgString.startsWith("logout employee")) //*****************
+			{
+				String[] args = (msgString.split(":")[1]).split(",");
+				App.employees.logoutEmployee(args[0]);
 
 			}
 
@@ -155,8 +188,9 @@ public class SimpleServer extends AbstractServer {
 
 
 		} else if (msg.getClass().equals(ComplaintData.class)) { // Make a complaint
-			System.out.format("i got a new complaint\n");
-			String receivedMsg = App.complaints.addComplaint((ComplaintData) msg);
+			Employee emp = App.employees.getRandomCS();
+			String receivedMsg = App.complaints.addComplaint((ComplaintData) msg, (Employee) emp, (ConnectionToClient) client);
+			App.complaints.pullComplaints();
 			Message arrivalMsg = new Message(receivedMsg);
 			SafeSendToClient(arrivalMsg, client);
 

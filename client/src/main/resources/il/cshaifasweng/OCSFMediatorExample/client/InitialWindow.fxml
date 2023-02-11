@@ -37,5 +37,16 @@
             <Image url="@Images/logo.png" />
          </image>
       </ImageView>
+      <Button fx:id="kiosk" layoutX="300.0" layoutY="494.0" mnemonicParsing="false" onAction="#goToKiosk" prefHeight="55.0" prefWidth="178.0" text="Kiosk">
+         <font>
+            <Font name="Agency FB" size="24.0" />
+         </font>
+         <effect>
+            <Blend />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

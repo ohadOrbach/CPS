@@ -49,27 +49,32 @@ public class MainMenuOrder {
 
     @FXML
     void makeCasualOrderInAdvance(ActionEvent event) throws IOException {
+        App.history.add("CasualOrderInAdvance");
         App.setRoot("CasualOrderInAdvance");
     }
 
     @FXML
     void makeCasualOrder(ActionEvent event) throws IOException {
+        App.history.add("CasualOrder");
         App.setRoot("CasualOrder");
     }
 
     @FXML
     void cancelOrder(ActionEvent event) throws IOException {
+        App.history.add("CancelOrder");
         App.setRoot("CancelOrder");
     }
 
     @FXML
     void TrackingOrder(ActionEvent event) throws IOException {
+        App.history.add("TrackingOrder");
         App.setRoot("TrackingOrder");
     }
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.setRoot("primary");
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
     @FXML

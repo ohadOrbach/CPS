@@ -1,23 +1,30 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.HashMap;
 
-    public class CostumerData implements Serializable {
+public class CostumerData implements Serializable {
 
         private int id;
         private String password;
         private String Email;
+        public HashMap<LocalDate,SubscriptionData> subscriptions = new HashMap<LocalDate,SubscriptionData>();
         private boolean loggedIn = false;
-
 
         public CostumerData(int id, String password, String email) {
             this.id = id;
+            this.password = password;
+            this.Email = email;
+
+            loggedIn = true;
+        }
+        public CostumerData(String password, String email) {
             this.password = password;
             Email = email;
 
             loggedIn = true;
         }
-
 
         public CostumerData()
         {
@@ -55,7 +62,18 @@ import java.io.Serializable;
         public void setLoggedIn(boolean loggedIn) {
             this.loggedIn = loggedIn;
         }
+        public void addSubscription(SubscriptionData sub)
+        {
+            subscriptions.put(sub.getEndingDate(),sub);
+        }
+        public SubscriptionData getSubscription(LocalDate date)
+        {
+            return (subscriptions.get(date));
+        }
 
+        public HashMap<LocalDate, SubscriptionData> getSubscriptions() {
+            return subscriptions;
+        }
 
     }
 

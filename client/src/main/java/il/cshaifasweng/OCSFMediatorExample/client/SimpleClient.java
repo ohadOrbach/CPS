@@ -21,6 +21,7 @@ public class SimpleClient extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
+		System.out.format("i got object from %s class\n", msg.getClass().getSimpleName());
 		if (msg.getClass().equals(Warning.class)) {
 			Platform.runLater(() -> EventBus.getDefault().post(new WarningEvent((Warning) msg)));
 		}
@@ -36,10 +37,16 @@ public class SimpleClient extends AbstractClient {
 			Platform.runLater(() -> EventBus.getDefault().
 					post(new ReceivedStastisticalInformationEvent((StastisticalInformationListData) msg)));
 		}
-
-		else if(msg.getClass().equals(PricesList.class)) {
+		else if(msg.getClass().equals(ParkingListData.class)) {
+			System.out.format("i got parkings list");
 			Platform.runLater(() -> EventBus.getDefault().
-					post(new ReceivedParkingPricesEvent((PricesList) msg)));
+					post(new ReceivedParkings((ParkingListData) msg)));
+		}
+
+		else if(msg.getClass().equals(ComplaintListData.class)) {
+			System.out.format("i got some complaints update");
+			Platform.runLater(() -> EventBus.getDefault().
+					post(new ReceivedComplaintsEvent((ComplaintListData) msg)));
 		}
 
 		else if(msg.getClass().equals(OrdersListData.class)) {
@@ -80,7 +87,7 @@ public class SimpleClient extends AbstractClient {
 
 	public void requestParkingLotList(){
 		try {
-			client.sendToServer("#request:parkingLots");
+			client.sendToServer("#request: parking lots list");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -111,6 +118,15 @@ public class SimpleClient extends AbstractClient {
 			e.printStackTrace();
 		}
 	}
+	public void getParkings(String name){
+		try {
+			System.out.println("sending "+name+"\n");
+			client.sendToServer("#update:parkings," + name);
+			//App.setRoot("ParkingScreenController");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void employeeLogin(String id, String password) {
 		try {
@@ -123,6 +139,16 @@ public class SimpleClient extends AbstractClient {
 	public void sendComplaint(ComplaintData complaint){
 		try {
 			client.sendToServer(complaint);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void changeCompStatus(int compValue, int compId) {
+		try {
+			client.sendToServer("#update:complaint status," + compId + "," + compValue);
+			client.sendToServer("#request: complaint table");
+			App.setRoot("ComplaintsEmployee");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

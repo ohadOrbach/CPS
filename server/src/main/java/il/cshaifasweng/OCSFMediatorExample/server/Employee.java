@@ -1,7 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
+import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
+import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class Employee {
     private String job;
     private String branch;
     private boolean login;
+
+    @OneToMany(mappedBy = "handledBy")
+    private List<Complaint> complaints = new ArrayList<>();
 
     public Employee(int id, String privateName, String sureName, String password, String email, String job, String branch) {
         this.id = id;
@@ -109,6 +115,35 @@ public class Employee {
         this.branch = branch;
     }
 
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+    public void addComplaimt(Complaint comp){
+        complaints.add(comp);
+    }
+
+    public EmployeeData getEmployeeData(){
+
+        return new EmployeeData(id, privateName, sureName, password, Email, job, branch);
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
+    public String checkReminders() {
+
+        int comps = 0;
+        for (Complaint complaint : complaints) {
+            System.out.println("comp number: " +complaint.getId()+" total comps to handle: "+comps+"\n");
+            comps = comps + complaint.checkReminder();
+        }
+        if (comps>0){
+            return "Reminder, you have complaints to answer";
+        }
+        else{
+            return "You do not have any complaints to handle, good job!";
+        }
+    }
     public void compensateCustomer() {
         // leave empty for now
     }

@@ -72,8 +72,8 @@ public class InitialCostumerWindow {
         {
             errorLoginMassage.setText("Login Success");
             App.costumer = event.getCostumer();
-            App.history.add("CostumerMainMenu");
-            App.setRoot("CostumerMainMenu");
+            App.history.add("CostumerMainWindow");
+            App.setRoot("CostumerMainWindow");
         }
     }
 

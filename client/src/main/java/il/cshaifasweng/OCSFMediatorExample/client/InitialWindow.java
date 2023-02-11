@@ -23,6 +23,9 @@ public class InitialWindow {
     private Button staff;
 
     @FXML
+    private Button kiosk;
+
+    @FXML
     void switchToCostumersLogin(ActionEvent event) throws IOException {
         App.history.add("InitialCostumerWindow");
         App.setRoot("InitialCostumerWindow");
@@ -35,9 +38,18 @@ public class InitialWindow {
     }
 
     @FXML
+    void goToKiosk(ActionEvent event) throws IOException {
+        App.history.add("kiosk");
+        App.setRoot("kiosk");
+
+
+    }
+
+    @FXML
     void initialize() {
         assert costumers != null : "fx:id=\"costumers\" was not injected: check your FXML file 'InitialWindow.fxml'.";
         assert staff != null : "fx:id=\"staff\" was not injected: check your FXML file 'InitialWindow.fxml'.";
+        assert kiosk != null : "fx:id=\"kiosk\" was not injected: check your FXML file 'InitialWindow.fxml'.";
 
     }
 

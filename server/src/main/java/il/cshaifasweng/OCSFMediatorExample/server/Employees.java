@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static il.cshaifasweng.OCSFMediatorExample.server.App.*;
 
@@ -70,15 +73,41 @@ public class Employees {
 
         if (employeesResult.isEmpty() || !employeesResult.get(0).getPassword().equals(password)||employeesResult.get(0).isLogin()) {
 
-            System.out.format("Login failed, employeesResult empty");
+            System.out.format("Login failed, employeesResult empty \n");
             return new EmployeeData();
         }
 
         Employee employee = employeesResult.get(0);
+        employee.setLogin(true);
         EmployeeData empData = new EmployeeData(employee.getId(),employee.getPrivateName(),employee.getSureName(),employee.getPassword()
                 ,employee.getEmail(), employee.getJob(),employee.getBranch());
-        System.out.format("Login Success");
+        System.out.format("Login Success \n");
 
         return empData;
     }
+
+    public Employee getRandomCS() {
+        List<Employee> csEmployees = new ArrayList<>();
+        for (Employee e : employees.values()) {
+            if (e.getJob().equals("costumer service")) {
+                csEmployees.add(e);
+            }
+        }
+        if (csEmployees.isEmpty()) {
+            return null;
+        }
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(csEmployees.size());
+        return csEmployees.get(randomIndex);
+    }
+
+    public void logoutEmployee(String id)
+    {
+        employees.get(Integer.valueOf(id)).setLogin(false);
+    }
+
+    public Employee findEmployeeById(int id) {
+        return employees.get(id);
+    }
+
 }

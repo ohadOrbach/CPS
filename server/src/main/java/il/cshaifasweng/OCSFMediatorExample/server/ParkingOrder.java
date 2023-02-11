@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,7 +24,6 @@ public class ParkingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
-
     private int userId;
     private int carNumber;
     private String email;
@@ -34,6 +34,8 @@ public class ParkingOrder {
     private String leavingTime;
     private String orderTime = (LocalTime.now()).toString();
     private int status2;     // 0 if we didn't fulfill the order, 1 if we inserted the car, -1 if its completed (we also removed it)
+
+    private double expectedPayment;
 
     @ManyToOne
     @JoinColumn(name = "parking_id2" , referencedColumnName = "id")
@@ -51,6 +53,7 @@ public class ParkingOrder {
         this.leavingDate = leavingDate;
         this.arrivalDate = arrivalDate;
         this.status2 = 0;   //initilize
+        this.expectedPayment = calcExpectedPayment(parkingLotName);
     }
 
 
@@ -92,7 +95,6 @@ public class ParkingOrder {
 
     public LocalDate getLeavingDate(){ return this.leavingDate; }
 
-
     public Parking getParking() {
         return parking_id2;
     }
@@ -116,5 +118,27 @@ public class ParkingOrder {
 
     public void setStatus(int status2) {
         this.status2 = status2;
+    }
+
+    private double calcExpectedPayment(String parkingLotName)
+    {
+        ParkingLot Pl = findParkingByName(parkingLotName);
+        double parkingPrice = Pl.getAllPrices().getOrderedParkingPrice();
+
+        LocalDateTime arrival = LocalDateTime.of(arrivalDate, LocalTime.parse(arrivalTime));
+        LocalDateTime leaving = LocalDateTime.of(leavingDate, LocalTime.parse(leavingTime));
+
+        long durationInMinutes =
+                (Duration.between(arrival, leaving).toMillis() / 1000) / 60;
+
+        return durationInMinutes * (parkingPrice / 60.0);
+    }
+
+    public double getExpectedPayment() {
+        return expectedPayment;
+    }
+
+    public void setExpectedPayment(double expectedPayment) {
+        this.expectedPayment = expectedPayment;
     }
 }

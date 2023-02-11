@@ -28,15 +28,19 @@ public class Costumer {
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "full_subscriptions_id")
     public List<FullSubscription> fullSubscriptions = new ArrayList<>();
-
+    @OneToMany(mappedBy = "issuedBy")
+    private List<Complaint> complaints;
 
     public Costumer(int id, String email,String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-        login = true;
+        login = false;
     }
 
+    public CostumerData getCostumerData(){
+        return new CostumerData(password, email);
+    }
     public boolean isLogin() {
         return login;
     }
@@ -84,8 +88,44 @@ public class Costumer {
     public void addRegularSubscriptions(RegularSubscription regularSubscription) {
         regularSubscriptions.add(regularSubscription);
     }
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
 
     public void addFullSubscriptions(FullSubscription fullSubscription) {
         fullSubscriptions.add(fullSubscription);
+    }
+
+    public boolean subFound(String licencePlate, ParkingLot parkingLot)
+    {
+        //System.out.println("hello");
+        int i = 0;
+        //System.out.println("hello1");
+        for(RegularSubscription rs : this.regularSubscriptions)
+        {
+           // System.out.println("im looking for: "+licencePlate);
+            if(rs.getLicencePlate().equals(licencePlate))
+            {
+                if(parkingLot.getParkingLotId()==rs.getParkingLot().getParkingLotId())
+                {
+                    return true;
+                }
+            }
+        }
+
+        for(FullSubscription rs : this.fullSubscriptions)
+        {
+            if(rs.getLicencePlate().equals(licencePlate))
+            {
+                System.out.println(i++);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

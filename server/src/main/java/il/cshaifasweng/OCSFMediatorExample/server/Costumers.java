@@ -3,11 +3,13 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrdersListData;
+import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
 import org.hibernate.Session;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,16 +58,29 @@ public class Costumers {
     {
         Costumer theCostumer = costumers.get(Integer.valueOf(id));
 
-        Costumer handmade = costumers.get(308283886);
-
-        if (theCostumer==null || !(theCostumer.getPassword().equals(password)))
+        if (theCostumer==null || !(theCostumer.getPassword().equals(password)) || theCostumer.isLogin())
         {
+            System.out.println("costumer failed");
             return new CostumerData();
         }
 
-        System.out.println("costumer exist");
-        return (new CostumerData(theCostumer.getId(),theCostumer.getEmail(),theCostumer.getPassword()));
+        theCostumer.setLogin(true);
 
+        CostumerData costumer = new CostumerData(theCostumer.getId(),theCostumer.getEmail(),theCostumer.getPassword());
+
+        for(FullSubscription fs : theCostumer.fullSubscriptions)
+        {
+            LocalDate endingDate = fs.getStart().plusMonths(1);
+            SubscriptionData sd = new SubscriptionData("full",fs.getLicencePlate(),endingDate,Integer.toString(fs.getCostumer().getId()));
+            costumer.addSubscription(sd);
+        }
+        for(RegularSubscription fs : theCostumer.regularSubscriptions)
+        {
+            LocalDate endingDate = fs.getStart().plusMonths(1);
+            SubscriptionData sd = new SubscriptionData("full",fs.getLicencePlate(),endingDate,Integer.toString(fs.getCostumer().getId()));
+            costumer.addSubscription(sd);
+        }
+        return costumer;
     }
 
     public String addNewCostumer(String id, String password,String email)

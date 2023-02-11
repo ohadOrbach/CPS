@@ -20,7 +20,6 @@ public class ParkingLotData implements Serializable {
         this.size = rows*rowNum;
         this.name = name;
     }
-
     public int getParkingLotId() {
         return id;
     }

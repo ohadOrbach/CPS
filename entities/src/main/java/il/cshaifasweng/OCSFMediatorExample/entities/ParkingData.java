@@ -1,8 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ParkingData {
+public class ParkingData implements Serializable {
     private int id;
     private int status; //0 is free, 1 is occupied, 2 is reserved, -1 is broken
     private int parkingLotId;
