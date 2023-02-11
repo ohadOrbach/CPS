@@ -158,9 +158,10 @@ public class Orders {
     private double calculateFine(ParkingOrder parkingOrder) throws ParseException {
         // get arrival time and date - in format below
         SimpleDateFormat diffFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Date arrival = diffFormat.parse(parkingOrder.getArrivalDate().toString() +" "+ parkingOrder.getArrivalTime() + ":00");
-        Date current = diffFormat.parse(LocalDateTime.now().toString());
-
+        Date arrival = diffFormat.parse(parkingOrder.getArrivalDate().toString() + " " + parkingOrder.getArrivalTime() + ":00");
+        Date current = diffFormat.parse(LocalDate.now().toString()+ " " + LocalDateTime.now().getHour() +
+                ":" + LocalDateTime.now().getMinute() + ":00");
+        System.out.println("in fine calcul\n");
         // calculate diff in hours.
         long difference_In_Time = current.getTime() - arrival.getTime();
         long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
