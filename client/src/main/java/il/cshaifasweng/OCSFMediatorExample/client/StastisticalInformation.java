@@ -25,13 +25,13 @@ public class StastisticalInformation {
     TableView<StastisticalInformationData> table = new TableView<StastisticalInformationData>();
 
     @FXML
-    private TableColumn<StastisticalInformationData, Integer> CancledOrdersCol;
+    private TableColumn<StastisticalInformationData, Double> CancledOrdersCol;
 
     @FXML
-    private TableColumn<StastisticalInformationData, Integer> LateParkingCol;
+    private TableColumn<StastisticalInformationData, Double> LateParkingCol;
 
     @FXML
-    private TableColumn<StastisticalInformationData, Integer> actualOrdersCol;
+    private TableColumn<StastisticalInformationData, Double> actualOrdersCol;
 
     @FXML
     private TableColumn<StastisticalInformationData, Integer> idCol;
