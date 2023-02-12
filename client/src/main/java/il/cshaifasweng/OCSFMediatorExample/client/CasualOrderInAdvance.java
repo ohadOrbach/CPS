@@ -19,9 +19,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import il.cshaifasweng.OCSFMediatorExample.client.MainMenuOrder;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
@@ -132,7 +134,23 @@ public class CasualOrderInAdvance {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+        leavingData.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
+        arrivalDate.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
     }
+
 
 
     @FXML
@@ -143,6 +161,8 @@ public class CasualOrderInAdvance {
     @FXML
     void sendAdvOrder(ActionEvent event) {
         try{
+            if(!testInput())
+                return;
             System.out.println("sending oreder");
             OrderData orderData =
                     new OrderData(IdText.getText(), CarNumText.getText(), arrivalDate.getValue(), ArrivalTF.getText(), leavingData.getValue(), DepartureTimeText.getText(),
@@ -151,6 +171,54 @@ public class CasualOrderInAdvance {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean testInput() {
+        // check time format HH:MM
+        if (!Pattern.matches("^[0-2][0-3]:[0-5][0-9]$", DepartureTimeText.getText()))
+            sendTextError("Incorrect Departure Time, please try again");
+        else if (!Pattern.matches("^[0-2][0-3]:[0-5][0-9]$", ArrivalTF.getText()))
+            sendTextError("Incorrect Arrival Time, please try again");
+
+        LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime arrivalTime = LocalTime.parse(ArrivalTF.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+        // test ID - 9 digits.
+        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
+            sendTextError("Incorrect ID, please try again");
+
+        // test carNum - only digits.
+        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
+            sendTextError("Incorrect car number, please try again");
+
+        // test email - chars + @ + dom name.
+        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
+            sendTextError("Incorrect Email, please try again");
+
+        // check that leaving time > current time.
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
+            sendTextError("Incorrect Departure Time, please try again");
+
+        // test that arrival time < leaving time.
+        else if(parsedTime.isBefore(arrivalTime) && leavingData.getValue().isEqual(arrivalDate.getValue()))
+            sendTextError("Incorrect Arrival Time, please try again");
+
+        // test that arrival date >= leaving date.
+        else if(leavingData.getValue().isBefore(arrivalDate.getValue()))
+            sendTextError("Incorrect Departure Date, please try again");
+
+        else
+            return true;
+
+        return false;
+    }
+
+
+    public void sendTextError(String text) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    String.format("Error: %s", text));
+            alert.show();
+        });
     }
 
 }

@@ -68,7 +68,7 @@ public class StastisticalInformations {
             stastisticalInformations.add(stastisticalInformation);
         }
         else{
-            int currentActualOrders = stastisticalInformations.get(statisticalInformationIndex).getActualOrders();
+            double currentActualOrders = stastisticalInformations.get(statisticalInformationIndex).getActualOrders();
             stastisticalInformations.get(statisticalInformationIndex).setActualOrders(currentActualOrders+1);
             App.session.flush();
         }
@@ -90,7 +90,7 @@ public class StastisticalInformations {
             stastisticalInformations.add(stastisticalInformation);
         }
         else{
-            int currenParkingLateOrders = stastisticalInformations.get(statisticalInformationIndex).getParkingLateNum();
+            double currenParkingLateOrders = stastisticalInformations.get(statisticalInformationIndex).getParkingLateNum();
             stastisticalInformations.get(statisticalInformationIndex).setParkingLateNum(currenParkingLateOrders+1);
             App.session.flush();
         }
@@ -134,7 +134,7 @@ public class StastisticalInformations {
                 stastisticalInformations.add(stastisticalInformation);
             }
             else{
-                int currentCancledOrders = stastisticalInformations.get(statisticalInformationIndex).getCanceledOrders();
+                double currentCancledOrders = stastisticalInformations.get(statisticalInformationIndex).getCanceledOrders();
                 stastisticalInformations.get(statisticalInformationIndex).setCanceledOrders(currentCancledOrders+1);
                 App.session.flush();
             }

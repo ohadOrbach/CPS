@@ -64,23 +64,29 @@ public class CancelOrder {
                 }
         }
 
+        // start choice box if its cancel (select the order to cancel).
         @Subscribe
         public void startChoiceBox(ReceivedOrderList event) throws Exception {
+                // if not cancel mode, return (can be also tracking).
                 if(!Objects.equals(event.getMode(), "cancel")){ return; }
-                System.out.println("i got list for deletion: in client\n");
+
                 List<OrderData> eventList = event.getOrderListData();
                 OrdersListData deleteList = new OrdersListData(eventList);
+                // init orders vector
                 for (int i = 0; i < eventList.size(); i++) {
                         orderList.add(eventList.get(i));
                 }
+
                 Stage choiceStage = new Stage();
                 choiceStage.setTitle("Select orders to cancel");
                 Button deleteBtn = new Button("Cancel Orders");
 
+                // create choice box for each order.
                 ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
                 int i = 1;
                 for (OrderData orderData : eventList) {
-                        CheckBox checkBox = new CheckBox(i++ + "." + " Order id: " + orderData.getOrderId() + " ,Car Number: " + orderData.getCarNumber() + " ,Expected Arrival Date: "
+                        CheckBox checkBox = new CheckBox(i++ + "." + " Order id: " + orderData.getOrderId() +
+                                " ,Car Number: " + orderData.getCarNumber() + " ,Expected Arrival Date: "
                                 + orderData.getArrivalDate().toString() + " ,From:" + orderData.getLeavingTime()
                                 + " ,Expected Leaving Date: " + orderData.getLeavingDate().toString() + " ,Until: " + orderData.getLeavingTime());
                         checkBoxes.add(checkBox);
@@ -90,6 +96,7 @@ public class CancelOrder {
                 for(CheckBox checkBox:checkBoxes)
                         vBox.getChildren().add(checkBox);
 
+                // in send cancel - send to server orders list for deletion.
                 deleteBtn.setOnAction((actionEvent) -> {
                         for (CheckBox checkBox : checkBoxes)
                                 if (!checkBox.isSelected()) {
@@ -103,6 +110,7 @@ public class CancelOrder {
                                 e.printStackTrace();}
                 });
 
+                // show choices to client
                 vBox.getChildren().add(deleteBtn);
                 Scene scene = new Scene(vBox, 800, 200);
                 choiceStage.setScene(scene);
@@ -110,10 +118,10 @@ public class CancelOrder {
         };
 
 
+        // send cancel request to server - via id and car number.
         @FXML
         void sendCancellation() {
                 try{
-                        System.out.println("sending cancellation req");
                         CancelOrderData trackingOrder =
                         new CancelOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(CarNumberTF.getText()));
                         SimpleClient.getClient().sendToServer(trackingOrder);
@@ -121,11 +129,12 @@ public class CancelOrder {
                         e.printStackTrace();}
         }
 
-
+        // change mode (dark\light).
         @FXML
         public void changeMode(ActionEvent event){
                 PrimaryController.ChangeForAll(parent, imMode);
         }
+
 
     }
 

@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Complaint">
+<AnchorPane prefHeight="480.0" prefWidth="800.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Complaint">
 <children>
-    <Button fx:id="sendBtn" layoutX="378.0" layoutY="431.0" mnemonicParsing="false" onAction="#sendComplaint" text="Submit" />
-    <Text fill="#25f725" layoutX="330.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaint" textAlignment="CENTER" wrappingWidth="141.800048828125">
+    <Button fx:id="sendBtn" layoutX="378.0" layoutY="431.0" mnemonicParsing="false" onAction="#sendComplaint" prefHeight="37.0" prefWidth="65.0" text="Submit">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass></Button>
+    <Text layoutX="322.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Complaint" textAlignment="CENTER" wrappingWidth="141.800048828125">
         <font>
-            <Font name="Berlin Sans FB Demi Bold" size="28.0" />
+            <Font name="System Bold" size="28.0" />
         </font>
     </Text>
     <Text layoutX="44.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What has happened?" wrappingWidth="177.79998779296875">
         <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
         </font>
     </Text>
-    <Button fx:id="MainMenuButton" layoutX="701.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" text="Main Menu" />
-      <TextArea fx:id="newComplaintTxt" layoutX="43.0" layoutY="122.0" prefHeight="302.0" prefWidth="706.0" promptText="write here..." />
+    <Button fx:id="MainMenuButton" layoutX="692.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="24.0" prefWidth="86.0" text="Main Menu">
+         <styleClass>
+            <String fx:value="round-border" />
+            <String fx:value="secondary-color" />
+         </styleClass></Button>
+      <TextArea fx:id="newComplaintTxt" layoutX="43.0" layoutY="121.0" prefHeight="303.0" prefWidth="693.0" promptText="write here..." />
 </children>
 </AnchorPane>

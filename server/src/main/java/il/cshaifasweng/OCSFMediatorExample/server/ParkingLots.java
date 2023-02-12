@@ -59,6 +59,7 @@ public class ParkingLots {
         namal5.setParkingPrices(prices5);
         StastisticalInformation stastisticalInformation5 = new StastisticalInformation(5,now,0,0,0, namal5);    //set statistical information
         namal5.addStastisticalInformation(stastisticalInformation5);
+
         App.session.save(namal1);
         App.session.save(prices1);
         App.session.save(stastisticalInformation1);
@@ -72,18 +73,72 @@ public class ParkingLots {
         App.session.save(namal2);
         App.session.save(prices2);
         App.session.save(stastisticalInformation2);
+        for(int i=1; i<=10; i++){
+            Parking parking = new Parking(0,1,i,1,namal2);
+            App.session.save(parking);
+            Parking parking2 = new Parking(0,2,i,1,namal2);
+            App.session.save(parking);
+            namal2.addParking(parking);
+            namal2.addParking(parking2);
+        }
+        App.session.save(namal2);
 
         App.session.save(namal3);
         App.session.save(prices3);
         App.session.save(stastisticalInformation3);
+        for(int i=1; i<=20; i++){
+            Parking parking = new Parking(0,1,i,1,namal3);
+            App.session.save(parking);
+            Parking parking2 = new Parking(0,2,i,1,namal3);
+            App.session.save(parking2);
+            Parking parking3 = new Parking(0,3,i,1,namal3);
+            App.session.save(parking3);
+            namal3.addParking(parking);
+            namal3.addParking(parking2);
+            namal3.addParking(parking3);
+        }
+        App.session.save(namal3);
 
         App.session.save(namal4);
         App.session.save(prices4);
         App.session.save(stastisticalInformation4);
+        for(int i=1; i<=50; i++){
+            Parking parking = new Parking(0,1,i,1,namal4);
+            App.session.save(parking);
+            Parking parking2 = new Parking(0,2,i,1,namal4);
+            App.session.save(parking2);
+            Parking parking3 = new Parking(0,3,i,1,namal4);
+            App.session.save(parking3);
+            Parking parking4 = new Parking(0,4,i,1,namal4);
+            App.session.save(parking4);
+            namal4.addParking(parking);
+            namal4.addParking(parking2);
+            namal4.addParking(parking3);
+            namal4.addParking(parking4);
+        }
+        App.session.save(namal4);
 
         App.session.save(namal5);
         App.session.save(prices5);
         App.session.save(stastisticalInformation5);
+        for(int i=1; i<=5; i++){
+            Parking parking = new Parking(0,1,i,1,namal5);
+            App.session.save(parking);
+            Parking parking2 = new Parking(0,2,i,1,namal5);
+            App.session.save(parking2);
+            Parking parking3 = new Parking(0,3,i,1,namal5);
+            App.session.save(parking3);
+            Parking parking4 = new Parking(0,4,i,1,namal5);
+            App.session.save(parking4);
+            Parking parking5 = new Parking(0,5,i,1,namal5);
+            App.session.save(parking5);
+            namal5.addParking(parking);
+            namal5.addParking(parking2);
+            namal5.addParking(parking3);
+            namal5.addParking(parking4);
+            namal5.addParking(parking5);
+        }
+        App.session.save(namal5);
 
         App.session.flush();
         App.SafeCommit();

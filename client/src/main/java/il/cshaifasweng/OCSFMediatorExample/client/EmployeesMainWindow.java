@@ -68,6 +68,9 @@ public class EmployeesMainWindow {
     void button1Func(ActionEvent event) throws IOException {
         if(button1.getText().equals("Statistical Information"))
         {
+            SimpleClient.getClient().sendToServer("#request: stastistical information list");
+            System.out.println();
+            App.setRoot("StastisticalInformation");
             App.history.add("StastisticalInformation");
             App.setRoot("StastisticalInformation");
         }

@@ -10,12 +10,12 @@ public class StastisticalInformationData implements Serializable {
     private int parkingLotId;
     private String name;
     private LocalDate date;
-    private int actualOrders;
-    private int canceledOrders;
-    private int parkingLateNum;
+    private double actualOrders;
+    private double canceledOrders;
+    private double parkingLateNum;
 
 
-    public StastisticalInformationData(int id, int parkingLotId ,String name ,LocalDate date, int actualOrders, int canceledOrders, int parkingLateNum) {
+    public StastisticalInformationData(int id, int parkingLotId ,String name ,LocalDate date, double actualOrders, double canceledOrders, double parkingLateNum) {
         this.id = id;
         this.parkingLotId = parkingLotId;
         this.name = name;
@@ -28,27 +28,27 @@ public class StastisticalInformationData implements Serializable {
     public StastisticalInformationData(){}
 
 
-    public int getActualOrders() {
+    public double getActualOrders() {
         return actualOrders;
     }
 
-    public void setActualOrders(int actualOrders) {
+    public void setActualOrders(double actualOrders) {
         this.actualOrders = actualOrders;
     }
 
-    public int getCanceledOrders() {
+    public double getCanceledOrders() {
         return canceledOrders;
     }
 
-    public void setCanceledOrders(int canceledOrders) {
+    public void setCanceledOrders(double canceledOrders) {
         this.canceledOrders = canceledOrders;
     }
 
-    public int getParkingLateNum() {
+    public double getParkingLateNum() {
         return parkingLateNum;
     }
 
-    public void setParkingLateNum(int parkingLateNum) {
+    public void setParkingLateNum(double parkingLateNum) {
         this.parkingLateNum = parkingLateNum;
     }
 
