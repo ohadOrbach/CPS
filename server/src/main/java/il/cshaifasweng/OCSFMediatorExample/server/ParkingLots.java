@@ -31,13 +31,13 @@ public class ParkingLots {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  //get current day for statistical information
         LocalDate now = LocalDate.now();
         Random random = new Random();
-        ParkingLot namal1 = new ParkingLot("namal1", 1, 5);
+        ParkingLot namal1 = new ParkingLot("namal1", 9, 4);
         App.session.save(namal1);
         ParkingPrices prices1 = new ParkingPrices(1, 7, 5, namal1);
         namal1.setParkingPrices(prices1);
         StastisticalInformation stastisticalInformation1 = new StastisticalInformation(1,now,0,0,0, namal1);    //set statistical information
         namal1.addStastisticalInformation(stastisticalInformation1);
-        ParkingLot namal2 = new ParkingLot("namal2", 2, 10);
+        ParkingLot namal2 = new ParkingLot("namal2", 9, 8);
         App.session.save(namal2);
         ParkingPrices prices2 = new ParkingPrices(2, 8, 7, namal2);
         namal2.setParkingPrices(prices2);
@@ -62,13 +62,26 @@ public class ParkingLots {
         App.session.save(namal1);
         App.session.save(prices1);
         App.session.save(stastisticalInformation1);
-        for(int i=1; i<=5; i++){
+        for(int i=1; i<=namal1.getSize(); i++){
             Parking parking = new Parking(0,1,i,1,namal1);
+            if (i%8==0) {
+                parking.setStatus(1);
+            }
+            else if (i%6==0){
+                parking.setStatus(2);
+            }
+            else if(i==(namal1.getSize()-5)){
+                parking.setStatus(3);
+            }
             App.session.save(parking);
             namal1.addParking(parking);
         }
         App.session.save(namal1);
-
+        for(int i=1; i<=namal2.getSize(); i++){
+            Parking parking = new Parking(0,1,i,1,namal2);
+            App.session.save(parking);
+            namal2.addParking(parking);
+        }
         App.session.save(namal2);
         App.session.save(prices2);
         App.session.save(stastisticalInformation2);
