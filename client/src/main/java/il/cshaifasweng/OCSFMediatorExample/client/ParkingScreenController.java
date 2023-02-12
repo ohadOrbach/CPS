@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -23,6 +24,8 @@ public class ParkingScreenController {
 
     @FXML
     private Button updateButton;
+    @FXML
+    private Button backButton;
     @FXML
     private VBox parkingVbox;
     @FXML
@@ -55,10 +58,20 @@ public class ParkingScreenController {
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
         try {
+            parkingGridPane.getChildren().clear();
+            parkingList.clear();
+            parkingLotList.clear();
             SimpleClient.getClient().sendToServer("#request: parking lots list");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert backButton != null : "fx:id=\"MainMenuButton\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+        assert updateButton != null : "fx:id=\"SendComplaintButton\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+        assert parkingLotComboBox != null : "fx:id=\"TextField\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+        assert parkingVbox != null : "fx:id=\"TextField\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+        assert hb1 != null : "fx:id=\"TextField\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+        assert parkingGridPane != null : "fx:id=\"TextField\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
+
     }
     @FXML
     void updateParkingLot() {
@@ -70,6 +83,7 @@ public class ParkingScreenController {
     }
     @Subscribe
     public void updateScreen(ReceivedParkings event) throws IOException{
+        parkingList.clear();
         List<ParkingData> eventList = event.getParkingDataList();
         for(int i = 0; i < eventList.size(); i++){
             parkingList.add(eventList.get(i));
@@ -89,9 +103,16 @@ public class ParkingScreenController {
             } else {
                 label.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
             }
-            int cols = parkingList.size();//need to divide by 9 after parking lots wil be correct
+            int cols = (int) parkingList.size()/9;
             parkingGridPane.add(label, i % cols, i / cols);
         }
+    }
+
+    @FXML
+    void goBack(ActionEvent event) throws IOException {
+
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 }
 
