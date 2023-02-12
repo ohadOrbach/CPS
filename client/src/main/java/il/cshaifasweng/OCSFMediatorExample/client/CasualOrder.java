@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
-import il.cshaifasweng.OCSFMediatorExample.server.ParkingLot;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,21 +9,29 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.hibernate.type.descriptor.java.LocalDateTimeJavaDescriptor;
-import il.cshaifasweng.OCSFMediatorExample.client.MainMenuOrder;
+
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
@@ -95,9 +102,40 @@ public class CasualOrder {
         parkingVbox.getChildren().add(choiceBox);
     }
 
+    public boolean testInput() {
+        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText()))
+            sendTextError("Incorrect Departure Time, please try again");
+
+        LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+
+        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
+            sendTextError("Incorrect ID, please try again");
+        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
+            sendTextError("Incorrect car number, please try again");
+        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
+            sendTextError("Incorrect Email, please try again");
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
+            sendTextError("Incorrect Departure Time, please try again");
+        else
+            return true;
+
+        return false;
+    }
+
+    public void sendTextError(String text) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    String.format("Error: %s", text));
+            alert.show();
+        });
+    }
+
+
     @FXML
     void sendCasualOrder(ActionEvent event) {
         try{
+            if(!testInput())
+                    return;
             System.out.println("sending order..");
             OrderData orderData =
                     new OrderData(IdText.getText(), CarNumText.getText(), leavingData.getValue(), DepartureTimeText.getText(),
@@ -139,6 +177,14 @@ public class CasualOrder {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+        leavingData.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
     }
 
     @FXML
