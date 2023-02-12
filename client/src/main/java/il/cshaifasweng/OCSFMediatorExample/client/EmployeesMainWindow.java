@@ -74,9 +74,10 @@ public class EmployeesMainWindow {
             App.history.add("StastisticalInformation");
             App.setRoot("StastisticalInformation");
         }
-        else if(button1.getText().equals("Report a parking fault"))
+        else if(button1.getText().equals("Change Parking Space Status"))
         {
-
+            App.history.add("Malfunctions");
+            App.setRoot("Malfunctions");
         }
         else
         {
@@ -155,7 +156,7 @@ public class EmployeesMainWindow {
                 button6.setVisible(false);
                 break;
             case "parking lot worker":
-                button1.setText("Report a parking fault");
+                button1.setText("Change Parking Space Status");
                 button2.setText("Save Parking Spot");
                 button3.setText("Referral to another parking lot");
                 button4.setVisible(false);

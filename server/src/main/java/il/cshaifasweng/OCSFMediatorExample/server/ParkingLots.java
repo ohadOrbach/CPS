@@ -31,30 +31,30 @@ public class ParkingLots {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  //get current day for statistical information
         LocalDate now = LocalDate.now();
         Random random = new Random();
-        ParkingLot namal1 = new ParkingLot("namal1", 1, 5);
+        ParkingLot namal1 = new ParkingLot("namal1", 1);
         App.session.save(namal1);
         ParkingPrices prices1 = new ParkingPrices(1, 7, 5, namal1);
         namal1.setParkingPrices(prices1);
         StastisticalInformation stastisticalInformation1 = new StastisticalInformation(1,now,0,0,0, namal1);    //set statistical information
         namal1.addStastisticalInformation(stastisticalInformation1);
-        ParkingLot namal2 = new ParkingLot("namal2", 2, 10);
+        ParkingLot namal2 = new ParkingLot("namal2", 2);
         App.session.save(namal2);
         ParkingPrices prices2 = new ParkingPrices(2, 8, 7, namal2);
         namal2.setParkingPrices(prices2);
         StastisticalInformation stastisticalInformation2 = new StastisticalInformation(2,now,0,0,0, namal2);    //set statistical information
         namal2.addStastisticalInformation(stastisticalInformation2);
-        ParkingLot namal3 = new ParkingLot("namal3", 3, 20);
+        ParkingLot namal3 = new ParkingLot("namal3", 3);
         App.session.save(namal3);
         ParkingPrices prices3 = new ParkingPrices(3, 10, 7, namal3);
         namal3.setParkingPrices(prices3);
         StastisticalInformation stastisticalInformation3 = new StastisticalInformation(3,now,0,0,0, namal3);    //set statistical information
         namal3.addStastisticalInformation(stastisticalInformation3);
-        ParkingLot namal4 = new ParkingLot("namal4", 4, 50);
+        ParkingLot namal4 = new ParkingLot("namal4", 4);
         ParkingPrices prices4 = new ParkingPrices(4, 11, 8, namal4);
         namal4.setParkingPrices(prices4);
         StastisticalInformation stastisticalInformation4 = new StastisticalInformation(4,now,0,0,0, namal4);    //set statistical information
         namal4.addStastisticalInformation(stastisticalInformation4);
-        ParkingLot namal5 = new ParkingLot("namal5", 5, 5);
+        ParkingLot namal5 = new ParkingLot("namal5", 5);
         ParkingPrices prices5 = new ParkingPrices(5, 9, 8,namal5);
         namal5.setParkingPrices(prices5);
         StastisticalInformation stastisticalInformation5 = new StastisticalInformation(5,now,0,0,0, namal5);    //set statistical information
@@ -191,7 +191,7 @@ public class ParkingLots {
 
     public void addParkingLot(String name, int rowNum, int rowSize) {
         App.SafeStartTransaction();
-        ParkingLot parkingLot = new ParkingLot(name, rowNum, rowSize);
+        ParkingLot parkingLot = new ParkingLot(name, rowNum);
         App.session.save(parkingLot);
         App.session.flush();
         App.SafeCommit();

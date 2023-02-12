@@ -20,7 +20,6 @@ public class ParkingLot {
    private int id;
    private String name;
    private int rowsNum = 0;
-   private int rowSize = 0;
    private int size = 0;
 
    @OneToOne(mappedBy = "parkingLot")
@@ -33,11 +32,10 @@ public class ParkingLot {
    private List<Parking> parkings;
 
 
-   public ParkingLot(String name, int rowsNum, int rowSize){
+   public ParkingLot(String name, int rowsNum){
       this.name = name;
       this.rowsNum = rowsNum;
-      this.rowSize = rowSize;
-      this.size = rowSize*rowsNum;
+      this.size = 3*3*rowsNum;
       this.stastisticalInformation = new ArrayList<>();
       this.parkings = new ArrayList<>();
    }
@@ -50,7 +48,7 @@ public class ParkingLot {
 
    public ParkingLotData getParkingLotData()
    {
-      return new ParkingLotData(this.id, this.rowsNum, this.size, this.name);
+      return new ParkingLotData(this.id, this.rowsNum, this.name);
    }
 
 
