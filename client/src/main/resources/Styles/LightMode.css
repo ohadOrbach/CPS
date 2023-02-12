@@ -1,14 +1,14 @@
-.primary-color{
+.primary-color {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: black;
 }
 
-.secondary-color{
+.secondary-color {
     -fx-background-color: #E7E7E7;
     -fx-text-fill: black;
 }
 
-.round-border{
+.round-border {
     -fx-background-radius: 100;
 }
 

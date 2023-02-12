@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.StastisticalInformationData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,51 +14,40 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-
 
 
 public class StastisticalInformation {
 
     TableView<StastisticalInformationData> table = new TableView<StastisticalInformationData>();
-
+    ObservableList<StastisticalInformationData> stastisticalInformationList = FXCollections.observableArrayList();
     @FXML
     private TableColumn<StastisticalInformationData, Integer> CancledOrdersCol;
-
     @FXML
     private TableColumn<StastisticalInformationData, Integer> LateParkingCol;
-
     @FXML
     private TableColumn<StastisticalInformationData, Integer> actualOrdersCol;
-
     @FXML
     private TableColumn<StastisticalInformationData, Integer> idCol;
-
     @FXML
     private TableColumn<StastisticalInformationData, Integer> parkingLotIdCol;
-
     @FXML
     private TableColumn<StastisticalInformationData, String> parkingLotNameCol;
-
     @FXML
     private Button MainMenuButton;
-
     @FXML
     private VBox Vbox;
-
-    ObservableList<StastisticalInformationData> stastisticalInformationList = FXCollections.observableArrayList();
 
     @Subscribe
     public void onReceivedParkingList(ReceivedStastisticalInformationEvent event) throws IOException {
         List<StastisticalInformationData> eventList = event.getstastisticalInformationDataListDataList();
-        for(int i = 0; i < eventList.size(); i++){
+        for (int i = 0; i < eventList.size(); i++) {
             stastisticalInformationList.add(eventList.get(i));
         }
         buildListTable();
     }
 
-    private void buildListTable(){
+    private void buildListTable() {
         idCol.setCellValueFactory(new PropertyValueFactory("id"));
         parkingLotIdCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
         parkingLotNameCol.setCellValueFactory(new PropertyValueFactory("name"));
@@ -68,7 +56,7 @@ public class StastisticalInformation {
         actualOrdersCol.setCellValueFactory(new PropertyValueFactory("actualOrders"));
 
 
-        table.getColumns().addAll(idCol, parkingLotIdCol, parkingLotNameCol, CancledOrdersCol,LateParkingCol, actualOrdersCol);
+        table.getColumns().addAll(idCol, parkingLotIdCol, parkingLotNameCol, CancledOrdersCol, LateParkingCol, actualOrdersCol);
         table.setItems(stastisticalInformationList);
         Vbox.getChildren().clear();
         Vbox.getChildren().add(table);
@@ -83,8 +71,8 @@ public class StastisticalInformation {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
 }

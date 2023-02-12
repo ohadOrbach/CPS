@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingData;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +16,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingScreenController {
+    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
+    ObservableList<ParkingData> parkingList = FXCollections.observableArrayList();
     @FXML
     private ComboBox<String> parkingLotComboBox;
-
     @FXML
     private Button updateButton;
     @FXML
@@ -32,28 +33,25 @@ public class ParkingScreenController {
     private HBox hb1;
     @FXML
     private GridPane parkingGridPane;
-
     private String selectedParkingLotData;
-    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
-    ObservableList<ParkingData> parkingList = FXCollections.observableArrayList();
-
 
     @Subscribe
-    public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException{
+    public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
         List<ParkingLotData> eventList = event.getParkingLotDataList();
-        for(int i = 0; i < eventList.size(); i++){
+        for (int i = 0; i < eventList.size(); i++) {
             parkingLotList.add(eventList.get(i));
         }
         buildScreen();
     }
 
-    public void buildScreen(){
+    public void buildScreen() {
         assert parkingLotComboBox != null : "fx:id=\"parkingLotComboBox\" was not injected: check your FXML file 'primary.fxml'.";
-        for(ParkingLotData parkingLotData: parkingLotList){
+        for (ParkingLotData parkingLotData : parkingLotList) {
             parkingLotComboBox.getItems().add(parkingLotData.getParkingLotName());
         }
         updateButton.setOnAction(event -> updateParkingLot());
     }
+
     @FXML
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
@@ -73,19 +71,21 @@ public class ParkingScreenController {
         assert parkingGridPane != null : "fx:id=\"TextField\" was not injected: check your FXML file 'ParkingScreenController.fxml'.";
 
     }
+
     @FXML
     void updateParkingLot() {
         selectedParkingLotData = (String) parkingLotComboBox.getSelectionModel().getSelectedItem();
-        System.out.println("name is"+selectedParkingLotData+"\n");
+        System.out.println("name is" + selectedParkingLotData + "\n");
         SimpleClient myclient = SimpleClient.getClient();
         myclient.getParkings(selectedParkingLotData);
 
     }
+
     @Subscribe
-    public void updateScreen(ReceivedParkings event) throws IOException{
+    public void updateScreen(ReceivedParkings event) throws IOException {
         parkingList.clear();
         List<ParkingData> eventList = event.getParkingDataList();
-        for(int i = 0; i < eventList.size(); i++){
+        for (int i = 0; i < eventList.size(); i++) {
             parkingList.add(eventList.get(i));
         }
         parkingGridPane.getChildren().clear();
@@ -103,7 +103,7 @@ public class ParkingScreenController {
             } else {
                 label.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
             }
-            int cols = (int) parkingList.size()/9;
+            int cols = (int) parkingList.size() / 9;
             parkingGridPane.add(label, i % cols, i / cols);
         }
     }
@@ -111,8 +111,8 @@ public class ParkingScreenController {
     @FXML
     void goBack(ActionEvent event) throws IOException {
 
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 }
 

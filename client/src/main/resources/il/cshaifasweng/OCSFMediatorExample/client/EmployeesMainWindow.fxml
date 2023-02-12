@@ -1,116 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EmployeesMainWindow">
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="parent" prefHeight="400.0" prefWidth="600.0"
+            styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css"
+            xmlns="http://javafx.com/javafx/19"
+            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.EmployeesMainWindow">
     <children>
-        <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="600.0" prefWidth="800.0" styleClass="secondary-color" />
+        <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="54.0" prefWidth="800.0"
+                 styleClass="secondary-color"/>
         <Label layoutX="261.0" layoutY="8.0" styleClass="secondary-color" text="Employee menu">
             <font>
-                <Font name="Arial Black" size="24.0" />
+                <Font name="Arial Black" size="24.0"/>
             </font>
         </Label>
         <TextField fx:id="timeTF" layoutX="112.0" layoutY="13.0" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
+                <String fx:value="primary-color"/>
+                <String fx:value="round-border"/>
             </styleClass>
         </TextField>
         <Label layoutX="61.0" layoutY="11.0" prefHeight="30.0" prefWidth="43.0" text="Time:">
             <styleClass>
-                <String fx:value="secondary-color" />
-                <String fx:value="round-border" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
             </styleClass>
         </Label>
-        <Button fx:id="btnMode" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#changeMode" prefHeight="36.0" prefWidth="33.0">
+        <Button fx:id="btnMode" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#changeMode"
+                prefHeight="36.0" prefWidth="33.0">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
+                <String fx:value="primary-color"/>
+                <String fx:value="round-border"/>
             </styleClass>
             <graphic>
                 <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../images/LightMode2.png" />
+                        <Image url="@../../../../images/LightMode2.png"/>
                     </image>
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="goToLogIn" layoutX="679.0" layoutY="14.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="25.0" prefWidth="59.0" text="Back">
+        <Button fx:id="goToLogIn" layoutX="679.0" layoutY="14.0" mnemonicParsing="false" onAction="#LogOut"
+                prefHeight="25.0" prefWidth="59.0" text="Back">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="primary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#button1Func" prefHeight="47.0" prefWidth="198.0" text="button 1">
+        <Button fx:id="button1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#button1Func"
+                prefHeight="47.0" prefWidth="198.0" text="button 1">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button2" layoutX="291.0" layoutY="100.0" mnemonicParsing="false" onAction="#button2Func" prefHeight="47.0" prefWidth="198.0" text="button 2">
+        <Button fx:id="button2" layoutX="291.0" layoutY="100.0" mnemonicParsing="false" onAction="#button2Func"
+                prefHeight="47.0" prefWidth="198.0" text="button 2">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button3" layoutX="529.0" layoutY="100.0" mnemonicParsing="false" onAction="#button3Func" prefHeight="47.0" prefWidth="198.0" text="button 3">
+        <Button fx:id="button3" layoutX="529.0" layoutY="100.0" mnemonicParsing="false" onAction="#button3Func"
+                prefHeight="47.0" prefWidth="198.0" text="button 3">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button4" layoutX="46.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="198.0" text="button 4">
+        <Button fx:id="button4" layoutX="46.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0"
+                prefWidth="198.0" text="button 4">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button5" layoutX="291.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="198.0" text="button 5">
+        <Button fx:id="button5" layoutX="291.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0"
+                prefWidth="198.0" text="button 5">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
-        <Button fx:id="button6" layoutX="529.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="198.0" text="button 6">
+        <Button fx:id="button6" layoutX="529.0" layoutY="183.0" mnemonicParsing="false" prefHeight="47.0"
+                prefWidth="198.0" text="button 6">
             <styleClass>
-                <String fx:value="primary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+                <String fx:value="text-field"/>
             </styleClass>
             <font>
-                <Font size="14.0" />
+                <Font size="14.0"/>
             </font>
         </Button>
     </children>

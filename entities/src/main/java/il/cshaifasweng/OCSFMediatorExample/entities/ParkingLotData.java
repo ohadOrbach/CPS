@@ -11,22 +11,26 @@ public class ParkingLotData implements Serializable {
     public ParkingLotData(int id, int rows, int rowNum) {
         this.id = id;
         this.rowsNum = rows;
-        this.size = rows*rowNum;
+        this.size = rows * rowNum;
     }
 
     public ParkingLotData(int id, int rows, int rowNum, String name) {
         this.id = id;
         this.rowsNum = rows;
-        this.size = rows*rowNum;
+        this.size = rows * rowNum;
         this.name = name;
     }
+
     public int getParkingLotId() {
         return id;
     }
 
-    public String getParkingLotName() {return this.name; }
     public void setParkingLotId(int id) {
         this.id = id;
+    }
+
+    public String getParkingLotName() {
+        return this.name;
     }
 
     public int getRowsNum() {

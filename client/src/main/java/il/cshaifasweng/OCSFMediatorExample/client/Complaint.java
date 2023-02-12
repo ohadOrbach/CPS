@@ -1,22 +1,12 @@
-
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
-import il.cshaifasweng.OCSFMediatorExample.server.ParkingPrices;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Complaint {
@@ -34,8 +24,8 @@ public class Complaint {
 
     @FXML
     void sendComplaint(ActionEvent event) {
-        SimpleClient myclient=SimpleClient.getClient();
-        ComplaintData cmp=new ComplaintData(newComplaintTxt.getText(),0, App.costumer);
+        SimpleClient myclient = SimpleClient.getClient();
+        ComplaintData cmp = new ComplaintData(newComplaintTxt.getText(), 0, App.costumer);
         myclient.sendComplaint(cmp);
         newComplaintTxt.setText("");
     }
@@ -51,7 +41,7 @@ public class Complaint {
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
 
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 }

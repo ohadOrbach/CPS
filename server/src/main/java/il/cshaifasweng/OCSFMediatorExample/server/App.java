@@ -1,9 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
-import il.cshaifasweng.OCSFMediatorExample.entities.PricesList;
-import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +8,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class App
-{
+public class App {
 
-    private static SimpleServer server;
     public static Session session;
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
@@ -30,9 +22,11 @@ public class App
     public static Subscriptions subscriptions;
     public static Parkings parkings;
     public static Kiosk kiosk;
+    public static Reports reports;
+    private static SimpleServer server;
+    private static int TransactionDepth = 0;
 
-    public static void main( String[] args ) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         session = getSessionFactory().openSession();
         parkinglots = new ParkingLots();
         parkingPrices = new ParkingLots();
@@ -55,6 +49,8 @@ public class App
         kiosk = new Kiosk();
         server = new SimpleServer(3000);
         server.listen();
+        reports = new Reports();
+        reports.pullReports();
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {
@@ -79,6 +75,8 @@ public class App
         configuration.addAnnotatedClass(Subscriptions.class);
         configuration.addAnnotatedClass(FullSubscription.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
+        configuration.addAnnotatedClass(Report.class);
+        configuration.addAnnotatedClass(Reports.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();
@@ -87,14 +85,14 @@ public class App
 
     }
 
-    private static int TransactionDepth = 0;
-    public static void SafeStartTransaction(){
-        if(TransactionDepth++ == 0) {
+    public static void SafeStartTransaction() {
+        if (TransactionDepth++ == 0) {
             session.beginTransaction();
         }
     }
-    public static void SafeCommit(){
-        if(--TransactionDepth == 0) {
+
+    public static void SafeCommit() {
+        if (--TransactionDepth == 0) {
             session.getTransaction().commit();
         }
     }

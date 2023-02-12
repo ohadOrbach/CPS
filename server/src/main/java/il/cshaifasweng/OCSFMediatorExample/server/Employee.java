@@ -1,10 +1,11 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
-import il.cshaifasweng.OCSFMediatorExample.entities.CostumerData;
-import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
-import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +46,7 @@ public class Employee {
         this.branch = other.getBranch();
     }
 
-    public Employee()
-    {
+    public Employee() {
         this.login = false;
     }
 
@@ -103,6 +103,10 @@ public class Employee {
         return branch;
     }
 
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
     public boolean isLogin() {
         return login;
     }
@@ -111,39 +115,37 @@ public class Employee {
         this.login = login;
     }
 
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
     public List<Complaint> getComplaints() {
         return complaints;
-    }
-    public void addComplaimt(Complaint comp){
-        complaints.add(comp);
-    }
-
-    public EmployeeData getEmployeeData(){
-
-        return new EmployeeData(id, privateName, sureName, password, Email, job, branch);
     }
 
     public void setComplaints(List<Complaint> complaints) {
         this.complaints = complaints;
     }
+
+    public void addComplaimt(Complaint comp) {
+        complaints.add(comp);
+    }
+
+    public EmployeeData getEmployeeData() {
+
+        return new EmployeeData(id, privateName, sureName, password, Email, job, branch);
+    }
+
     public String checkReminders() {
 
         int comps = 0;
         for (Complaint complaint : complaints) {
-            System.out.println("comp number: " +complaint.getId()+" total comps to handle: "+comps+"\n");
+            System.out.println("comp number: " + complaint.getId() + " total comps to handle: " + comps + "\n");
             comps = comps + complaint.checkReminder();
         }
-        if (comps>0){
+        if (comps > 0) {
             return "Reminder, you have complaints to answer";
-        }
-        else{
+        } else {
             return "You do not have any complaints to handle, good job!";
         }
     }
+
     public void compensateCustomer() {
         // leave empty for now
     }
@@ -152,13 +154,11 @@ public class Employee {
         // leave empty for now
     }
 
-    public void ordersReport()
-    {
+    public void ordersReport() {
         // leave empty for now
     }
 
-    public void complaintsReport()
-    {
+    public void complaintsReport() {
         // leave empty for now
     }
 

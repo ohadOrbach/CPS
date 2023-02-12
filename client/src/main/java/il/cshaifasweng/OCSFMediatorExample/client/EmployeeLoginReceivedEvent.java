@@ -1,4 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
+
 import il.cshaifasweng.OCSFMediatorExample.entities.EmployeeData;
 
 
@@ -6,16 +7,12 @@ public class EmployeeLoginReceivedEvent {
     private EmployeeData employee;
     private boolean loginFailed;
 
-    EmployeeLoginReceivedEvent(EmployeeData employee)
-    {
-        if(employee.isLoggedIn())
-        {
+    EmployeeLoginReceivedEvent(EmployeeData employee) {
+        if (employee.isLoggedIn()) {
             loginFailed = false;
             this.employee = employee;
-        }
-        else
-        {
-            this.loginFailed=true;
+        } else {
+            this.loginFailed = true;
             this.employee = null;
         }
     }
@@ -24,8 +21,7 @@ public class EmployeeLoginReceivedEvent {
         return employee;
     }
 
-    public boolean LoginFailed()
-    {
+    public boolean LoginFailed() {
         return loginFailed;
     }
 }

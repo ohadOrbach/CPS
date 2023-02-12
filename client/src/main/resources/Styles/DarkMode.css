@@ -1,15 +1,15 @@
-.primary-color{
+.primary-color {
     -fx-background-color: #505050;
     -fx-text-fill: #101010;
     -fx-image: #101010;
 }
 
-.secondary-color{
+.secondary-color {
     -fx-background-color: #313131;
     -fx-text-fill: #989898;
 }
 
-.round-border{
+.round-border {
     -fx-background-radius: 100;
 }
 

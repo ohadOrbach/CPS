@@ -1,12 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.TrackingOrderData;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,8 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -49,28 +46,31 @@ public class TrackingOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
     @FXML
     void initialize() {
         EventBus.getDefault().register(this);
-        if(!isLightMode){ PrimaryController.setDarkMode(parent, imMode);}
+        if (!isLightMode) {
+            PrimaryController.setDarkMode(parent, imMode);
+        }
     }
 
     @FXML
     void sendTracking() {
-        try{
+        try {
             TrackingOrderData trackingOrder =
                     new TrackingOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(CarNumberTF.getText()));
             SimpleClient.getClient().sendToServer(trackingOrder);
         } catch (IOException e) {
-            e.printStackTrace();}
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
@@ -83,7 +83,7 @@ public class TrackingOrder {
         ArrayList<String> trackingInfo = orderList.getInfo();
         Stage choiceStage = new Stage();
         VBox vBox = new VBox();
-        for (String infoStr : trackingInfo){
+        for (String infoStr : trackingInfo) {
             Label infoText = new Label(infoStr);
             vBox.getChildren().add(infoText);
         }

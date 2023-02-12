@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -27,56 +26,42 @@ import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLig
 
 public class Kiosk {
 
+    String parkingLot;
+    ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
     @FXML
     private Button MainMenuButton;
-
     @FXML
     private TextField ClientId;
-
     @FXML
     private TextField CarId;
-
     @FXML
     private Button OrderParkingBtn;
-
     @FXML
     private Button TakeInCarBtn;
-
     @FXML
     private Button TakeOutCarBtn;
-
     @FXML
     private Button btnMode;
-
     @FXML
     private ChoiceBox choiceBox;
-
-    String parkingLot;
-
-
     @FXML
     private ImageView imMode;
-
     @FXML
     private AnchorPane parent;
-
     @FXML
     private TextField timeTF;
-
-
-    ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
         List<ParkingLotData> eventList = event.getParkingLotDataList();
-        for(int i = 0; i < eventList.size(); i++){
+        for (int i = 0; i < eventList.size(); i++) {
             parkingList.add(eventList.get(i));
         }
         buildParkingList();
     }
 
     private void buildParkingList() {
-        for(ParkingLotData parkingLotData: parkingList){
+        for (ParkingLotData parkingLotData : parkingList) {
             choiceBox.getItems().add(parkingLotData.getParkingLotName());
         }
         choiceBox.setOnAction((event) -> {
@@ -87,7 +72,7 @@ public class Kiosk {
 
     @FXML
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         EventBus.getDefault().register(this);
@@ -110,14 +95,13 @@ public class Kiosk {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
 
-
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
@@ -128,11 +112,11 @@ public class Kiosk {
 
     @FXML
     void takeInClientCar(ActionEvent event) {
-        try{
+        try {
             System.out.println("Take in Client Car \n");
             String clientId = ClientId.getText();
             String carId = CarId.getText();
-            SimpleClient.getClient().sendToServer("#Take in client car:" + clientId + ","  + carId + ","+ parkingLot);
+            SimpleClient.getClient().sendToServer("#Take in client car:" + clientId + "," + carId + "," + parkingLot);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,11 +124,11 @@ public class Kiosk {
 
     @FXML
     void takeOutClientCar(ActionEvent event) {
-        try{
+        try {
             System.out.println("Take out Client Car \n");
             String clientId = ClientId.getText();
             String carId = CarId.getText();
-            SimpleClient.getClient().sendToServer("#Take out client car:" + clientId + ","  + carId + ","+ parkingLot);
+            SimpleClient.getClient().sendToServer("#Take out client car:" + clientId + "," + carId + "," + parkingLot);
         } catch (IOException e) {
             e.printStackTrace();
         }

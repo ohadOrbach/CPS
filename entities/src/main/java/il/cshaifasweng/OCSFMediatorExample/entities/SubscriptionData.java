@@ -3,8 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class SubscriptionData implements Serializable
-{
+public class SubscriptionData implements Serializable {
 
     private String costumerId;
 
@@ -14,7 +13,7 @@ public class SubscriptionData implements Serializable
 
     private LocalDate endingDate;
 
-    public SubscriptionData(String type, String carNum, LocalDate endingDate,String costumerId) {
+    public SubscriptionData(String type, String carNum, LocalDate endingDate, String costumerId) {
         this.type = type;
         this.carNum = carNum;
         this.endingDate = endingDate;
@@ -42,15 +41,15 @@ public class SubscriptionData implements Serializable
         return endingDate;
     }
 
+    public void setEndingDate(LocalDate endingDate) {
+        this.endingDate = endingDate;
+    }
+
     public String getCostumerId() {
         return costumerId;
     }
 
     public void setCostumerId(String costumerId) {
         this.costumerId = costumerId;
-    }
-
-    public void setEndingDate(LocalDate endingDate) {
-        this.endingDate = endingDate;
     }
 }

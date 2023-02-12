@@ -3,8 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,8 +22,7 @@ public class StastisticalInformation implements Serializable {
     private ParkingLot parkingLot;
 
 
-
-    public StastisticalInformation(int parkingLotId ,String name ,LocalDate date,int actualOrders, int canceledOrders, int parkingLateNum) {
+    public StastisticalInformation(int parkingLotId, String name, LocalDate date, int actualOrders, int canceledOrders, int parkingLateNum) {
         this.parkingLotId = parkingLotId;
         this.name = name;
         this.date = date;
@@ -34,7 +31,7 @@ public class StastisticalInformation implements Serializable {
         this.parkingLateNum = parkingLateNum;
     }
 
-    public StastisticalInformation(int parkingLotId , LocalDate date,int actualOrders, int canceledOrders, int parkingLateNum, ParkingLot parkingLot) {
+    public StastisticalInformation(int parkingLotId, LocalDate date, int actualOrders, int canceledOrders, int parkingLateNum, ParkingLot parkingLot) {
         this.parkingLotId = parkingLotId;
         this.name = parkingLot.getName();
         this.date = date;
@@ -44,7 +41,7 @@ public class StastisticalInformation implements Serializable {
         this.parkingLot = parkingLot;
     }
 
-    public StastisticalInformation(List<StastisticalInformation> list){
+    public StastisticalInformation(List<StastisticalInformation> list) {
         this.id = id;
         this.date = null;
         this.actualOrders = 0;
@@ -53,14 +50,17 @@ public class StastisticalInformation implements Serializable {
     }
 
 
-    public StastisticalInformation(){}
+    public StastisticalInformation() {
+    }
 
 
-    public int getStatisticId(){
+    public int getStatisticId() {
         return this.id;
     }
 
-    public int getParkingLotId(){ return this.parkingLotId;}
+    public int getParkingLotId() {
+        return this.parkingLotId;
+    }
 
     public double getActualOrders() {
         return actualOrders;

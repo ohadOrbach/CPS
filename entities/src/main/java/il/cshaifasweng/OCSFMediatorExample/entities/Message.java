@@ -40,20 +40,20 @@ public class Message implements Serializable {
         return id;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public void setMessage(String message) {

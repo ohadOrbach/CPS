@@ -2,8 +2,6 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingListData;
-import il.cshaifasweng.OCSFMediatorExample.entities.StastisticalInformationData;
-import il.cshaifasweng.OCSFMediatorExample.entities.StastisticalInformationListData;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,18 +10,19 @@ import java.util.List;
 
 public class Parkings {
     public List<Parking> parkingList;
-    public Parkings()
-    {
-        parkingList=new ArrayList<Parking>();
+
+    public Parkings() {
+        parkingList = new ArrayList<Parking>();
     }
-    public Parkings(List<Parking> p){
-        parkingList=new ArrayList<Parking>();
-        for(Parking parking : p){
+
+    public Parkings(List<Parking> p) {
+        parkingList = new ArrayList<Parking>();
+        for (Parking parking : p) {
             parkingList.add(parking);
         }
     }
-    public void pullStastisticalInformationFromDB()
-    {
+
+    public void pullStastisticalInformationFromDB() {
         CriteriaBuilder builder = App.session.getCriteriaBuilder();
         CriteriaQuery<Parking> query = builder.createQuery(Parking.class);
         query.from(Parking.class);
@@ -31,18 +30,18 @@ public class Parkings {
         parkingList.clear();
         parkingList.addAll(data);
     }
-    public ParkingData getparkingData(Parking parking)
-    {
+
+    public ParkingData getparkingData(Parking parking) {
         ArrayList<Integer> ordersId = new ArrayList<>();
-        for(ParkingOrder parkingOrder : parking.getParkingOrder()){
+        for (ParkingOrder parkingOrder : parking.getParkingOrder()) {
             ordersId.add(parkingOrder.getOrderId());
         }
-        return new ParkingData(parking.getId(), parking.getStatus() , parking.getParkingLot().getParkingLotId() ,parking.getRow(), parking.getColumn(), parking.getDepth(),ordersId);
+        return new ParkingData(parking.getId(), parking.getStatus(), parking.getParkingLot().getParkingLotId(), parking.getRow(), parking.getColumn(), parking.getDepth(), ordersId);
     }
 
     public ParkingListData getParkingList() {
         List<ParkingData> dataList = new ArrayList<>();
-        for(Parking parking: parkingList){
+        for (Parking parking : parkingList) {
             ParkingData parkingData = getparkingData(parking);
             dataList.add(parkingData);
         }
