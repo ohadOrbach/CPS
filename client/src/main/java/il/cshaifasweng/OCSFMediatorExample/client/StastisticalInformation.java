@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class StastisticalInformation {
     private TableColumn<StastisticalInformationData, String> parkingLotNameCol;
     @FXML
     private Button MainMenuButton;
+    @FXML
+    private ChoiceBox<String> comboBox;
+    private String[] options = {"average","median"};
     @FXML
     private VBox Vbox;
 
@@ -66,8 +71,16 @@ public class StastisticalInformation {
     @FXML
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
+        comboBox.getItems().addAll(options);
+        comboBox.setOnAction(this::getOption);
     }
 
+    public void getOption(ActionEvent event){
+        String myOption = comboBox.getValue();
+        if(myOption.compareTo("average") == 0){
+
+        }
+    }
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
