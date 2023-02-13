@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class App extends Application {
 
     private static Scene scene;
-    private SimpleClient client;
+    private static SimpleClient client;
     static CostumerData costumer = null;
     static EmployeeData employee = null;
 
@@ -44,13 +44,20 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
     	EventBus.getDefault().register(this);
-    	client = SimpleClient.getClient();
+        scene = new Scene(loadFXML("IpWindow"), 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        /*
+        client = SimpleClient.getClient();
     	client.openConnection();
         scene = new Scene(loadFXML("InitialWindow"), 800, 600);
         history.add("InitialWindow");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+         */
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -107,10 +114,14 @@ public class App extends Application {
         });
     }
 
+    public static void setClient(String ip, int port) throws IOException {
+        client = SimpleClient.getClient(ip, port);
+        client.openConnection();
+        System.out.println(client.getHost() + client.getPort());
+    }
+
 	public static void main(String[] args) {
         launch();
     }
-
-
 
 }
