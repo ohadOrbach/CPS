@@ -1,5 +1,4 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import javafx.animation.Animation;
@@ -10,19 +9,28 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
@@ -31,39 +39,53 @@ import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLig
 public class CasualOrder {
 
     @FXML
-    ChoiceBox choiceBox;
-    String parkingLot;
-    ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
-    @FXML
     private Button Back;
+
     @FXML
     private Button BookParking;
+
     @FXML
     private TextField CarNumText;
+
     @FXML
     private TextField DepartureTimeText;
+
     @FXML
     private TextField EmailText;
+
     @FXML
     private VBox parkingVbox;
+
     @FXML
     private TextField IdText;
+
     @FXML
     private TextField timeTF;
+
     @FXML
     private Button btnMode;
+
     @FXML
     private ImageView imMode;
+
     @FXML
     private AnchorPane parent;
+
+    @FXML
+    ChoiceBox choiceBox;
+
+    String parkingLot;
+
     @FXML
     private DatePicker leavingData;
 
+    ObservableList<ParkingLotData> parkingList = FXCollections.observableArrayList();
+
     // on received parking list - build parking list for choice in order box.
     @Subscribe
-    public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
+    public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException{
         List<ParkingLotData> eventList = event.getParkingLotDataList();
-        for (int i = 0; i < eventList.size(); i++) {
+        for(int i = 0; i < eventList.size(); i++){
             parkingList.add(eventList.get(i));
         }
         buildParkingList();
@@ -88,7 +110,7 @@ public class CasualOrder {
             sendTextError("Incorrect Email, please try again");
 
             // test if leaving time is before now.
-        else if (parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
             sendTextError("Incorrect Departure Time, please try again");
         else
             return true;
@@ -98,7 +120,7 @@ public class CasualOrder {
 
 
     private void buildParkingList() {
-        for (ParkingLotData parkingLotData : parkingList) {
+        for(ParkingLotData parkingLotData: parkingList){
             choiceBox.getItems().add(parkingLotData.getParkingLotName());
         }
         choiceBox.setOnAction((event) -> {
@@ -121,8 +143,8 @@ public class CasualOrder {
 
     @FXML
     void sendCasualOrder(ActionEvent event) {
-        try {
-            if (!testInput())
+        try{
+            if(!testInput())
                 return;
             System.out.println("sending order..");
             OrderData orderData =
@@ -137,13 +159,13 @@ public class CasualOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size() - 1);
-        App.setRoot(App.history.get(App.history.size() - 1));
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
     @FXML
     void initialize() {
-        if (!isLightMode) {
+        if(!isLightMode){
             PrimaryController.setDarkMode(parent, imMode);
         }
         EventBus.getDefault().register(this);
@@ -171,13 +193,13 @@ public class CasualOrder {
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
 
-                setDisable(empty || date.compareTo(today) < 0);
+                setDisable(empty || date.compareTo(today) < 0 );
             }
         });
     }
 
     @FXML
-    public void changeMode(ActionEvent event) {
+    public void changeMode(ActionEvent event){
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
