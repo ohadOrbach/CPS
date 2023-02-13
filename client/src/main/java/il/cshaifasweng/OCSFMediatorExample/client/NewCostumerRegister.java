@@ -4,9 +4,6 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class NewCostumerRegister {
 
@@ -42,23 +43,19 @@ public class NewCostumerRegister {
     private Label registerReturn;
 
     @Subscribe
-    public void RegisterAttempt(String event) throws IOException
-    {
-        if(event.equals("registration succeeded"))
-        {
+    public void RegisterAttempt(String event) throws IOException {
+        if (event.equals("registration succeeded")) {
             registerReturn.setText("registration succeeded");
 
-        }
-        else
-        {
+        } else {
             registerReturn.setText("registration failed");
         }
     }
 
     @FXML
     void getBack(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
     @FXML
@@ -66,10 +63,11 @@ public class NewCostumerRegister {
 
         SimpleClient myClient = SimpleClient.getClient();
 
-        myClient.sendToServer("costumer Register:"+id.getText()+","+password.getText()+","+email.getText());
+        myClient.sendToServer("costumer Register:" + id.getText() + "," + password.getText() + "," + email.getText());
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert back != null : "fx:id=\"back\" was not injected: check your FXML file 'NewCostumerRegister.fxml'.";
         assert email != null : "fx:id=\"email\" was not injected: check your FXML file 'NewCostumerRegister.fxml'.";

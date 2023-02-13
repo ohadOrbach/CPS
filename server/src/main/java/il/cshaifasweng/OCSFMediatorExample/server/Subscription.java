@@ -22,7 +22,8 @@ public class Subscription {
         this.start = startingDate;
     }
 
-    public Subscription() {}
+    public Subscription() {
+    }
 
     public int getSubscriptionId() {
         return subscriptionId;

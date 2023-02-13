@@ -1,11 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.client.PrimaryController;
-import il.cshaifasweng.OCSFMediatorExample.client.ReceivedParkingLotListEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ReportData;
 import il.cshaifasweng.OCSFMediatorExample.entities.StastisticalInformationData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -36,47 +31,34 @@ import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLig
 public class Reports {
     String chosenCategory = "";
     String chosenID = "";
-
+    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
+    ObservableList<StastisticalInformationData> stastisticalInformationList = FXCollections.observableArrayList();
     @FXML // fx:id="backBtn"
     private Button backBtn; // Value injected by FXMLLoader
-
     @FXML // fx:id="categoryCombo"
     private ComboBox<String> categoryCombo; // Value injected by FXMLLoader
-
     @FXML // fx:id="finishDate"
     private DatePicker finishDate; // Value injected by FXMLLoader
-
     @FXML
     private ImageView imMode;
-
     @FXML
     private AnchorPane parent;
-
     @FXML // fx:id="reviewChart"
     private LineChart<String, Integer> reviewChart; // Value injected by FXMLLoader
-
     @FXML
     private ComboBox<String> parkingLotCombo;
-
     @FXML
     private Label errorLoginMassage;
     @FXML
     private Button updateBtm;
-
     @FXML // fx:id="startDate"
     private DatePicker startDate; // Value injected by FXMLLoader
-
     @FXML
     private TextField timeTF;
-
     @FXML
     private CategoryAxis xAxis;
-
     @FXML
     private NumberAxis yAxis;
-
-    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
-    ObservableList<StastisticalInformationData> stastisticalInformationList = FXCollections.observableArrayList();
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
@@ -100,7 +82,7 @@ public class Reports {
 
     @FXML
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         EventBus.getDefault().register(this);
@@ -130,7 +112,7 @@ public class Reports {
     }
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
@@ -138,6 +120,7 @@ public class Reports {
     void chooseParkingLot(ActionEvent event) {
         chosenID = parkingLotCombo.getSelectionModel().getSelectedItem();
     }
+
     @FXML
     void chooseFromCategory(ActionEvent event) {
         chosenCategory = categoryCombo.getSelectionModel().getSelectedItem(); //category combo box
@@ -145,11 +128,11 @@ public class Reports {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
-    public StastisticalInformationData FindStastisticalInformationDay(LocalDate date){
+    public StastisticalInformationData FindStastisticalInformationDay(LocalDate date) {
         for (StastisticalInformationData stastisticalInformationData : stastisticalInformationList) {
             if (stastisticalInformationData.getDate().isEqual(date)) {
                 System.out.println("true");
@@ -168,22 +151,29 @@ public class Reports {
         reviewChart.getData().clear();
 
 
-        if (startDate == null && FindStastisticalInformationDay(startDate.getValue()) == null){
-            if (startDate == null) {errorLoginMassage.setText("Starting date not selected"); return;}
+        if (startDate == null && FindStastisticalInformationDay(startDate.getValue()) == null) {
+            if (startDate == null) {
+                errorLoginMassage.setText("Starting date not selected");
+                return;
+            }
             errorLoginMassage.setText("Start date not in the system, please pick another date");
             return;
-        }if (finishDate == null && FindStastisticalInformationDay(finishDate.getValue()) == null){
-            if (finishDate == null) {errorLoginMassage.setText("Ending date not selected"); return;}
+        }
+        if (finishDate == null && FindStastisticalInformationDay(finishDate.getValue()) == null) {
+            if (finishDate == null) {
+                errorLoginMassage.setText("Ending date not selected");
+                return;
+            }
             errorLoginMassage.setText("End date not in the system, please pick another date");
             return;
         }
-        if (finishDate.getValue().isBefore(startDate.getValue())){
+        if (finishDate.getValue().isBefore(startDate.getValue())) {
             errorLoginMassage.setText("Start date must be before the end date");
             return;
         }
 
         //------------Complaints------------
-        if (chosenCategory.equals("Complaints")){
+        if (chosenCategory.equals("Complaints")) {
             //need to add tests
             errorLoginMassage.setText("");
             XYChart.Series series = new XYChart.Series();
@@ -192,16 +182,16 @@ public class Reports {
             xAxis.setLabel("Date");
             yAxis.setLabel("Quantity");
             series.setName("Number of Complaints");
-            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)){
+            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)) {
                 StastisticalInformationData stats = FindStastisticalInformationDay(date);
-                if (stats != null && stats.getName().equals(chosenID)){
+                if (stats != null && stats.getName().equals(chosenID)) {
                     //series.getData().add(new XYChart.Data("Jan", 23));
                 }
             }
             reviewChart.getData().add(series);
 
-        //------------Orders------------
-        } else if (chosenCategory.equals("Orders")){
+            //------------Orders------------
+        } else if (chosenCategory.equals("Orders")) {
 
             //need to add tests
             XYChart.Series casualSeries = new XYChart.Series();
@@ -215,9 +205,9 @@ public class Reports {
             casualSeries.setName("Number of casual orders");
             orderedSeries.setName("Number of one-time orders in advance");
             int test = 0;
-            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)){
+            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)) {
                 StastisticalInformationData stats = FindStastisticalInformationDay(date);
-                if (stats != null && stats.getName().equals(chosenID)){
+                if (stats != null && stats.getName().equals(chosenID)) {
                     System.out.println(test++);
                     System.out.println(stats.getActualOrders());
                     casualSeries.getData().add(new XYChart.Data(stats.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yy")), stats.getActualOrders()));
@@ -228,21 +218,21 @@ public class Reports {
             reviewChart.getData().add(casualSeries);
             reviewChart.getData().add(orderedSeries);
 
-        //------------Malfunctions------------
-        } else if(chosenCategory.equals("Malfunctions")){
+            //------------Malfunctions------------
+        } else if (chosenCategory.equals("Malfunctions")) {
             //need to add tests
 
             XYChart.Series series = new XYChart.Series();
-            reviewChart.setTitle("Malfunctions report "  + startDate.getValue().format(ldf) + " to "
+            reviewChart.setTitle("Malfunctions report " + startDate.getValue().format(ldf) + " to "
                     + finishDate.getValue().format(ldf));
 
             xAxis.setLabel("Date");
             yAxis.setLabel("Quantity");
             series.setName("Number of Malfunctions parking spaces");
 
-            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)){
+            for (LocalDate date = startDate.getValue(); date.isBefore(finishDate.getValue().plusDays(1)); date = date.plusDays(1)) {
                 StastisticalInformationData stats = FindStastisticalInformationDay(date);
-                if (stats != null && stats.getName().equals(chosenID)){
+                if (stats != null && stats.getName().equals(chosenID)) {
                     //series.getData().add(new XYChart.Data("Jan", 25));
                 }
             }

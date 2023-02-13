@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -36,5 +37,6 @@
             </children>
         </VBox>
         <Button fx:id="MainMenuButton" layoutX="628.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="26.0" prefWidth="130.0" text="Back" />
+      <ChoiceBox fx:id="comboBox" layoutX="26.0" layoutY="15.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

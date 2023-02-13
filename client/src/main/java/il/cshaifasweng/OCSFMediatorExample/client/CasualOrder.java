@@ -145,7 +145,7 @@ public class CasualOrder {
     void sendCasualOrder(ActionEvent event) {
         try{
             if(!testInput())
-                    return;
+                return;
             System.out.println("sending order..");
             OrderData orderData =
                     new OrderData(IdText.getText(), CarNumText.getText(), leavingData.getValue(), DepartureTimeText.getText(),

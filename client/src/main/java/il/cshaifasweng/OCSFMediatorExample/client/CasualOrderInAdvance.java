@@ -183,33 +183,43 @@ public class CasualOrderInAdvance {
         LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
         LocalTime arrivalTime = LocalTime.parse(ArrivalTF.getText(), DateTimeFormatter.ofPattern("HH:mm"));
         // test ID - 9 digits.
-        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
+        if (!Pattern.matches("[0-9]{9}", IdText.getText())) {
             sendTextError("Incorrect ID, please try again");
+            return false;
+        }
 
-        // test carNum - only digits.
-        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
+            // test carNum - only digits.
+        else if (!Pattern.matches("[0-9]+", CarNumText.getText())) {
             sendTextError("Incorrect car number, please try again");
+            return false;
+        }
 
-        // test email - chars + @ + dom name.
-        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
+            // test email - chars + @ + dom name.
+        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText())) {
             sendTextError("Incorrect Email, please try again");
+            return false;
+        }
 
-        // check that leaving time > current time.
-        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
+            // check that leaving time > current time.
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now())) {
             sendTextError("Incorrect Departure Time, please try again");
+            return false;
+        }
 
-        // test that arrival time < leaving time.
-        else if(parsedTime.isBefore(arrivalTime) && leavingData.getValue().isEqual(arrivalDate.getValue()))
+            // test that arrival time < leaving time.
+        else if(parsedTime.isBefore(arrivalTime) && leavingData.getValue().isEqual(arrivalDate.getValue())) {
             sendTextError("Incorrect Arrival Time, please try again");
+            return false;
+        }
 
-        // test that arrival date >= leaving date.
-        else if(leavingData.getValue().isBefore(arrivalDate.getValue()))
+            // test that arrival date >= leaving date.
+        else if(leavingData.getValue().isBefore(arrivalDate.getValue())) {
             sendTextError("Incorrect Departure Date, please try again");
+            return false;
+        }
 
-        else
-            return true;
+        return true;
 
-        return false;
     }
 
 

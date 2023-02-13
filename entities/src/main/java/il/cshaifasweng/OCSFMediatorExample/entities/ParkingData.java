@@ -77,7 +77,8 @@ public class ParkingData implements Serializable {
     public void setOrderId(ArrayList<Integer> orderId) {
         this.orderId = orderId;
     }
-    public void addOrderId(int orderId){
+
+    public void addOrderId(int orderId) {
         this.orderId.add(orderId);
     }
 }

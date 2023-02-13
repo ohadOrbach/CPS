@@ -1,118 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="parent" prefHeight="500.0" prefWidth="804.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Reports">
-   <children>
-      <DatePicker fx:id="startDate" layoutX="30.0" layoutY="93.0" styleClass="secondary-color" />
-      <DatePicker fx:id="finishDate" layoutX="226.0" layoutY="93.0" styleClass="secondary-color" />
-      <ComboBox fx:id="categoryCombo" layoutX="418.0" layoutY="93.0" onAction="#chooseFromCategory" prefWidth="150.0">
-         <styleClass>
-            <String fx:value="secondary-color" />
-            <String fx:value="round-border" />
-         </styleClass></ComboBox>
-      <Label layoutX="30.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick starting date:">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="226.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick ending date:">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="418.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick category:">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="583.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick parking lot:">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <LineChart fx:id="reviewChart" layoutX="63.0" layoutY="119.0" prefHeight="353.0" prefWidth="678.0">
-        <xAxis>
-          <CategoryAxis animated="false" side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAxis" animated="false" side="LEFT" />
-        </yAxis>
-      </LineChart>
-      <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="1.0" prefHeight="52.0" prefWidth="803.0" styleClass="secondary-color">
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-         <items>
-            <Button fx:id="btnMode" minWidth="32.0" mnemonicParsing="false" onAction="#changeMode" prefHeight="26.0" prefWidth="32.0">
-               <styleClass>
-                  <String fx:value="primary-color" />
-                  <String fx:value="round-border" />
-               </styleClass>
-               <graphic>
-                  <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../images/LightMode2.png" />
-                     </image>
-                     <styleClass>
-                        <String fx:value="round-border" />
-                        <String fx:value="primary-color" />
-                     </styleClass>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label prefHeight="30.0" prefWidth="56.0" text="Time:">
-               <styleClass>
-                  <String fx:value="secondary-color" />
-                  <String fx:value="round-border" />
-               </styleClass>
-            </Label>
-            <TextField fx:id="timeTF" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0">
-               <styleClass>
-                  <String fx:value="primary-color" />
-                  <String fx:value="round-border" />
-               </styleClass>
-            </TextField>
-            <Button fx:id="BackToMain" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="30.0" prefWidth="59.0" text="Back" textAlignment="CENTER">
-               <styleClass>
-                  <String fx:value="primary-color" />
-                  <String fx:value="round-border" />
-                  <String fx:value="text-field" />
-               </styleClass>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-         </items>
-      </ToolBar>
-      <Button fx:id="updateBtm" layoutX="731.0" layoutY="93.0" mnemonicParsing="false" onAction="#updateGraph" text="Enter">
-         <styleClass>
-            <String fx:value="secondary-color" />
-            <String fx:value="round-border" />
-         </styleClass></Button>
-      <ComboBox fx:id="parkingLotCombo" layoutX="583.0" layoutY="93.0" onAction="#chooseParkingLot" prefHeight="25.0" prefWidth="85.0">
-         <styleClass>
-            <String fx:value="secondary-color" />
-            <String fx:value="round-border" />
-         </styleClass></ComboBox>
-      <Label fx:id="errorLoginMassage" layoutX="15.0" layoutY="455.0" prefHeight="34.0" prefWidth="529.0" textFill="RED">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-   </children>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="parent" prefHeight="500.0" prefWidth="804.0"
+            styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css"
+            xmlns="http://javafx.com/javafx/19" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Reports">
+    <children>
+        <DatePicker fx:id="startDate" layoutX="30.0" layoutY="93.0" styleClass="secondary-color"/>
+        <DatePicker fx:id="finishDate" layoutX="226.0" layoutY="93.0" styleClass="secondary-color"/>
+        <ComboBox fx:id="categoryCombo" layoutX="418.0" layoutY="93.0" onAction="#chooseFromCategory" prefWidth="150.0">
+            <styleClass>
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+            </styleClass>
+        </ComboBox>
+        <Label layoutX="30.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick starting date:">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="226.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick ending date:">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="418.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick category:">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Label layoutX="583.0" layoutY="62.0" prefHeight="25.0" prefWidth="136.0" text="Pick parking lot:">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <LineChart fx:id="reviewChart" layoutX="63.0" layoutY="119.0" prefHeight="353.0" prefWidth="678.0">
+            <xAxis>
+                <CategoryAxis animated="false" side="BOTTOM" fx:id="xAxis"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" animated="false" side="LEFT"/>
+            </yAxis>
+        </LineChart>
+        <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="1.0" prefHeight="52.0" prefWidth="803.0"
+                 styleClass="secondary-color">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <items>
+                <Button fx:id="btnMode" minWidth="32.0" mnemonicParsing="false" onAction="#changeMode" prefHeight="26.0"
+                        prefWidth="32.0">
+                    <styleClass>
+                        <String fx:value="primary-color"/>
+                        <String fx:value="round-border"/>
+                    </styleClass>
+                    <graphic>
+                        <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/LightMode2.png"/>
+                            </image>
+                            <styleClass>
+                                <String fx:value="round-border"/>
+                                <String fx:value="primary-color"/>
+                            </styleClass>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Label prefHeight="30.0" prefWidth="56.0" text="Time:">
+                    <styleClass>
+                        <String fx:value="secondary-color"/>
+                        <String fx:value="round-border"/>
+                    </styleClass>
+                </Label>
+                <TextField fx:id="timeTF" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0">
+                    <styleClass>
+                        <String fx:value="primary-color"/>
+                        <String fx:value="round-border"/>
+                    </styleClass>
+                </TextField>
+                <Button fx:id="BackToMain" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="30.0"
+                        prefWidth="59.0" text="Back" textAlignment="CENTER">
+                    <styleClass>
+                        <String fx:value="primary-color"/>
+                        <String fx:value="round-border"/>
+                        <String fx:value="text-field"/>
+                    </styleClass>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+            </items>
+        </ToolBar>
+        <Button fx:id="updateBtm" layoutX="731.0" layoutY="93.0" mnemonicParsing="false" onAction="#updateGraph"
+                text="Enter">
+            <styleClass>
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+            </styleClass>
+        </Button>
+        <ComboBox fx:id="parkingLotCombo" layoutX="583.0" layoutY="93.0" onAction="#chooseParkingLot" prefHeight="25.0"
+                  prefWidth="85.0">
+            <styleClass>
+                <String fx:value="secondary-color"/>
+                <String fx:value="round-border"/>
+            </styleClass>
+        </ComboBox>
+        <Label fx:id="errorLoginMassage" layoutX="15.0" layoutY="455.0" prefHeight="34.0" prefWidth="529.0"
+               textFill="RED">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

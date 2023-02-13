@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotListData;
+
 import java.util.ArrayList;
 import java.util.List;
 

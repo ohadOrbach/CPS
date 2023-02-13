@@ -1,10 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.ReportData;
+import il.cshaifasweng.OCSFMediatorExample.entities.ReportListData;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,9 @@ public class Reports {
         return "Your report has been successfully submitted.";
     }
 
-    public ReportData getReportData(Report report) { return report.getReportData(); }
+    public ReportData getReportData(Report report) {
+        return report.getReportData();
+    }
 
     public void pullReports() {
         CriteriaBuilder builder = App.session.getCriteriaBuilder();
@@ -51,7 +53,7 @@ public class Reports {
     public ReportListData getReportsList() {
         List<ReportData> reportList = new ArrayList<>();
         System.out.println("in this");
-        for(Report report: reportsList){
+        for (Report report : reportsList) {
             ReportData reportData = report.getReportData();
             System.out.println("add report " + reportData.getLotId());
             reportList.add(reportData);

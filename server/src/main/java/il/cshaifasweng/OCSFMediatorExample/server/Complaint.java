@@ -1,45 +1,42 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "complaint")
 public class Complaint {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(length=1000)
+    @Column(length = 1000)
     public String complaintTxt;
     public LocalDateTime date;
     public String status;
     @ManyToOne(fetch = FetchType.LAZY)
     public Costumer issuedBy;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @ManyToOne
     private Employee handledBy;
 
-    public Complaint() {}
-    public Complaint(ComplaintData com, Employee emp)
-    {
-        this.date= com.date;
-        this.complaintTxt=com.complaintTxt;
+    public Complaint() {
+    }
+
+    public Complaint(ComplaintData com, Employee emp) {
+        this.date = com.date;
+        this.complaintTxt = com.complaintTxt;
         this.issuedBy = App.costumers.getCostumer((com.issuedBy.getId()));
         this.handledBy = emp;
         this.status = com.status;
     }
 
-    public ComplaintData getComplaintData()
-    {
+    public ComplaintData getComplaintData() {
         ComplaintData com = new ComplaintData(complaintTxt, id, date, issuedBy.getCostumerData(), status, handledBy.getEmployeeData());
         return com;
     }
+
     public int getId() {
         return id;
     }
@@ -47,6 +44,7 @@ public class Complaint {
     public void setId(int id) {
         this.id = id;
     }
+
     public LocalDateTime getDate() {
         return date;
     }
@@ -54,13 +52,15 @@ public class Complaint {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
     public String getcomplaintTxt() {
         return complaintTxt;
     }
-    public String Respond()
-    {
+
+    public String Respond() {
         return "We are very sorry to hear your complaint\nWe will get back to you in 24 hours or less \nThank you for your understanding";
     }
+
     public void setcomplaintTxt(String complaintTxt) {
         this.complaintTxt = complaintTxt;
     }
@@ -92,8 +92,9 @@ public class Complaint {
     public int checkReminder() {
         if (this.status.equals("open")) {
             return 1;
+        } else {
+            return 0;
         }
-        else {return 0;}
     }
 
 }

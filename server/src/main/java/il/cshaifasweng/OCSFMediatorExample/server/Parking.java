@@ -1,9 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +24,10 @@ public class Parking {
     @OneToMany(mappedBy = "parking_id2")
     private List<ParkingOrder> parkingOrders2;
 
-    public Parking(){}
+    public Parking() {
+    }
 
-    public Parking(int id,int status, int row, int column, int depth){
+    public Parking(int id, int status, int row, int column, int depth) {
         this.status2 = status;
         this.row2 = row;
         this.column2 = column;
@@ -39,7 +36,7 @@ public class Parking {
         this.parkingOrders2 = new ArrayList<>();
     }
 
-    public Parking(int id,int status, int row, int column, int depth, ParkingLot parkingLot, List<ParkingOrder> parkingOrders){
+    public Parking(int id, int status, int row, int column, int depth, ParkingLot parkingLot, List<ParkingOrder> parkingOrders) {
         this.status2 = status;
         this.row2 = row;
         this.column2 = column;
@@ -50,7 +47,7 @@ public class Parking {
         this.parkingOrders2 = parkingOrders;
     }
 
-    public Parking(int status, int row, int column, int depth, ParkingLot parkingLot){
+    public Parking(int status, int row, int column, int depth, ParkingLot parkingLot) {
         this.status2 = status;
         this.row2 = row;
         this.column2 = column;
@@ -117,5 +114,7 @@ public class Parking {
         this.parkingOrders2 = parkingOrders;
     }
 
-    public void addParkingOrder(ParkingOrder parkingOrder){ this.parkingOrders2.add(parkingOrder); }
+    public void addParkingOrder(ParkingOrder parkingOrder) {
+        this.parkingOrders2.add(parkingOrder);
+    }
 }

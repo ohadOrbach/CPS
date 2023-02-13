@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class ParkingPricesData implements Serializable {
     private double regularSubscriptionMultiCarsPrice;
     private double fullySubscriptionPrice;
 
-    public ParkingPricesData(int parkingLotId, double parkingPrice, double orderedParkingPrice){
+    public ParkingPricesData(int parkingLotId, double parkingPrice, double orderedParkingPrice) {
         this.id = parkingLotId;
         this.parkingPrice = parkingPrice;
         this.orderedParkingPrice = orderedParkingPrice;
@@ -22,7 +21,7 @@ public class ParkingPricesData implements Serializable {
         this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
 
-    public ParkingPricesData(List<ParkingPricesData> list){
+    public ParkingPricesData(List<ParkingPricesData> list) {
         this.id = 0;
         this.parkingPrice = 0;
         this.orderedParkingPrice = 0;
@@ -31,38 +30,42 @@ public class ParkingPricesData implements Serializable {
         this.fullySubscriptionPrice = 0;
     }
 
-
-    public void setParkingLotId(int parkingLotId){
-        this.id = parkingLotId;
-    }
-    public int getParkingLotId(){
+    public int getParkingLotId() {
         return this.id;
     }
 
-    public void setParkingPrice(double parkingPrice){
-        this.parkingPrice = parkingPrice;
+    public void setParkingLotId(int parkingLotId) {
+        this.id = parkingLotId;
     }
-    public double getParkingPrice(){
+
+    public double getParkingPrice() {
         return this.parkingPrice;
     }
 
-    public void setOrderedParkingPrice(double orderedParkingPrice){
+    public void setParkingPrice(double parkingPrice) {
+        this.parkingPrice = parkingPrice;
+    }
+
+    public double getOrderedParkingPrice() {
+        return this.orderedParkingPrice;
+    }
+
+    public void setOrderedParkingPrice(double orderedParkingPrice) {
         this.orderedParkingPrice = orderedParkingPrice;
         this.regularSubscriptionPrice = orderedParkingPrice * 60;
         this.regularSubscriptionMultiCarsPrice = orderedParkingPrice * 54;
         this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
-    public double getOrderedParkingPrice(){
-        return this.orderedParkingPrice;
-    }
 
-    public double getRegularSubscriptionPrice(){
+    public double getRegularSubscriptionPrice() {
         return this.regularSubscriptionPrice;
     }
 
-    public double getRegularSubscriptionMultiCarsPrice() { return this.regularSubscriptionMultiCarsPrice;}
+    public double getRegularSubscriptionMultiCarsPrice() {
+        return this.regularSubscriptionMultiCarsPrice;
+    }
 
-    public double getFullySubscriptionPrice(){
+    public double getFullySubscriptionPrice() {
         return this.fullySubscriptionPrice;
     }
 }

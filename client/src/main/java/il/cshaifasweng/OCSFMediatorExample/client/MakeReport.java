@@ -1,9 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.client.PrimaryController;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.ComplaintData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ReportData;
 import javafx.animation.Animation;
@@ -21,7 +17,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -30,49 +25,35 @@ import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLig
 
 public class MakeReport {
 
+    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
     @FXML
     private Button BackToMain;
-
     @FXML
     private Button SubmitBtn;
-
     @FXML
     private Button btnMode;
-
     @FXML
     private TextField casualNumber;
-
     @FXML
     private TextField complaintsNumber;
-
     @FXML
     private DatePicker endDate;
-
     @FXML
     private ImageView imMode;
-
     @FXML
     private AnchorPane parent;
-
     @FXML
     private TextField inAdvanceNumber;
-
     @FXML
     private ComboBox<String> parkingLotComboBox;
-
     @FXML
     private TextField malfunctuinsNumber;
-
     @FXML
     private DatePicker startDate;
-
     @FXML
     private TextField timeTF;
-
     @FXML
     private Label errorLoginMassage;
-
-    ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
@@ -88,7 +69,7 @@ public class MakeReport {
 
     @FXML
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         EventBus.getDefault().register(this);
@@ -97,7 +78,7 @@ public class MakeReport {
         } catch (IOException e) {
             e.printStackTrace();
         }
-            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             timeTF.setText(currentTime.format(dtf));
@@ -110,31 +91,31 @@ public class MakeReport {
 
     @FXML
     void SubmitReport(ActionEvent event) {
-        SimpleClient myclient=SimpleClient.getClient();
+        SimpleClient myclient = SimpleClient.getClient();
         int casual;
         int inAdvance;
         int complaints;
         int malfunctuins;
-        if (startDate.getValue() == null){
+        if (startDate.getValue() == null) {
             errorLoginMassage.setText("Starting date not selected");
             return;
         }
-        if (endDate.getValue() == null){
+        if (endDate.getValue() == null) {
             errorLoginMassage.setText("Ending date not selected");
             return;
         }
-        if (endDate.getValue().isBefore(startDate.getValue())){
+        if (endDate.getValue().isBefore(startDate.getValue())) {
             errorLoginMassage.setText("Start date must be before the end date");
             return;
         }
-        if (parkingLotComboBox.getSelectionModel().getSelectedItem() == null){
+        if (parkingLotComboBox.getSelectionModel().getSelectedItem() == null) {
             errorLoginMassage.setText("Parking lot not selected");
             return;
         }
         try {
             complaints = Integer.parseInt(complaintsNumber.getText());
         } catch (NumberFormatException e) {
-            if (complaintsNumber.getText().equals("")){
+            if (complaintsNumber.getText().equals("")) {
                 errorLoginMassage.setText("Complaints not added");
                 return;
             }
@@ -144,17 +125,17 @@ public class MakeReport {
         try {
             malfunctuins = Integer.parseInt(malfunctuinsNumber.getText());
         } catch (NumberFormatException e) {
-            if (malfunctuinsNumber.getText().equals("")){
-            errorLoginMassage.setText("Malfunctuins parking spaces not added");
-            return;
-        }
+            if (malfunctuinsNumber.getText().equals("")) {
+                errorLoginMassage.setText("Malfunctuins parking spaces not added");
+                return;
+            }
             errorLoginMassage.setText("Malfunctuin parking spaces must be a whole number");
             return;
         }
         try {
             casual = Integer.parseInt(casualNumber.getText());
         } catch (NumberFormatException e) {
-            if (casualNumber.getText().equals("")){
+            if (casualNumber.getText().equals("")) {
                 errorLoginMassage.setText("Casual orders not added");
                 return;
             }
@@ -164,7 +145,7 @@ public class MakeReport {
         try {
             inAdvance = Integer.parseInt(inAdvanceNumber.getText());
         } catch (NumberFormatException e) {
-            if (inAdvanceNumber.getText().equals("")){
+            if (inAdvanceNumber.getText().equals("")) {
                 errorLoginMassage.setText("Casual orders in advance not added");
                 return;
             }
@@ -198,14 +179,14 @@ public class MakeReport {
     }*/
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
 

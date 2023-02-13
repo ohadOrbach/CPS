@@ -4,20 +4,18 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class InitialCostumerWindow {
 
@@ -52,7 +50,7 @@ public class InitialCostumerWindow {
             return;
         }
         SimpleClient myClient = SimpleClient.getClient();
-        myClient.costumerLogin(id.getText(),password.getText());
+        myClient.costumerLogin(id.getText(), password.getText());
     }
 
     @FXML
@@ -62,14 +60,10 @@ public class InitialCostumerWindow {
     }
 
     @Subscribe
-    public void loginAttemptSuccess(CostumerLoginReceivedEvent event) throws IOException
-    {
-        if(event.LoginFailed())
-        {
+    public void loginAttemptSuccess(CostumerLoginReceivedEvent event) throws IOException {
+        if (event.LoginFailed()) {
             errorLoginMassage.setText("Login Failed");
-        }
-        else
-        {
+        } else {
             errorLoginMassage.setText("Login Success");
             App.costumer = event.getCostumer();
             App.history.add("CostumerMainWindow");
@@ -79,11 +73,12 @@ public class InitialCostumerWindow {
 
     @FXML
     void getBack(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert errorLoginMassage != null : "fx:id=\"errorLoginMassage\" was not injected: check your FXML file 'InitialCostumerWindow.fxml'.";
         assert id != null : "fx:id=\"id\" was not injected: check your FXML file 'InitialCostumerWindow.fxml'.";

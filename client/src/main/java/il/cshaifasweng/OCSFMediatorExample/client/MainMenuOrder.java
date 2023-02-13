@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -73,18 +72,19 @@ public class MainMenuOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");

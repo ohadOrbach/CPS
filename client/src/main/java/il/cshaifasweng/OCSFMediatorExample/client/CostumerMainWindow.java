@@ -4,14 +4,6 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
 import il.cshaifasweng.OCSFMediatorExample.entities.SubscriptionData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -24,7 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
@@ -92,14 +91,15 @@ public class CostumerMainWindow {
     @FXML
     void LogOut(ActionEvent event) throws IOException {
         SimpleClient myClient = SimpleClient.getClient();
-        myClient.sendToServer("logout costumer:"+App.costumer.getId());
+        myClient.sendToServer("logout costumer:" + App.costumer.getId());
         App.costumer = null;
         App.dontShow = false;
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnMode != null : "fx:id=\"btnMode\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         assert button1 != null : "fx:id=\"button1\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
@@ -108,7 +108,7 @@ public class CostumerMainWindow {
         assert goToLogIn != null : "fx:id=\"goToLogIn\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         //assert imMode != null : "fx:id=\"imMode\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
         //assert timeTF != null : "fx:id=\"timeTF\" was not injected: check your FXML file 'CostumerMainWindow.fxml'.";
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -121,10 +121,9 @@ public class CostumerMainWindow {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
-        if(!App.dontShow)
-        {
+        if (!App.dontShow) {
             LocalDate currentDate = LocalDate.now();
-            if(!((App.costumer.getSubscriptions().isEmpty()))) {
+            if (!((App.costumer.getSubscriptions().isEmpty()))) {
                 Optional<SubscriptionData> expiringSubscription = App.costumer.getSubscriptions().keySet().stream()
                         .filter(date -> date.isBefore(currentDate.plusDays(7)))
                         .filter(date -> date.isAfter(currentDate))

@@ -27,18 +27,19 @@ public class MainEmployees {
     private ImageView imMode;
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
     @FXML
-    public void goToLogIn(ActionEvent event){
+    public void goToLogIn(ActionEvent event) {
         //add code back to main login here
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");

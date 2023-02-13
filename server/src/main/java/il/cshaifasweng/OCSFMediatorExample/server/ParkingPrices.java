@@ -20,7 +20,7 @@ public class ParkingPrices implements Serializable {
     private ParkingLot parkingLot;
 
 
-    public ParkingPrices(int parkingLotId, double parkingPrice, double orderedParkingPrice, ParkingLot parkingLot){
+    public ParkingPrices(int parkingLotId, double parkingPrice, double orderedParkingPrice, ParkingLot parkingLot) {
         this.id = parkingLotId;
         this.parkingPrice = parkingPrice;
         this.orderedParkingPrice = orderedParkingPrice;
@@ -30,7 +30,7 @@ public class ParkingPrices implements Serializable {
         this.parkingLot = parkingLot;
     }
 
-    public ParkingPrices(List<ParkingPrices> list){
+    public ParkingPrices(List<ParkingPrices> list) {
         this.id = 0;
         this.parkingPrice = 0;
         this.orderedParkingPrice = 0;
@@ -42,45 +42,57 @@ public class ParkingPrices implements Serializable {
     public ParkingPrices() {
 
     }
-    public void setParkingLotId(int parkingLotId){
-        this.id = parkingLotId;
-    }
-    public int getParkingLotId(){
+
+    public int getParkingLotId() {
         return this.id;
     }
 
-    public void setParkingPrice(double parkingPrice){
-        this.parkingPrice = parkingPrice;
+    public void setParkingLotId(int parkingLotId) {
+        this.id = parkingLotId;
     }
-    public double getParkingPrice(){
+
+    public double getParkingPrice() {
         return this.parkingPrice;
     }
 
-    public void setOrderedParkingPrice(double orderedParkingPrice){
+    public void setParkingPrice(double parkingPrice) {
+        this.parkingPrice = parkingPrice;
+    }
+
+    public double getOrderedParkingPrice() {
+        return this.orderedParkingPrice;
+    }
+
+    public void setOrderedParkingPrice(double orderedParkingPrice) {
         this.orderedParkingPrice = orderedParkingPrice;
         this.regularSubscriptionPrice = orderedParkingPrice * 60;
         this.regularSubscriptionMultiCarsPrice = orderedParkingPrice * 54;
         this.fullySubscriptionPrice = orderedParkingPrice * 72;
     }
-    public double getOrderedParkingPrice(){
-        return this.orderedParkingPrice;
-    }
 
-    public double getRegularSubscriptionPrice(){
+    public double getRegularSubscriptionPrice() {
         return this.regularSubscriptionPrice;
     }
 
-    public double getRegularSubscriptionMultiCarsPrice() { return this.regularSubscriptionMultiCarsPrice;}
+    public double getRegularSubscriptionMultiCarsPrice() {
+        return this.regularSubscriptionMultiCarsPrice;
+    }
 
-    public double getFullySubscriptionPrice(){
+    public double getFullySubscriptionPrice() {
         return this.fullySubscriptionPrice;
     }
 
-    public void setRegularSub(double newPrice) { this.regularSubscriptionPrice = newPrice; }
+    public void setRegularSub(double newPrice) {
+        this.regularSubscriptionPrice = newPrice;
+    }
 
-    public void setRegularSubMulti(double newPrice) { this.regularSubscriptionMultiCarsPrice = newPrice; }
+    public void setRegularSubMulti(double newPrice) {
+        this.regularSubscriptionMultiCarsPrice = newPrice;
+    }
 
-    public void setFullSubPrice(double newPrice) { this.fullySubscriptionPrice = newPrice; }
+    public void setFullSubPrice(double newPrice) {
+        this.fullySubscriptionPrice = newPrice;
+    }
 
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;

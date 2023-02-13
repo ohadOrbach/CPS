@@ -10,13 +10,15 @@ public class ComplaintListData implements Serializable {
     public ComplaintListData(List<ComplaintData> datalist) {
 
         this.complaints = new ArrayList<>();
-        for(ComplaintData compData: datalist){
+        for (ComplaintData compData : datalist) {
             complaints.add(compData);
         }
     }
-    public void remove(ComplaintData compData){
+
+    public void remove(ComplaintData compData) {
         complaints.remove(complaints.remove(compData));
     }
+
     public List<ComplaintData> getComplaints() {
         return this.complaints;
     }

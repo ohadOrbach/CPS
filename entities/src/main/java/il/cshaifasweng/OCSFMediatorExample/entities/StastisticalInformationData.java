@@ -2,8 +2,6 @@ package il.cshaifasweng.OCSFMediatorExample.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class StastisticalInformationData implements Serializable {
     private int id;
@@ -15,7 +13,7 @@ public class StastisticalInformationData implements Serializable {
     private double parkingLateNum;
 
 
-    public StastisticalInformationData(int id, int parkingLotId ,String name ,LocalDate date, double actualOrders, double canceledOrders, double parkingLateNum) {
+    public StastisticalInformationData(int id, int parkingLotId, String name, LocalDate date, double actualOrders, double canceledOrders, double parkingLateNum) {
         this.id = id;
         this.parkingLotId = parkingLotId;
         this.name = name;
@@ -25,7 +23,8 @@ public class StastisticalInformationData implements Serializable {
         this.parkingLateNum = parkingLateNum;
     }
 
-    public StastisticalInformationData(){}
+    public StastisticalInformationData() {
+    }
 
 
     public double getActualOrders() {

@@ -1,7 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
-import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.client.PrimaryController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,9 +40,10 @@ public class ReportMenu {
     @FXML
     private Button viewReport;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        if(!isLightMode){
+        if (!isLightMode) {
             PrimaryController.setDarkMode(parent, imMode);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -59,14 +58,14 @@ public class ReportMenu {
     }
 
     @FXML
-    public void changeMode(ActionEvent event){
+    public void changeMode(ActionEvent event) {
         PrimaryController.ChangeForAll(parent, imMode);
     }
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.history.remove(App.history.size() - 1);
+        App.setRoot(App.history.get(App.history.size() - 1));
     }
 
     @FXML
@@ -76,7 +75,7 @@ public class ReportMenu {
     }
 
     @FXML
-    void goToViewReports(ActionEvent event) throws IOException  {
+    void goToViewReports(ActionEvent event) throws IOException {
         App.history.add("ViewReport");
         App.setRoot("ViewReport");
     }
