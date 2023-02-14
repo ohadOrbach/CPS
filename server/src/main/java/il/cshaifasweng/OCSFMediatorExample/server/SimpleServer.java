@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleServer extends AbstractServer {
 
@@ -70,6 +71,17 @@ public class SimpleServer extends AbstractServer {
                         SafeSendToClient(arrivalMsg, client);
 
                     }
+                    case "approve change" -> { // update parkings to  client screen
+                        System.out.println("in update approve change  " + args[1] + "\n");
+                        ParkingPricesForConfirmation temp = App.parkingPricesForConfirmtion.getParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Casual", temp.getParkingPrice());
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Ordered", temp.getOrderedParkingPrice());
+                        App.parkingPricesForConfirmtion.removeParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        App.parkingPrices.pullParkingPrices();
+                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
+                        SafeSendToClient(pData, client);
+                    }
                 }
             } else if (msgString.startsWith("#request")) {
                 String[] args = (msgString.split(":")[1]).split(",");
@@ -89,6 +101,13 @@ public class SimpleServer extends AbstractServer {
                         System.out.format("i am in case request for complaint table\n");
                         ComplaintListData complaintsList = App.complaints.getComplaints();
                         SafeSendToClient(complaintsList, client);
+                    }
+
+                    case " PricesToConfirm table" -> {
+                        System.out.format("i am in case request for PricesToConfirm table\n");
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
+                        SafeSendToClient(pData, client);
                     }
 
                     case " reports list" -> {

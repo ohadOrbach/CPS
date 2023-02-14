@@ -70,6 +70,7 @@ public class EmployeesMainWindow {
         {
             SimpleClient.getClient().sendToServer("#request: stastistical information list");
             System.out.println();
+            App.setRoot("StastisticalInformation");
             App.history.add("StastisticalInformation");
             App.setRoot("StastisticalInformation");
         }
@@ -111,10 +112,27 @@ public class EmployeesMainWindow {
 
     @FXML
     void button3Func(ActionEvent event) throws IOException{
-        if(button3.getText().equals("View Report"))
-        {
-            App.history.add("View Report");
-            App.setRoot("View Report");
+        if(button3.getText().equals("Make Report")){
+            App.history.add("MakeReport");
+            App.setRoot("MakeReport");
+        }
+        else if (button3.getText().equals("Confirm Price Changes")){
+            SimpleClient.getClient().sendToServer("#request: PricesToConfirm table");
+            App.history.add("PricesToConfirm");
+            App.setRoot("PricesToConfirm");
+        }
+    }
+
+    @FXML
+    void button4Func(ActionEvent event) throws IOException{
+         if (button4.getText().equals("Price tables")){
+            try {
+                SimpleClient.getClient().sendToServer("#request: prices table");
+                App.history.add("ParkingLotTable");
+                App.setRoot("ParkingLotTable");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -141,15 +159,15 @@ public class EmployeesMainWindow {
             case "company manager":
                 button1.setText("Statistical Information");
                 button2.setText("Get Parking Lot Status");
-                button3.setText("View Report");
-                button4.setVisible(false);
-                button5.setVisible(false);
+                button3.setText("Confirm Price Changes");
+                button4.setText("Price tables");
+                button5.setText("View Report");
                 button6.setVisible(false);
                 break;
             case "parking lot manager":
                 button1.setText("Statistical Information");
-                button2.setText("Make Report");
-                button3.setVisible(false);
+                button2.setText("Price tables");
+                button3.setText("Make Report");
                 button4.setVisible(false);
                 button5.setVisible(false);
                 button6.setVisible(false);

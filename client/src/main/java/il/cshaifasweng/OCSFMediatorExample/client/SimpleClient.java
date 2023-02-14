@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SimpleClient extends AbstractClient {
 
@@ -67,6 +68,9 @@ public class SimpleClient extends AbstractClient {
         } else if (msg.getClass().equals(String.class)) {
             Platform.runLater(() -> EventBus.getDefault().
                     post(msg));
+        } else if (msg.getClass().equals(PricesListToConfirm.class)) {
+            Platform.runLater(() -> EventBus.getDefault().
+                    post(new ReceivedConfirmaitnDataEvent((PricesListToConfirm) msg)));
         } else {
             EventBus.getDefault().post(new MessageEvent((Message) msg));
         }
@@ -175,5 +179,14 @@ public class SimpleClient extends AbstractClient {
         }
     }
 
+    public void approveChange(int id){
+        try {
+            client.sendToServer("#update:approve change," + id);
+            client.sendToServer("#request: PricesToConfirm table");
+            App.setRoot("PricesToConfirm");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

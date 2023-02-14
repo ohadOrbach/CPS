@@ -97,4 +97,7 @@ public class ParkingPrices implements Serializable {
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
+    public ParkingLot getParkingLot() {
+        return this.parkingLot;
+    }
 }

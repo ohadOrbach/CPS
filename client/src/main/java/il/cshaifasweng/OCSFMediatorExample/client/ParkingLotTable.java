@@ -51,17 +51,21 @@ public class ParkingLotTable {
 
     @Subscribe
     public void onReceivedPrices(ReceivedParkingPricesEvent event) throws IOException {
+        pricesList.clear();
         List<ParkingPricesData> eventList = event.getParkingPrices();
         for (int i = 0; i < eventList.size(); i++) {
             pricesList.add(eventList.get(i));
         }
+        System.out.println("\nsize of list is "+pricesList.size()+"\n");
         buildPricesTable();
     }
 
     private void buildPricesTable() {
+        table.setItems(FXCollections.observableArrayList());
+        table.getColumns().clear();
         idCol.setCellValueFactory(new PropertyValueFactory("parkingLotId"));
         casualCol.setCellValueFactory(new PropertyValueFactory("parkingPrice"));
-        orderedCol.setCellValueFactory(new PropertyValueFactory(" "));
+        orderedCol.setCellValueFactory(new PropertyValueFactory("orderedParkingPrice"));
         regSubCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionPrice"));
         multyCol.setCellValueFactory(new PropertyValueFactory("regularSubscriptionMultiCarsPrice"));
         fullSubCol.setCellValueFactory(new PropertyValueFactory("fullySubscriptionPrice"));
@@ -126,14 +130,6 @@ public class ParkingLotTable {
         SimpleClient myclient = SimpleClient.getClient();
         System.out.format("Sending update to the server \n");
         myclient.changePrice(newPrice, updateID, updateType);
-        //database should be updated here
-
-        ObservableList<ParkingPricesData> list = getUserList();
-
-        // only for example, should be deleted later:
-
-        table.setItems(list);
-        Vbox.getChildren().addAll(table);
 
     }
 
