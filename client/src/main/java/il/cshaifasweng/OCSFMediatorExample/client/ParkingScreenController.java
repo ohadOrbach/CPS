@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.print.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -33,7 +34,15 @@ public class ParkingScreenController {
     private HBox hb1;
     @FXML
     private GridPane parkingGridPane;
+    @FXML
+    private Button goBack;
+    @FXML
+    private Button printButton;
+    @FXML
+    private Label ParkingLabal;
     private String selectedParkingLotData;
+
+
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
@@ -113,6 +122,26 @@ public class ParkingScreenController {
 
         App.history.remove(App.history.size() - 1);
         App.setRoot(App.history.get(App.history.size() - 1));
+    }
+
+    @FXML
+    void printStatus(ActionEvent event) throws IOException {
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null) {
+            printButton.setVisible(false);
+            updateButton.setVisible(false);
+            goBack.setVisible(false);
+            parkingLotComboBox.setVisible(false);
+            ParkingLabal.setVisible(false);
+
+            AnchorPane temp = new AnchorPane(parkingVbox);
+            PageLayout layout = job.getPrinter()
+                    .createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
+            job.getJobSettings().setPageLayout(layout);
+            job.printPage(parkingVbox);
+            job.endJob();
+            App.setRoot("ParkingScreenController");
+        }
     }
 }
 

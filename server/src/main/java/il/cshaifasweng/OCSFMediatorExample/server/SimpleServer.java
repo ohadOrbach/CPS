@@ -48,10 +48,8 @@ public class SimpleServer extends AbstractServer {
                 System.out.println("im in update mode \n");
                 switch (args[0]) {
                     case "parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
-                        ParkingPricesData temp = App.parkingPrices.askToChangePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
-                        ParkingLot temp2 = App.parkingPrices.getParkingLot(Integer.parseInt(args[1]));
-                        App.parkingPricesForConfirmtion.addParkingPricesForConfirmtion(temp, temp2);
-                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+                        App.parkingPrices.pullParkingPrices();
                     }
                     case "complaint status" -> {
                         ConnectionToClient c = App.complaints.changeStatus(Integer.parseInt(args[1]));
@@ -65,6 +63,24 @@ public class SimpleServer extends AbstractServer {
                         Parkings plist = new Parkings(p.getParkings());
                         ParkingListData returnParkings = plist.getParkingList();
                         SafeSendToClient(returnParkings, client);
+                    }
+                    case "parking space status" -> { // update parking space status
+                        App.parkinglots.changeParkingStatus(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5]);
+                        System.out.println("update parking in parking lot " + args[1] + "change status to" + args[5] + "\n");
+                        Message arrivalMsg = new Message("Parking space status is updated to " + args[5]);
+                        SafeSendToClient(arrivalMsg, client);
+
+                    }
+                    case "approve change" -> { // update parkings to  client screen
+                        System.out.println("in update approve change  " + args[1] + "\n");
+                        ParkingPricesForConfirmation temp = App.parkingPricesForConfirmtion.getParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Casual", temp.getParkingPrice());
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Ordered", temp.getOrderedParkingPrice());
+                        App.parkingPricesForConfirmtion.removeParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        App.parkingPrices.pullParkingPrices();
+                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
+                        SafeSendToClient(pData, client);
                     }
                     case "approve change" -> { // update parkings to  client screen
                         System.out.println("in update approve change  " + args[1] + "\n");

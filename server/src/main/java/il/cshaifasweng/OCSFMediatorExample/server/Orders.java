@@ -24,7 +24,6 @@ public class Orders {
     }
 
 
-
     public String addOrder(OrderData orderData) {
         App.SafeStartTransaction();
         ParkingOrder order = new ParkingOrder(orderData.getId(), orderData.getCarNumber(), orderData.getArrivalDate(), orderData.getArrivalTime(), orderData.getLeavingDate(), orderData.getLeavingTime(), orderData.getEmail(), orderData.getAdv(), orderData.getParkingName());
@@ -33,8 +32,8 @@ public class Orders {
         String parkingLotName = orderData.getParkingName();
         ParkingLot parkingLot = App.parkinglots.getParkingLotByName(parkingLotName);
         boolean foundParking = false;
-        for(Parking parking: parkingLot.getParkings()) {
-            if(parking.getStatus() == 0){
+        for (Parking parking : parkingLot.getParkings()) {
+            if (parking.getStatus() == 0) {
                 //this parking is empty, so we set this order to be in this parking
                 parking.addParkingOrder(order);
                 parking.setStatus(1);       //this parking is occupied now
@@ -48,31 +47,30 @@ public class Orders {
             }
         }
         // if we didn't find an empty parking space
-        if(foundParking == false){
+        if (foundParking == false) {
             // if its advanced order, we might be able to find empty parking space in those hours
             //if(orderData.getAdv().compareTo("true") == 0){
-            for(Parking parking: parkingLot.getParkings()){
+            for (Parking parking : parkingLot.getParkings()) {
                 // we check if this parking is occupied in these date and hours
                 List<ParkingOrder> parkingOrders = parking.getParkingOrder();
                 boolean collusionFlag = false;
-                for(ParkingOrder parkingOrder: parkingOrders){
+                for (ParkingOrder parkingOrder : parkingOrders) {
                     // first we convert the order and parking Arrival and Leaving DateTime and it's Time to LocalDateTime object
-                    LocalDateTime orderArrivalTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getArrivalDate(),orderData.getArrivalTime());
-                    LocalDateTime orderLeavingTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getLeavingDate(),orderData.getLeavingTime());
-                    LocalDateTime parkingArrivalTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getArrivalDate(),parkingOrder.getArrivalTime());
-                    LocalDateTime parkingLeavingTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getLeavingDate(),parkingOrder.getLeavingTime());
+                    LocalDateTime orderArrivalTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getArrivalDate(), orderData.getArrivalTime());
+                    LocalDateTime orderLeavingTime = Kiosk.convertLocalDateAndStringOfTime(orderData.getLeavingDate(), orderData.getLeavingTime());
+                    LocalDateTime parkingArrivalTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getArrivalDate(), parkingOrder.getArrivalTime());
+                    LocalDateTime parkingLeavingTime = Kiosk.convertLocalDateAndStringOfTime(parkingOrder.getLeavingDate(), parkingOrder.getLeavingTime());
 
                     // we check if there is collusion between these 2 orders
-                    if(((orderArrivalTime.isAfter(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderArrivalTime.isBefore(parkingLeavingTime) || orderArrivalTime.isEqual(parkingLeavingTime)))
+                    if (((orderArrivalTime.isAfter(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderArrivalTime.isBefore(parkingLeavingTime) || orderArrivalTime.isEqual(parkingLeavingTime)))
                             || ((orderLeavingTime.isAfter(parkingArrivalTime) || orderLeavingTime.isEqual(parkingArrivalTime)) && (orderLeavingTime.isBefore(parkingLeavingTime) || orderLeavingTime.isEqual(parkingLeavingTime)))
-                            || ((orderArrivalTime.isBefore(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderLeavingTime.isAfter(parkingLeavingTime) || orderLeavingTime.isEqual(parkingLeavingTime))))
-                    {
+                            || ((orderArrivalTime.isBefore(parkingArrivalTime) || orderArrivalTime.isEqual(parkingArrivalTime)) && (orderLeavingTime.isAfter(parkingLeavingTime) || orderLeavingTime.isEqual(parkingLeavingTime)))) {
                         // we found collusion with this order, we break and move to next parking
                         collusionFlag = true;
                         break;
                     }
                 }
-                if(collusionFlag == false){
+                if (collusionFlag == false) {
                     // we didnt find any collusion in this parking spaces orders so we can add this order to this parking space
                     parking.addParkingOrder(order);
                     App.session.save(parking);

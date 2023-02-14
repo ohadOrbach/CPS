@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="parent" prefHeight="480.0" prefWidth="800.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.ReserveSpot">
+   <children>
+      <ToolBar accessibleRole="MENU" focusTraversable="false" prefHeight="60.0" prefWidth="805.0" styleClass="secondary-color">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <items>
+            <Button fx:id="btnMode" minWidth="32.0" mnemonicParsing="false" onAction="#changeMode" prefHeight="26.0" prefWidth="32.0">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+               <graphic>
+                  <ImageView fx:id="imMode" fitHeight="77.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../images/LightMode2.png" />
+                     </image>
+                     <styleClass>
+                        <String fx:value="round-border" />
+                        <String fx:value="primary-color" />
+                     </styleClass>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label prefHeight="30.0" prefWidth="56.0" text="Time:">
+               <styleClass>
+                  <String fx:value="secondary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+            </Label>
+            <TextField fx:id="timeTF" maxWidth="116.0" prefHeight="26.0" prefWidth="92.0">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+               </styleClass>
+            </TextField>
+            <Label styleClass="secondary-color" text="Reserve Parking Space">
+               <font>
+                  <Font name="Arial Black" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackToMain" mnemonicParsing="false" onAction="#goToMainMenu" prefHeight="30.0" prefWidth="59.0" text="Back" textAlignment="CENTER">
+               <styleClass>
+                  <String fx:value="primary-color" />
+                  <String fx:value="round-border" />
+                  <String fx:value="text-field" />
+               </styleClass>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+      <Label layoutX="21.0" layoutY="163.0" prefHeight="21.0" prefWidth="92.0" text="Select row:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="215.0" prefHeight="21.0" prefWidth="290.0" text="Select column:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="260.0" prefHeight="21.0" prefWidth="290.0" text="Select level:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="306.0" prefHeight="21.0" prefWidth="290.0" text="Update parking space:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="113.0" prefHeight="21.0" prefWidth="162.0" text="Select Parking lot id:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="UpdateBtn" layoutX="427.0" layoutY="388.0" mnemonicParsing="false" onAction="#UpdateSpace" text="Update">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </Button>
+      <ComboBox fx:id="idCombobox" layoutX="387.0" layoutY="111.0" onAction="#selectParkingID" prefHeight="25.0" prefWidth="106.0" stylesheets="@../../../../Styles/LightMode.css">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </ComboBox>
+      <Label fx:id="errorLoginMassage" layoutX="23.0" layoutY="384.0" prefHeight="34.0" prefWidth="388.0" textFill="RED">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="rowCombobox" layoutX="387.0" layoutY="161.0" onAction="#selectRow" prefHeight="25.0" prefWidth="106.0" stylesheets="@../../../../Styles/LightMode.css">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </ComboBox>
+      <ComboBox fx:id="columnCombobox" layoutX="387.0" layoutY="213.0" onAction="#selectColumn" prefHeight="25.0" prefWidth="106.0" stylesheets="@../../../../Styles/LightMode.css">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </ComboBox>
+      <ComboBox fx:id="levelCombobox" layoutX="387.0" layoutY="258.0" onAction="#selectLevel" prefHeight="25.0" prefWidth="106.0" stylesheets="@../../../../Styles/LightMode.css">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </ComboBox>
+      <ComboBox fx:id="updateSpaceCombobox" layoutX="387.0" layoutY="304.0" onAction="#chooseUpdate" prefHeight="25.0" prefWidth="106.0" stylesheets="@../../../../Styles/LightMode.css">
+         <styleClass>
+            <String fx:value="secondary-color" />
+            <String fx:value="round-border" />
+         </styleClass>
+      </ComboBox>
+   </children>
+</AnchorPane>

@@ -8,29 +8,25 @@ public class ParkingLotData implements Serializable {
     private int size;
     private String name;
 
-    public ParkingLotData(int id, int rows, int rowNum) {
+    public ParkingLotData(int id, int rows) {
         this.id = id;
         this.rowsNum = rows;
-        this.size = rows * rowNum;
+        this.size = rows*3*3;
     }
 
-    public ParkingLotData(int id, int rows, int rowNum, String name) {
+    public ParkingLotData(int id, int rows, String name) {
         this.id = id;
         this.rowsNum = rows;
-        this.size = rows * rowNum;
+        this.size = rows*3*3;
         this.name = name;
     }
-
     public int getParkingLotId() {
         return id;
     }
 
+    public String getParkingLotName() {return this.name; }
     public void setParkingLotId(int id) {
         this.id = id;
-    }
-
-    public String getParkingLotName() {
-        return this.name;
     }
 
     public int getRowsNum() {

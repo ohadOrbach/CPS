@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -85,7 +87,7 @@ public class App extends Application {
     	EventBus.getDefault().unregister(this);
 		super.stop();
 	}
-    
+
     @Subscribe
     public void onWarningEvent(WarningEvent event) {
     	Platform.runLater(() -> {
@@ -123,7 +125,5 @@ public class App extends Application {
 	public static void main(String[] args) {
         launch();
     }
-
-
 
 }

@@ -27,11 +27,11 @@ public class Employees {
     public void generateEmployees() {
         SafeStartTransaction();
 
-        Employee or = new Employee(308283886, "or", "meir", "308283886", "ormeir93@gmail.com", "parking lot manager", "parking lot 5");
-        Employee ohad = new Employee(308283881, "ohad", "orbach", "308283881", "ohadorbach92@gmail.com", "parking lot worker", "parking lot 5");
+        Employee or = new Employee(308283886, "or", "meir", "308283886", "ormeir93@gmail.com", "parking lot manager", "namal1");
+        Employee ohad = new Employee(308283881, "ohad", "orbach", "308283881", "ohadorbach92@gmail.com", "parking lot worker", "namal2");
         Employee amit = new Employee(318883584, "amit", "barak", "318883584", "amitbarak1997@gmail.com", "company manager", "");
         Employee tomer = new Employee(312160062, "tomer", "bar-orin", "312160062", "tomer6464@gmail.com", "costumer service", "");
-        Employee liam = new Employee(308283884, "liam", "gavrieli", "308283884", "liamgabriely@gmail.com", "parking lot worker", "parking lot 5");
+        Employee liam = new Employee(308283884, "liam", "gavrieli", "308283884", "liamgabriely@gmail.com", "parking lot worker", "namal3");
 
         App.session.save(ohad);
         App.session.save(or);

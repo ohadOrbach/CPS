@@ -129,17 +129,5 @@ public class ViewReport {
         App.setRoot(App.history.get(App.history.size() - 1));
     }
 
-    @FXML
-    void printReport(ActionEvent event) {
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null) {
-            AnchorPane temp = new AnchorPane(parent);
-            PageLayout layout = job.getPrinter()
-                    .createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
-            job.getJobSettings().setPageLayout(layout);
-            job.printPage(parent);
-            job.endJob();
-        }
-    }
 
 }
