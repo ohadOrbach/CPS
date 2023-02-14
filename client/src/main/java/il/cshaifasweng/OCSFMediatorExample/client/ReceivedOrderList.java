@@ -32,7 +32,7 @@ public class ReceivedOrderList {
         int i = 1;
         for (OrderData orderData : orderList) {
             info.add(i++ + "." + " Order id: " + orderData.getOrderId() + " ,Car Number: " + orderData.getCarNumber() + " Expected Arrival Date: "
-                    + orderData.getArrivalDate().toString() + " ,From:" + orderData.getLeavingTime()
+                    + orderData.getArrivalDate().toString() + " ,From:" + orderData.getArrivalTime()
                     + " Expected Leaving Date: " + orderData.getLeavingDate().toString() + " ,Until: " + orderData.getLeavingTime());
         }
         return info;

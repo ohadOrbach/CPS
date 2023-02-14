@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleServer extends AbstractServer {
 
@@ -47,8 +48,10 @@ public class SimpleServer extends AbstractServer {
                 System.out.println("im in update mode \n");
                 switch (args[0]) {
                     case "parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
-                        App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
-                        App.parkingPrices.pullParkingPrices();
+                        ParkingPricesData temp = App.parkingPrices.askToChangePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+                        ParkingLot temp2 = App.parkingPrices.getParkingLot(Integer.parseInt(args[1]));
+                        App.parkingPricesForConfirmtion.addParkingPricesForConfirmtion(temp, temp2);
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
                     }
                     case "complaint status" -> {
                         ConnectionToClient c = App.complaints.changeStatus(Integer.parseInt(args[1]));
@@ -62,6 +65,17 @@ public class SimpleServer extends AbstractServer {
                         Parkings plist = new Parkings(p.getParkings());
                         ParkingListData returnParkings = plist.getParkingList();
                         SafeSendToClient(returnParkings, client);
+                    }
+                    case "approve change" -> { // update parkings to  client screen
+                        System.out.println("in update approve change  " + args[1] + "\n");
+                        ParkingPricesForConfirmation temp = App.parkingPricesForConfirmtion.getParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Casual", temp.getParkingPrice());
+                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Ordered", temp.getOrderedParkingPrice());
+                        App.parkingPricesForConfirmtion.removeParkingPricesForConfirmtion(Integer.parseInt(args[1]));
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        App.parkingPrices.pullParkingPrices();
+                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
+                        SafeSendToClient(pData, client);
                     }
                 }
             } else if (msgString.startsWith("#request")) {
@@ -82,6 +96,13 @@ public class SimpleServer extends AbstractServer {
                         System.out.format("i am in case request for complaint table\n");
                         ComplaintListData complaintsList = App.complaints.getComplaints();
                         SafeSendToClient(complaintsList, client);
+                    }
+
+                    case " PricesToConfirm table" -> {
+                        System.out.format("i am in case request for PricesToConfirm table\n");
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
+                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
+                        SafeSendToClient(pData, client);
                     }
 
                     case " reports list" -> {
