@@ -51,6 +51,7 @@ public class CancelOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
+        EventBus.getDefault().unregister(this);
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }
@@ -58,7 +59,9 @@ public class CancelOrder {
 
     @FXML
     void initialize() {
-        EventBus.getDefault().register(this);
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         if(!isLightMode){
             PrimaryController.setDarkMode(parent, imMode);
         }

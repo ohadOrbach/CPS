@@ -106,6 +106,7 @@ public class CasualOrderInAdvance {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
+        EventBus.getDefault().unregister(this);
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }

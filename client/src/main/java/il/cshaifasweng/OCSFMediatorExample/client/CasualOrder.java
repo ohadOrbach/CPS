@@ -9,33 +9,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.IOException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
-// TODO add TESTS fof inputs //
+
 public class CasualOrder {
 
     @FXML
@@ -159,6 +149,7 @@ public class CasualOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
+        EventBus.getDefault().unregister(this);
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }

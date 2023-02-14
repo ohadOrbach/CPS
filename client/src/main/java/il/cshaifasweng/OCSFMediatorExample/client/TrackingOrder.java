@@ -49,6 +49,7 @@ public class TrackingOrder {
 
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
+        EventBus.getDefault().unregister(this);
         App.history.remove(App.history.size()-1);
         App.setRoot(App.history.get(App.history.size()-1));
     }
@@ -81,15 +82,15 @@ public class TrackingOrder {
             return;
         }
         ArrayList<String> trackingInfo = orderList.getInfo();
-        Stage choiceStage = new Stage();
         VBox vBox = new VBox();
         for (String infoStr : trackingInfo){
             Label infoText = new Label(infoStr);
             vBox.getChildren().add(infoText);
         }
         Scene scene = new Scene(vBox, 800, 200);
+        Stage choiceStage = new Stage();
         choiceStage.setScene(scene);
         choiceStage.show();
+        }
     }
 
-}
