@@ -139,7 +139,6 @@ public class Malfunctions {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
         id = App.employee.getBranch();
-        System.out.println(id);
         parkingIDtext.setText(id);
 
         for(int i = 1; i <= 3; i++){
@@ -217,6 +216,7 @@ public class Malfunctions {
 
         myclient.changeParkingStatus(id, row,  col,  lvl, update);
 
+        App.setRoot("Malfunctions");
     }
 
     @FXML

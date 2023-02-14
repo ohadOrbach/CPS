@@ -130,7 +130,6 @@ public class ReserveSpot {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
         id = App.employee.getBranch();
-        System.out.println();
         for(int i = 1; i <= 3; i++){
             rowCombobox.getItems().add(i);
             levelCombobox.getItems().add(i);
@@ -205,6 +204,7 @@ public class ReserveSpot {
 
         myclient.changeParkingStatus(id, row,  col,  lvl, update);
 
+        App.setRoot("ReserveSpot");
     }
 
     @FXML

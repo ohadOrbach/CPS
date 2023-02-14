@@ -149,7 +149,6 @@ public class SimpleClient extends AbstractClient {
     public void changeParkingStatus(String parkingLotId, int row, int col, int lvl, String status) {
         try {
             client.sendToServer("#update:parking space status," + parkingLotId + "," + row + "," + col + "," + lvl + ',' + status);
-            App.setRoot("Malfunctions");
         } catch (IOException e) {
             e.printStackTrace();
         }

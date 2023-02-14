@@ -97,10 +97,14 @@ public class EmployeesMainWindow {
             App.history.add("ReserveSpot");
             App.setRoot("ReserveSpot");
         }
-        else if (button2.getText().equals("Make Report"))
-        {
-            App.history.add("Make Report");
-            App.setRoot("Make Report");
+        else if (button2.getText().equals("Price tables")){
+            try {
+                SimpleClient.getClient().sendToServer("#request: prices table");
+                App.history.add("ParkingLotTable");
+                App.setRoot("ParkingLotTable");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else
         {
@@ -136,6 +140,13 @@ public class EmployeesMainWindow {
         }
     }
 
+    @FXML
+    void button5Func(ActionEvent event) throws IOException{
+        if(button5.getText().equals("View Report")){
+            App.history.add("ViewReport");
+            App.setRoot("ViewReport");
+        }
+    }
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize()
     {
