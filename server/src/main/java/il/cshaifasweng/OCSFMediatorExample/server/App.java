@@ -16,6 +16,7 @@ public class App {
     public static ParkingLots parkinglots;
     public static ParkingLots parkingPrices;
     public static Complaints complaints;
+    public static ParkingPricesForConfirmationList parkingPricesForConfirmtion;
     public static StastisticalInformations sastisticalInformations;
     public static Orders orders;
     public static Employees employees;
@@ -32,6 +33,8 @@ public class App {
         parkinglots = new ParkingLots();
         parkingPrices = new ParkingLots();
         parkings = new Parkings();
+        parkingPricesForConfirmtion = new ParkingPricesForConfirmationList();
+        parkingPricesForConfirmtion.pullPricesConfirm();
         parkinglots.generateParkingLots();
         parkinglots.pullParkingLots();
         parkingPrices.pullParkingPrices();
@@ -60,28 +63,30 @@ public class App {
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(ParkingLot.class);
-        configuration.addAnnotatedClass(ParkingLots.class);
-        configuration.addAnnotatedClass(Parking.class);
-        configuration.addAnnotatedClass(Parkings.class);
-        configuration.addAnnotatedClass(Orders.class);
-        configuration.addAnnotatedClass(Kiosk.class);
-        configuration.addAnnotatedClass(ParkingPrices.class);
         configuration.addAnnotatedClass(Complaint.class);
-        configuration.addAnnotatedClass(ParkingOrder.class);
         configuration.addAnnotatedClass(Complaints.class);
-        configuration.addAnnotatedClass(StastisticalInformation.class);
-        configuration.addAnnotatedClass(StastisticalInformations.class);
-        configuration.addAnnotatedClass(Employee.class);
-        configuration.addAnnotatedClass(Employees.class);
         configuration.addAnnotatedClass(Costumer.class);
         configuration.addAnnotatedClass(Costumers.class);
-        configuration.addAnnotatedClass(Subscription.class);
-        configuration.addAnnotatedClass(Subscriptions.class);
+        configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Employees.class);
         configuration.addAnnotatedClass(FullSubscription.class);
+        configuration.addAnnotatedClass(Kiosk.class);
+        configuration.addAnnotatedClass(Orders.class);
+        configuration.addAnnotatedClass(Parking.class);
+        configuration.addAnnotatedClass(ParkingLot.class);
+        configuration.addAnnotatedClass(ParkingLots.class);
+        configuration.addAnnotatedClass(ParkingOrder.class);
+        configuration.addAnnotatedClass(ParkingPrices.class);
+        configuration.addAnnotatedClass(ParkingPricesForConfirmation.class);
+        configuration.addAnnotatedClass(ParkingPricesForConfirmationList.class);
+        configuration.addAnnotatedClass(Parkings.class);
         configuration.addAnnotatedClass(RegularSubscription.class);
         configuration.addAnnotatedClass(Report.class);
         configuration.addAnnotatedClass(Reports.class);
+        configuration.addAnnotatedClass(StastisticalInformation.class);
+        configuration.addAnnotatedClass(StastisticalInformations.class);
+        configuration.addAnnotatedClass(Subscription.class);
+        configuration.addAnnotatedClass(Subscriptions.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties())
                 .build();

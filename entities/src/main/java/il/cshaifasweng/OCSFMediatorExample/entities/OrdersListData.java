@@ -7,9 +7,6 @@ import java.util.List;
 public class OrdersListData implements Serializable {
     public List<OrderData> ordersListData;
 
-    //if send for cancellation request mode == "cancellation" else (for tracking)
-    String mode;
-
     public OrdersListData() {
         this.ordersListData = new ArrayList<OrderData>();
     }
@@ -29,11 +26,4 @@ public class OrdersListData implements Serializable {
         return this.ordersListData;
     }
 
-    public String getMode() {
-        return this.mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
 }

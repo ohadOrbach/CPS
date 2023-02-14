@@ -58,14 +58,16 @@ public class PrimaryController {
         parent.getStylesheets().remove("src/Styles/DarkMode.css");
         parent.getStylesheets().add("/Styles/LightMode.css");
         Image image = new Image("/Images/LightMode2.png");
-        imMode.setImage(image);
+        if(imMode != null)
+            imMode.setImage(image);
     }
 
     public static void setDarkMode(AnchorPane parent, ImageView imMode) {
         parent.getStylesheets().remove("src/Styles/LightMode.css");
         parent.getStylesheets().add("/Styles/DarkMode.css");
         Image image = new Image("/Images/DarkMode.png");
-        imMode.setImage(image);
+        if(imMode != null)
+            imMode.setImage(image);
     }
 
     @FXML

@@ -3,14 +3,14 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.entities.CancelOrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrdersListData;
+import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -26,33 +26,44 @@ import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLig
 
 public class CancelOrder {
 
-    ObservableList<OrderData> orderList = FXCollections.observableArrayList();
     @FXML
     private Button BackBtn;
+
     @FXML
     private TextField CarNumberTF;
+
     @FXML
     private TextField IdTF;
+
     @FXML
     private Button SendBtn;
+
     @FXML
     private Button btnMode;
+
     @FXML
     private ImageView imMode;
+
     @FXML
     private AnchorPane parent;
 
+    ObservableList<OrderData> orderList = FXCollections.observableArrayList();
+
+
     @FXML
     void goToMainMenu(ActionEvent event) throws IOException {
-        App.history.remove(App.history.size() - 1);
-        App.setRoot(App.history.get(App.history.size() - 1));
+        EventBus.getDefault().unregister(this);
+        App.history.remove(App.history.size()-1);
+        App.setRoot(App.history.get(App.history.size()-1));
     }
 
 
     @FXML
     void initialize() {
-        EventBus.getDefault().register(this);
-        if (!isLightMode) {
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        if(!isLightMode){
             PrimaryController.setDarkMode(parent, imMode);
         }
     }
@@ -60,11 +71,6 @@ public class CancelOrder {
     // start choice box if its cancel (select the order to cancel).
     @Subscribe
     public void startChoiceBox(ReceivedOrderList event) throws Exception {
-        // if not cancel mode, return (can be also tracking).
-        if (!Objects.equals(event.getMode(), "cancel")) {
-            return;
-        }
-
         List<OrderData> eventList = event.getOrderListData();
         OrdersListData deleteList = new OrdersListData(eventList);
         // init orders vector
@@ -88,7 +94,7 @@ public class CancelOrder {
         }
 
         VBox vBox = new VBox();
-        for (CheckBox checkBox : checkBoxes)
+        for(CheckBox checkBox:checkBoxes)
             vBox.getChildren().add(checkBox);
 
         // in send cancel - send to server orders list for deletion.
@@ -96,14 +102,14 @@ public class CancelOrder {
             for (CheckBox checkBox : checkBoxes)
                 if (!checkBox.isSelected()) {
                     char index = checkBox.getText().toCharArray()[0];
-                    OrderData orderData = eventList.get(Integer.parseInt(Character.toString(index)) - 1);
+                    OrderData orderData = eventList.get(Integer.parseInt(Character.toString(index))-1);
                     deleteList.remove(orderData);
                 }
-            try {
+            try{
                 SimpleClient.getClient().sendToServer(deleteList);
             } catch (IOException e) {
-                e.printStackTrace();
-            }
+                e.printStackTrace();}
+            choiceStage.close();
         });
 
         // show choices to client
@@ -111,27 +117,41 @@ public class CancelOrder {
         Scene scene = new Scene(vBox, 800, 200);
         choiceStage.setScene(scene);
         choiceStage.show();
-    }
+    };
 
 
     // send cancel request to server - via id and car number.
     @FXML
     void sendCancellation() {
-        try {
+        try{
+            String carNumber = CarNumberTF.getText();
+
+            //Cancel by ID only
+            if(carNumber.isEmpty())
+                carNumber = "-1";
+
             CancelOrderData trackingOrder =
-                    new CancelOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(CarNumberTF.getText()));
+                    new CancelOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(carNumber));
             SimpleClient.getClient().sendToServer(trackingOrder);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();}
     }
 
     // change mode (dark\light).
     @FXML
-    public void changeMode(ActionEvent event) {
+    public void changeMode(ActionEvent event){
         PrimaryController.ChangeForAll(parent, imMode);
+    }
+
+    // error alert message.
+    @Subscribe
+    public void sendTextError(String msg) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    String.format("%s", msg));
+            alert.show();
+        });
     }
 
 
 }
-

@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +24,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
 public class NewSubscription {
 
@@ -59,6 +63,12 @@ public class NewSubscription {
     private VBox vboxParkingList;
     @FXML // fx:id="parkingLot"
     private ChoiceBox<String> parkingLot; // Value injected by FXMLLoader
+
+    @FXML
+    private AnchorPane parent;
+    @FXML
+    private ImageView imMode;
+
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
@@ -166,7 +176,7 @@ public class NewSubscription {
         assert time != null : "fx:id=\"time\" was not injected: check your FXML file 'NewSubscription.fxml'.";
         assert subResult != null : "fx:id=\"subResult\" was not injected: check your FXML file 'NewSubscription.fxml'.";
         EventBus.getDefault().register(this);
-
+        if(!isLightMode){ PrimaryController.setDarkMode(parent, imMode);}
         String[] hours = new String[24];
         for (int i = 0; i < 24; i++) {
             hours[i] = (String.format("%02d:00", i));

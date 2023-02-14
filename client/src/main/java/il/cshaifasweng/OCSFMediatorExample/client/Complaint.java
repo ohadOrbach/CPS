@@ -5,8 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+
+import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
 
 public class Complaint {
@@ -20,7 +25,10 @@ public class Complaint {
     private TextArea newComplaintTxt; // Text injected by FXMLLoader
     @FXML
     private Button MainMenuButton;
-
+    @FXML
+    private AnchorPane parent;
+    @FXML
+    private ImageView imMode;
 
     @FXML
     void sendComplaint(ActionEvent event) {
@@ -32,6 +40,7 @@ public class Complaint {
 
     @FXML
     void initialize() {
+        if(!isLightMode){ PrimaryController.setDarkMode(parent, imMode);}
         assert MainMenuButton != null : "fx:id=\"MainMenuButton\" was not injected: check your FXML file 'Complaints.fxml'.";
         assert sendBtn != null : "fx:id=\"SendComplaintButton\" was not injected: check your FXML file 'Complaints.fxml'.";
         assert newComplaintTxt != null : "fx:id=\"TextField\" was not injected: check your FXML file 'Complaints.fxml'.";

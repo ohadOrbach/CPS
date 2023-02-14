@@ -8,10 +8,8 @@ import java.util.List;
 
 public class ReceivedOrderList {
     private List<OrderData> orderList;
-    private String mode;
 
     public ReceivedOrderList(OrdersListData ordersListData) {
-        this.mode = ordersListData.getMode();
         this.orderList = new ArrayList<>();
         List<OrderData> dataList = ordersListData.getOrdersListData();
         for (OrderData orderData : dataList) {
@@ -23,16 +21,12 @@ public class ReceivedOrderList {
         return this.orderList;
     }
 
-    public String getMode() {
-        return this.mode;
-    }
-
     public ArrayList<String> getInfo() {
         ArrayList<String> info = new ArrayList<>();
         int i = 1;
         for (OrderData orderData : orderList) {
             info.add(i++ + "." + " Order id: " + orderData.getOrderId() + " ,Car Number: " + orderData.getCarNumber() + " Expected Arrival Date: "
-                    + orderData.getArrivalDate().toString() + " ,From:" + orderData.getLeavingTime()
+                    + orderData.getArrivalDate().toString() + " ,From:" + orderData.getArrivalTime()
                     + " Expected Leaving Date: " + orderData.getLeavingDate().toString() + " ,Until: " + orderData.getLeavingTime());
         }
         return info;
