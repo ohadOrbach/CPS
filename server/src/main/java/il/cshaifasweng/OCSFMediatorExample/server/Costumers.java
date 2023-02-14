@@ -32,7 +32,6 @@ public class Costumers {
         App.session.flush();
         App.SafeCommit();
         pullCostumersFromDB();
-        or.fullSubscriptions.add(new FullSubscription(123456,or,"123123123",LocalDate.now().minusDays(25)));
     }
 
     public void pullCostumersFromDB() {
@@ -91,17 +90,23 @@ public class Costumers {
         return costumer;
     }
 
-    public String addNewCostumer(String id, String password, String email) {
+    public String addNewCostumer(String id, String password,String email)
+    {
+        System.out.println("inside costumer Register method");
         Costumer costumer = costumers.get(Integer.valueOf(id));
-        if (costumer != null) {
+        if(costumer != null)
+        {
+            System.out.println("inside costumer Register method1");
             return "failure";
         }
         App.SafeStartTransaction();
-        Costumer newCostumer = new Costumer(Integer.parseInt(id), email, password);
+        Costumer newCostumer = new Costumer(Integer.parseInt(id),email,password);
         App.session.save(newCostumer);
+        System.out.println("inside costumer Register method2");
         App.session.flush();
         App.SafeCommit();
-        costumers.put(Integer.parseInt(id), newCostumer);
+        System.out.println("inside costumer Register method3");
+        costumers.put(Integer.parseInt(id),newCostumer);
         return "success";
     }
 

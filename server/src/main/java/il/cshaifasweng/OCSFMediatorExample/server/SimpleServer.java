@@ -112,7 +112,7 @@ public class SimpleServer extends AbstractServer {
                 SafeSendToClient(costumer, client);
             } else if (msgString.startsWith("costumer Register:")) {
                 String[] args = (msgString.split(":")[1]).split(",");
-
+                System.out.println("inside costumer Register");
                 if (App.costumers.addNewCostumer(args[0], args[1], args[2]).equals("success")) {
                     SafeSendToClient("registration succeeded", client);
                 } else {
@@ -145,6 +145,7 @@ public class SimpleServer extends AbstractServer {
             }
             else if(msgString.startsWith("renew"))
             {
+                System.out.println("inside renew");
                 String id = msgString.split(":")[1];
                 String ret = App.subscriptions.renewSubscription(id);
                 SafeSendToClient(ret, client);

@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -52,8 +53,8 @@ public class InitialStaffWindow {
 
     @FXML
     void loginAttempt(ActionEvent event) {
-        if (id.getText().isEmpty() || password.getText().isEmpty()) {
-            errorLoginMassage.setText("Error: Missing fields");
+        if (id.getText().isEmpty() || password.getText().isEmpty()||InputCheck.checkId(id.getText())) {
+            errorLoginMassage.setText("Error: Invalid fields");
             return;
         }
         SimpleClient myClient = SimpleClient.getClient();

@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Subscriptions {
-    HashMap<Integer, RegularSubscription> regularSubscriptions;
-    HashMap<Integer, FullSubscription> fullSubscriptions;
+    HashMap<Integer, RegularSubscription> regularSubscriptions = new HashMap<Integer, RegularSubscription>();
+    HashMap<Integer, FullSubscription> fullSubscriptions = new HashMap<Integer, FullSubscription>();
 
     Session session = App.session;
 
@@ -87,6 +87,7 @@ public class Subscriptions {
 
     public String renewSubscription(String id)
     {
+        System.out.println("inside renew method");
         RegularSubscription regularSub = regularSubscriptions.get(Integer.valueOf(id));
         FullSubscription fullSub = fullSubscriptions.get(Integer.valueOf(id));
         LocalDate end;

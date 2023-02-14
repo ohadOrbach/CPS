@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class App {
 
@@ -51,6 +52,10 @@ public class App {
         server.listen();
         reports = new Reports();
         reports.pullReports();
+
+        Costumer or = costumers.getCostumer(308283886);
+        subscriptions.addNewFullSubscription(or,"123123123", LocalDate.now().minusDays(25));
+
     }
 
     private static SessionFactory getSessionFactory() throws HibernateException {

@@ -97,6 +97,8 @@ public class SubscriptionsList {
     @Subscribe
     public void renewAnswer(String event) throws IOException {
 
+        System.out.println("renew success");
+
         String[] args = (event.split(":")[1]).split(",");
         LocalDate oldEnd = LocalDate.parse(args[1], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate newEnd = LocalDate.parse(args[2], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -106,17 +108,7 @@ public class SubscriptionsList {
         subMap.remove(args[0]);
         App.costumer.addSubscription(sub);
 
-        subscriptionsList.clear();
-        for(HashMap<String, SubscriptionData> map : App.costumer.getSubscriptions().values())
-        {
-            for(SubscriptionData subscriptionData : subMap.values())
-            {
-                subscriptionsList.add(subscriptionData);
-                System.out.println(subscriptionData.getSubscriptionId());
-            }
-        }
-
-        buildSubscriptionsTable();
+        App.setRoot("SubscriptionsList");
     }
 
     private void buildSubscriptionsTable() {
@@ -129,7 +121,7 @@ public class SubscriptionsList {
         table.getColumns().addAll(idCol,typeCol, LicencePlateCol, endingTimeCol,ParkingLotCol);
         table.setItems(subscriptionsList);
         Vbox.getChildren().clear();
-        Vbox.getChildren().add(table);
+        Vbox.getChildren().addAll(table);
         assert idList != null : "fx:id=\"idList\" was not injected: check your FXML file 'primary.fxml'.";
 
         if (subscriptionsList != null) {

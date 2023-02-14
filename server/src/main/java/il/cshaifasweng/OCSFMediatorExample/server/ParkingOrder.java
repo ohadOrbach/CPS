@@ -35,7 +35,6 @@ public class ParkingOrder {
     @JoinColumn(name = "parking_id2", referencedColumnName = "id")
     private Parking parking_id2;
 
-
     public ParkingOrder(int userId, int carNumber, LocalDate arrivalDate, String arrivalTime, LocalDate leavingDate, String leavingTime, String email, String advance, String parkingLotName) {
         this.userId = userId;
         this.carNumber = carNumber;
@@ -125,7 +124,6 @@ public class ParkingOrder {
     public void setId(int orderId) {
         this.orderId = orderId;
     }
-
 
     public int getStatus() {
         return status2;
