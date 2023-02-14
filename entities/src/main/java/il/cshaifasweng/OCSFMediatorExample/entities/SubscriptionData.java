@@ -13,13 +13,25 @@ public class SubscriptionData implements Serializable {
 
     private LocalDate endingDate;
 
-    public SubscriptionData(String type, String carNum, LocalDate endingDate, String costumerId) {
+    private String parkingLot;
+
+    private String subscriptionId;
+
+    public SubscriptionData(String type, String carNum, LocalDate endingDate, String costumerId,String parkingLot) {
         this.type = type;
         this.carNum = carNum;
         this.endingDate = endingDate;
         this.costumerId = costumerId;
+        this.parkingLot=parkingLot;
     }
 
+    public String getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(String parkingLot) {
+        this.parkingLot = parkingLot;
+    }
 
     public String getType() {
         return type;
@@ -51,5 +63,13 @@ public class SubscriptionData implements Serializable {
 
     public void setCostumerId(String costumerId) {
         this.costumerId = costumerId;
+    }
+
+    public String getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 }

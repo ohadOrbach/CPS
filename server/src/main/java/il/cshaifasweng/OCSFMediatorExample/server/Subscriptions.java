@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,13 +52,10 @@ public class Subscriptions {
             return "already registered";
         }
 
-        System.out.println("new regular 1");
-
         int subscriptionId = (int) (Math.random() * 900000) + 100000;
         while ((regularSubscriptions.get(subscriptionId)) != null) {
             subscriptionId = (int) (Math.random() * 900000) + 100000;
         }
-
         App.SafeStartTransaction();
         RegularSubscription subscription = new RegularSubscription(subscriptionId, costumer, licencePlate, startingDate, parkingLot, expectedLeavingTime);
         App.session.save(subscription);
@@ -66,14 +64,13 @@ public class Subscriptions {
         regularSubscriptions.put(subscription.getSubscriptionId(), subscription);
         costumer.addRegularSubscriptions(subscription);
 
-        return "registration succeeded";
+        return "registration succeeded:"+subscriptionId;
     }
 
     public String addNewFullSubscription(Costumer costumer, String licencePlate, LocalDate start) {
         if (costumer.subFound(licencePlate, null)) {
-            return "already registered";
+            return "already registered:";
         }
-
         int subscriptionId = (int) (Math.random() * 900000) + 100000;
         while ((fullSubscriptions.get(subscriptionId)) != null) {
             subscriptionId = (int) (Math.random() * 900000) + 100000;
@@ -85,7 +82,29 @@ public class Subscriptions {
         App.SafeCommit();
         fullSubscriptions.put(subscription.getSubscriptionId(), subscription);
         costumer.addFullSubscriptions(subscription);
-        return "new full subscription made";
+        return "registration succeeded:"+subscriptionId;
+    }
+
+    public String renewSubscription(String id)
+    {
+        RegularSubscription regularSub = regularSubscriptions.get(Integer.valueOf(id));
+        FullSubscription fullSub = fullSubscriptions.get(Integer.valueOf(id));
+        LocalDate end;
+        if(regularSub!=null)
+        {
+            end = regularSub.getEnd();
+            regularSub.setEnd(regularSub.getEnd().plusMonths(1));
+        }
+        else
+        {
+            end = regularSub.getEnd();
+            fullSub.setEnd(fullSub.getEnd().plusMonths(1));
+        }
+
+        String dateString = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String newEnd = (end.plusMonths(1)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        return "Subscription Renewed:"+id+","+dateString+","+newEnd;
     }
 
 

@@ -193,7 +193,6 @@ public class CasualOrderInAdvance {
         return false;
     }
 
-
     public void sendTextError(String text) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING,

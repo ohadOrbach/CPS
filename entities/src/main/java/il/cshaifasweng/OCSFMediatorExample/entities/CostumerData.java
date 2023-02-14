@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class CostumerData implements Serializable {
 
-    public HashMap<LocalDate, SubscriptionData> subscriptions = new HashMap<LocalDate, SubscriptionData>();
+    public HashMap< LocalDate , HashMap<String, SubscriptionData>> subscriptions = new HashMap<LocalDate, HashMap<String, SubscriptionData>>();
     private int id;
     private String password;
     private String Email;
@@ -63,16 +63,24 @@ public class CostumerData implements Serializable {
         this.loggedIn = loggedIn;
     }
 
+
     public void addSubscription(SubscriptionData sub) {
-        subscriptions.put(sub.getEndingDate(), sub);
+        HashMap<String, SubscriptionData> currentMap = subscriptions.get(sub.getEndingDate());
+        if(currentMap==null)
+        {
+            subscriptions.put(sub.getEndingDate(),new HashMap<String, SubscriptionData>());
+        }
+        subscriptions.get(sub.getEndingDate()).put(sub.getSubscriptionId(),sub);
     }
 
-    public SubscriptionData getSubscription(LocalDate date) {
+    public HashMap<String, SubscriptionData> getSubscriptionsByDate(LocalDate date) {
+
         return (subscriptions.get(date));
     }
 
-    public HashMap<LocalDate, SubscriptionData> getSubscriptions() {
-        return subscriptions;
+    public HashMap< LocalDate , HashMap<String, SubscriptionData>> getSubscriptions() {
+
+        return (subscriptions);
     }
 
 }

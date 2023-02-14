@@ -22,6 +22,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -84,8 +85,8 @@ public class CostumerMainWindow {
 
     @FXML
     void goToSubscriptions(ActionEvent event) throws IOException {
-        App.history.add("NewSubscription");
-        App.setRoot("NewSubscription");
+        App.history.add("SubscriptionsMenu");
+        App.setRoot("SubscriptionsMenu");
     }
 
     @FXML
@@ -121,25 +122,50 @@ public class CostumerMainWindow {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
 
+
+
         if (!App.dontShow) {
             LocalDate currentDate = LocalDate.now();
-            if (!((App.costumer.getSubscriptions().isEmpty()))) {
-                Optional<SubscriptionData> expiringSubscription = App.costumer.getSubscriptions().keySet().stream()
-                        .filter(date -> date.isBefore(currentDate.plusDays(7)))
-                        .filter(date -> date.isAfter(currentDate))
-                        .map(App.costumer.getSubscriptions()::get)
-                        .findFirst();
-                if (expiringSubscription.isPresent()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Subscription Expiring");
-                    alert.setHeaderText("One of your subscriptions is about to expire");
-                    alert.setContentText("Please renew or cancel your subscription");
-                    alert.showAndWait();
-                }
+            LocalDate nextWeek = currentDate.plusDays(7);
+            HashMap<LocalDate, HashMap<String, SubscriptionData>> subscriptionsByDate = App.costumer.getSubscriptions();
+            boolean hasExpiringSubscription = subscriptionsByDate.entrySet().stream()
+                    .filter(entry -> entry.getKey().isAfter(currentDate) && entry.getKey().isBefore(nextWeek))
+                    .flatMap(entry -> entry.getValue().values().stream())
+                    .anyMatch(sub -> sub.getEndingDate().isAfter(currentDate) && sub.getEndingDate().isBefore(nextWeek));
+            if (hasExpiringSubscription) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Subscription Expiring");
+                alert.setHeaderText("One of your subscriptions is about to expire");
+                alert.setContentText("Please renew or cancel your subscription");
+                alert.showAndWait();
             }
 
             App.dontShow = true;
         }
+
+
+
+
+
+//        if (!App.dontShow) {
+//            LocalDate currentDate = LocalDate.now();
+//            if (!((App.costumer.getSubscriptions().isEmpty()))) {
+//                Optional<SubscriptionData> expiringSubscription = App.costumer.getSubscriptions().keySet().stream()
+//                        .filter(date -> date.isBefore(currentDate.plusDays(7)))
+//                        .filter(date -> date.isAfter(currentDate))
+//                        .map(App.costumer.getSubscriptions()::get)
+//                        .findFirst();
+//                if (expiringSubscription.isPresent()) {
+//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Subscription Expiring");
+//                    alert.setHeaderText("One of your subscriptions is about to expire");
+//                    alert.setContentText("Please renew or cancel your subscription");
+//                    alert.showAndWait();
+//                }
+//            }
+//
+//            App.dontShow = true;
+//        }
 
     }
 }

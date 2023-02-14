@@ -97,33 +97,47 @@ public class NewSubscription {
 
     @FXML
     void registerAttempt(ActionEvent event) throws IOException {
+
+        if((!(InputCheck.checkCarNum(licencePlate.getText())))||(!InputCheck.checkDate(time.getValue())))
+        {
+            subResult.setText("registration failed");
+            return;
+        }
         SimpleClient myClient = SimpleClient.getClient();
         String dateString = time.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String type = "";
+        LocalDate endingDate = LocalDate.now().plusMonths(1);
         if (full.isSelected()) {
             myClient.sendToServer("new subscription full:" + App.costumer.getId() + "," + licencePlate.getText() + "," + dateString);
             type = "full";
+            App.currentSub = new SubscriptionData(type, licencePlate.getText(), endingDate, String.valueOf(App.costumer.getId()),null);
         } else {
             myClient.sendToServer("new subscription regular:" + App.costumer.getId() + "," + licencePlate.getText() +
                     "," + dateString + "," + parkingLot.getValue() + "," + expectedDailyLeavingTime.getValue());
             type = "regular";
+
+            App.currentSub = new SubscriptionData(type, licencePlate.getText(), endingDate, String.valueOf(App.costumer.getId()),parkingLot.getValue());
         }
-        LocalDate endingDate = LocalDate.now().plusMonths(1);
-        App.currentSub = new SubscriptionData(type, licencePlate.getText(), endingDate, String.valueOf(App.costumer.getId()));
+        subResult.setText("sending sub");
     }
 
     @Subscribe
     public void subscriptionAttempt(String event) throws IOException {
-        subResult.setText("registration succeeded");
-        App.costumer.addSubscription(App.currentSub);
-        // if(event.equals("registration succeeded"))
-        // {
 
-        //  }
-        //  else
-        //  {
-        //      subResult.setText("registration failed");
-        //  }
+         if(event.startsWith("registration succeeded"))
+         {
+             subResult.setText("registration succeeded0");
+             String id = (event.split(":")[1]);
+             subResult.setText("registration succeeded1"+App.currentSub.getCarNum());
+             App.currentSub.setSubscriptionId(id);
+             subResult.setText("adding subscription to the map "+id);
+             System.out.println("subscription is: "+App.currentSub.getSubscriptionId()+", "+App.currentSub.getCarNum());
+             App.costumer.addSubscription(App.currentSub);
+         }
+         else
+         {
+              subResult.setText("registration failed");
+         }
     }
 
     @FXML

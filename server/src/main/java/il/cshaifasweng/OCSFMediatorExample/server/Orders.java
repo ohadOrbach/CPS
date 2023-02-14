@@ -88,7 +88,7 @@ public class Orders {
         if (foundParking == false)
             return "error, we didnt find parking in this ParkingLot";
 
-        return "Your order has been successfully received! Thank you and happy parking";
+        return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "+order.getExpectedPayment();
     }
 
     public OrderData getOrderData(ParkingOrder order) {

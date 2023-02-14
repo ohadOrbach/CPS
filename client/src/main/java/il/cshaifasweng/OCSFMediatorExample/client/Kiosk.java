@@ -106,7 +106,10 @@ public class Kiosk {
     }
 
     @FXML
-    void makeClientOrder(ActionEvent event) {
+    void makeClientOrder(ActionEvent event) throws IOException {
+
+        App.history.add("CasualOrder");
+        App.setRoot("CasualOrder");
 
     }
 

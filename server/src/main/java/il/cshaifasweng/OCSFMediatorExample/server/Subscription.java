@@ -15,11 +15,22 @@ public class Subscription {
     private String licencePlate;
     private LocalDate start;
 
+    private LocalDate end;
+
     public Subscription(int subscriptionId, Costumer costumer, String licencePlate, LocalDate startingDate) {
         this.subscriptionId = subscriptionId;
         this.costumer = costumer;
         this.licencePlate = licencePlate;
         this.start = startingDate;
+        this.end = startingDate.plusMonths(1);
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     public Subscription() {

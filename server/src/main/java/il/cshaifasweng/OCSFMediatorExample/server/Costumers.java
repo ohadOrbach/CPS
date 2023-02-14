@@ -59,18 +59,33 @@ public class Costumers {
         }
 
         theCostumer.setLogin(true);
+        session.update(theCostumer);
 
         CostumerData costumer = new CostumerData(theCostumer.getId(), theCostumer.getEmail(), theCostumer.getPassword());
 
+        System.out.println("\n subscriptions Check When Login");
+
         for (FullSubscription fs : theCostumer.fullSubscriptions) {
-            LocalDate endingDate = fs.getStart().plusMonths(1);
-            SubscriptionData sd = new SubscriptionData("full", fs.getLicencePlate(), endingDate, Integer.toString(fs.getCostumer().getId()));
+            SubscriptionData sd = new SubscriptionData("full", fs.getLicencePlate(), fs.getEnd(), Integer.toString(fs.getCostumer().getId()),"");
+            sd.setSubscriptionId(String.valueOf(fs.getSubscriptionId()));
             costumer.addSubscription(sd);
+            System.out.println(fs.getSubscriptionId()+", "+fs.getEnd());
         }
         for (RegularSubscription fs : theCostumer.regularSubscriptions) {
-            LocalDate endingDate = fs.getStart().plusMonths(1);
-            SubscriptionData sd = new SubscriptionData("full", fs.getLicencePlate(), endingDate, Integer.toString(fs.getCostumer().getId()));
+            SubscriptionData sd = new SubscriptionData("regular", fs.getLicencePlate(), fs.getEnd(), Integer.toString(fs.getCostumer().getId()),fs.getParkingLot().getName());
+            sd.setSubscriptionId(String.valueOf(fs.getSubscriptionId()));
             costumer.addSubscription(sd);
+            System.out.println(fs.getSubscriptionId()+", "+fs.getEnd());
+        }
+
+        //System.out.println("and now, the subscriptions in the CostumerData (the size is "+costumer.getSubscriptions().values().size()+"): ");
+        //int i =1;
+        for(HashMap<String, SubscriptionData> subMap : costumer.getSubscriptions().values())
+        {
+            for(SubscriptionData sub : subMap.values())
+            {
+                System.out.println(sub.getSubscriptionId());
+            }
         }
         return costumer;
     }
@@ -96,5 +111,6 @@ public class Costumers {
     void logOutCostumer(String id) {
         Costumer costumer = costumers.get(Integer.valueOf(id));
         costumer.setLogin(false);
+        session.update(costumer);
     }
 }

@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="600.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CostumerMainWindow">
+<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="600.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.SubscriptionsMenu">
     <children>
         <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="59.0" prefWidth="800.0" styleClass="secondary-color" />
-        <Label layoutX="261.0" layoutY="8.0" styleClass="secondary-color" text="Costumer menu">
+        <Label layoutX="261.0" layoutY="8.0" styleClass="secondary-color" text="Subscriptions menu">
             <font>
                 <Font name="Arial Black" size="24.0" />
             </font>
@@ -43,7 +43,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="goToLogIn" layoutX="660.0" layoutY="14.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="29.0" prefWidth="78.0" text="Log Out">
+        <Button fx:id="goToLogIn" layoutX="660.0" layoutY="14.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="29.0" prefWidth="78.0" text="back">
             <styleClass>
                 <String fx:value="primary-color" />
                 <String fx:value="round-border" />
@@ -53,7 +53,7 @@
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="button1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToOrders" prefHeight="47.0" prefWidth="149.0" text="Orders Menu">
+        <Button fx:id="joinSub" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#joinSubscription" prefHeight="47.0" prefWidth="149.0" text="Join A Subscription!">
             <styleClass>
                 <String fx:value="secondary-color" />
                 <String fx:value="round-border" />
@@ -63,17 +63,7 @@
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="button2" layoutX="275.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="182.0" text="Subscriptions Menu">
-            <styleClass>
-                <String fx:value="secondary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
-            </styleClass>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-        <Button fx:id="button3" layoutX="529.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToComplain" prefHeight="47.0" prefWidth="182.0" text="Complain">
+        <Button fx:id="mySub" layoutX="275.0" layoutY="100.0" mnemonicParsing="false" onAction="#showSubscriptions" prefHeight="47.0" prefWidth="182.0" text="My Subscriptions">
             <styleClass>
                 <String fx:value="secondary-color" />
                 <String fx:value="round-border" />

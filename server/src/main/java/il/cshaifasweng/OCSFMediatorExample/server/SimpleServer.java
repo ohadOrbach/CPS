@@ -137,11 +137,17 @@ public class SimpleServer extends AbstractServer {
                 String[] args = (msgString.split(":")[1]).split(",");
                 App.costumers.logOutCostumer(args[0]);
 
-            } else if (msgString.startsWith("logout employee")) //*****************
+            } else if (msgString.startsWith("logout employee")) //*******
             {
                 String[] args = (msgString.split(":")[1]).split(",");
                 App.employees.logoutEmployee(args[0]);
 
+            }
+            else if(msgString.startsWith("renew"))
+            {
+                String id = msgString.split(":")[1];
+                String ret = App.subscriptions.renewSubscription(id);
+                SafeSendToClient(ret, client);
             }
 
             // we got a requset from kiosk to take in client car
