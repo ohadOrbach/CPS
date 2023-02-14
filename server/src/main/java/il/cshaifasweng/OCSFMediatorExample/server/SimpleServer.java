@@ -82,17 +82,6 @@ public class SimpleServer extends AbstractServer {
                         PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
                         SafeSendToClient(pData, client);
                     }
-                    case "approve change" -> { // update parkings to  client screen
-                        System.out.println("in update approve change  " + args[1] + "\n");
-                        ParkingPricesForConfirmation temp = App.parkingPricesForConfirmtion.getParkingPricesForConfirmtion(Integer.parseInt(args[1]));
-                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Casual", temp.getParkingPrice());
-                        App.parkingPrices.changePrice(temp.getParkingLotId(), "Ordered", temp.getOrderedParkingPrice());
-                        App.parkingPricesForConfirmtion.removeParkingPricesForConfirmtion(Integer.parseInt(args[1]));
-                        App.parkingPricesForConfirmtion.pullPricesConfirm();
-                        App.parkingPrices.pullParkingPrices();
-                        PricesListToConfirm pData = App.parkingPricesForConfirmtion.getPdata();
-                        SafeSendToClient(pData, client);
-                    }
                 }
             } else if (msgString.startsWith("#request")) {
                 String[] args = (msgString.split(":")[1]).split(",");
