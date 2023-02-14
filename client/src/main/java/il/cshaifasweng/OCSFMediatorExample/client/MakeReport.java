@@ -24,6 +24,7 @@ import java.util.List;
 import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
 
 public class MakeReport {
+    String ParkingID = "";
 
     ObservableList<ParkingLotData> parkingLotList = FXCollections.observableArrayList();
     @FXML
@@ -47,6 +48,8 @@ public class MakeReport {
     @FXML
     private ComboBox<String> parkingLotComboBox;
     @FXML
+    private TextField parkingIDtext;
+    @FXML
     private TextField malfunctuinsNumber;
     @FXML
     private DatePicker startDate;
@@ -55,17 +58,15 @@ public class MakeReport {
     @FXML
     private Label errorLoginMassage;
 
+
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
         List<ParkingLotData> eventList = event.getParkingLotDataList();
         for (int i = 0; i < eventList.size(); i++) {
             parkingLotList.add(eventList.get(i));
         }
-        assert parkingLotComboBox != null : "fx:id=\"parkingLotComboBox\" was not injected: check your FXML file 'primary.fxml'.";
-        for (ParkingLotData parkingLotData : parkingLotList) {
-            parkingLotComboBox.getItems().add(parkingLotData.getParkingLotName());
-        }
     }
+
 
     @FXML
     void initialize() {
@@ -87,6 +88,8 @@ public class MakeReport {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+        ParkingID = App.employee.getBranch();
+        parkingIDtext.setText(ParkingID);
     }
 
     @FXML
@@ -108,8 +111,8 @@ public class MakeReport {
             errorLoginMassage.setText("Start date must be before the end date");
             return;
         }
-        if (parkingLotComboBox.getSelectionModel().getSelectedItem() == null) {
-            errorLoginMassage.setText("Parking lot not selected");
+        if (ParkingID.equals("")) {
+            errorLoginMassage.setText("Parking lot not found");
             return;
         }
         try {
@@ -153,7 +156,7 @@ public class MakeReport {
             return;
         }
         System.out.println("submitting report..");
-        ReportData report = new ReportData(parkingLotComboBox.getSelectionModel().getSelectedItem(), casual, inAdvance, complaints,
+        ReportData report = new ReportData(ParkingID, casual, inAdvance, complaints,
                 malfunctuins, startDate.getValue(), endDate.getValue());
         myclient.submitReport(report);
         casualNumber.clear();
