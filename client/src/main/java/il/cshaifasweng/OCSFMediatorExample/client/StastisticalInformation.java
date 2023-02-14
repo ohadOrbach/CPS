@@ -80,7 +80,6 @@ public class StastisticalInformation {
     void initialize() throws IOException {
         EventBus.getDefault().register(this);
         comboBox.getItems().addAll(options);
-        comboBox.setValue("average");
         comboBox.setOnAction(this::getOption);
     }
 
@@ -88,17 +87,19 @@ public class StastisticalInformation {
         String myOption = comboBox.getValue();
         List<StastisticalInformationData> newList;
         if(myOption.compareTo("average") == 0){
-             newList = calcDailyAvgForThisWeek(eventList);
+            newList = calcDailyAvgForThisWeek(eventList);
         }
         else{
-             newList = calcDailyMedianForThisWeek(eventList);
+            newList = calcDailyMedianForThisWeek(eventList);
         }
         stastisticalInformationList.clear();
         for (int i = 0; i < newList.size(); i++) {
             stastisticalInformationList.add(newList.get(i));
-            System.out.println("heyyyyyy   "  + stastisticalInformationList.get(i));
+            System.out.println("heyyyyyy   "  + stastisticalInformationList.get(i).getActualOrders());
         }
-        buildListTable();
+        table.setItems(stastisticalInformationList);
+        Vbox.getChildren().clear();
+        Vbox.getChildren().add(table);
     }
 
     @FXML
