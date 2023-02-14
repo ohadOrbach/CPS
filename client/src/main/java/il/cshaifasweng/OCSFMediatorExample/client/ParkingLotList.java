@@ -36,6 +36,7 @@ public class ParkingLotList {
 
     @Subscribe
     public void onReceivedParkingList(ReceivedParkingLotListEvent event) throws IOException {
+        parkingList.clear();
         List<ParkingLotData> eventList = event.getParkingLotDataList();
         for (int i = 0; i < eventList.size(); i++) {
             parkingList.add(eventList.get(i));

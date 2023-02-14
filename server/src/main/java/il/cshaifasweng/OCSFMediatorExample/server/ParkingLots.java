@@ -182,8 +182,33 @@ public class ParkingLots {
         stastisticalInformations.addAll(data);
     }
 
+    public ParkingPricesData askToChangePrice(int id, String type, double newPrice) {
+        ParkingPrices temp = new ParkingPrices();
+        for (ParkingPrices pl : parkingPrices) {
+            if (pl.getParkingLotId() == id) {
+                temp = pl;
+            }
+        }
+        ParkingPrices temp2 = new ParkingPrices(temp.getParkingLotId(), temp.getParkingPrice(), temp.getOrderedParkingPrice(), temp.getParkingLot());
+        if (type.equals("Casual")) {
+            temp2.setParkingPrice(newPrice);
+        } else {
+            temp2.setOrderedParkingPrice(newPrice);
+        }
+        ParkingPricesData newAsk = new ParkingPricesData(id, temp2.getParkingPrice(), temp2.getOrderedParkingPrice());
+        return newAsk;
+    }
 
-    public void changePrice(int id, String type, int newPrice) {
+    public ParkingLot getParkingLot(int id){
+        for (ParkingPrices pl : parkingPrices) {
+            if (pl.getParkingLotId() == id) {
+               return pl.getParkingLot();
+            }
+        }
+        return null;
+    }
+
+    public void changePrice(int id, String type, double newPrice) {
         App.SafeStartTransaction();
         ParkingPrices temp = new ParkingPrices();
         for (ParkingPrices pl : parkingPrices) {

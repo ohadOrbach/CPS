@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ParkingPricesData implements Serializable {
     private int id;
+    private int parkingLotId;
     private double parkingPrice;
     private double orderedParkingPrice;
     private double regularSubscriptionPrice;
@@ -13,7 +14,7 @@ public class ParkingPricesData implements Serializable {
     private double fullySubscriptionPrice;
 
     public ParkingPricesData(int parkingLotId, double parkingPrice, double orderedParkingPrice) {
-        this.id = parkingLotId;
+        this.parkingLotId = parkingLotId;
         this.parkingPrice = parkingPrice;
         this.orderedParkingPrice = orderedParkingPrice;
         this.regularSubscriptionPrice = orderedParkingPrice * 60;
@@ -22,7 +23,7 @@ public class ParkingPricesData implements Serializable {
     }
 
     public ParkingPricesData(List<ParkingPricesData> list) {
-        this.id = 0;
+        this.parkingLotId = 0;
         this.parkingPrice = 0;
         this.orderedParkingPrice = 0;
         this.regularSubscriptionPrice = 0;
@@ -30,12 +31,13 @@ public class ParkingPricesData implements Serializable {
         this.fullySubscriptionPrice = 0;
     }
 
+    public int getId(){return id;}
     public int getParkingLotId() {
-        return this.id;
+        return this.parkingLotId;
     }
 
     public void setParkingLotId(int parkingLotId) {
-        this.id = parkingLotId;
+        this.parkingLotId = parkingLotId;
     }
 
     public double getParkingPrice() {
