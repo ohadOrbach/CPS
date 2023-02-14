@@ -70,7 +70,6 @@ public class EmployeesMainWindow {
         {
             SimpleClient.getClient().sendToServer("#request: stastistical information list");
             System.out.println();
-            App.setRoot("StastisticalInformation");
             App.history.add("StastisticalInformation");
             App.setRoot("StastisticalInformation");
         }
@@ -92,9 +91,15 @@ public class EmployeesMainWindow {
     @FXML
     void button2Func(ActionEvent event) throws IOException{
 
-        if(button1.getText().equals("Save Parking Spot"))
+        if(button2.getText().equals("Save Parking Spot"))
         {
-
+            App.history.add("ReserveSpot");
+            App.setRoot("ReserveSpot");
+        }
+        else if (button2.getText().equals("Make Report"))
+        {
+            App.history.add("Make Report");
+            App.setRoot("Make Report");
         }
         else
         {
@@ -106,7 +111,11 @@ public class EmployeesMainWindow {
 
     @FXML
     void button3Func(ActionEvent event) throws IOException{
-
+        if(button3.getText().equals("View Report"))
+        {
+            App.history.add("View Report");
+            App.setRoot("View Report");
+        }
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -132,14 +141,14 @@ public class EmployeesMainWindow {
             case "company manager":
                 button1.setText("Statistical Information");
                 button2.setText("Get Parking Lot Status");
-                button3.setVisible(false);
+                button3.setText("View Report");
                 button4.setVisible(false);
                 button5.setVisible(false);
                 button6.setVisible(false);
                 break;
             case "parking lot manager":
                 button1.setText("Statistical Information");
-                button2.setVisible(false);;
+                button2.setText("Make Report");
                 button3.setVisible(false);
                 button4.setVisible(false);
                 button5.setVisible(false);
@@ -147,8 +156,8 @@ public class EmployeesMainWindow {
                 break;
             case "parking lot worker":
                 button1.setText("Change Parking Space Status");
-                button2.setText("Save Parking Spot");
-                button3.setText("Referral to another parking lot");
+                button2.setText("Referral to another parking lot");
+                button3.setVisible(false);
                 button4.setVisible(false);
                 button5.setVisible(false);
                 button6.setVisible(false);

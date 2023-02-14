@@ -3,10 +3,8 @@ package il.cshaifasweng.OCSFMediatorExample.server;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotListData;
-import il.cshaifasweng.OCSFMediatorExample.entities.ParkingPricesData;
-import il.cshaifasweng.OCSFMediatorExample.entities.PricesList;
+import il.cshaifasweng.OCSFMediatorExample.entities.*;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -198,6 +196,36 @@ public class ParkingLots {
 
         parkingLots.add(parkingLot);
     }
+
+    public void changeParkingStatus(String id, int row, int col, int lvl, String status) {
+        App.SafeStartTransaction();
+        Parking temp;
+        for (ParkingLot parkLot : parkingLots) { //finding parking lot
+            if (parkLot.getName().equals(id)) {
+                for (Parking park: parkLot.getParkings()) {    // finding parking Space
+                    if ((park.getRow() == row) & (park.getColumn() == col) & (park.getDepth() == lvl)){
+                        temp = park;
+                        switch (status) {
+                            case "Working":
+                                temp.setStatus(0);
+                                break;
+                            case "Faulty":
+                                temp.setStatus(-1);
+                                break;
+                            case "Reserved":
+                                temp.setStatus(2);
+                                break;
+                        }
+                        App.session.save(temp);
+                        App.session.flush();
+                        App.SafeCommit();
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
 
     public ParkingLotListData getParkingLotList() {
         List<ParkingLotData> dataList = new ArrayList<>();

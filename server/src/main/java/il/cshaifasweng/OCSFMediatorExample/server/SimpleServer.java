@@ -63,6 +63,13 @@ public class SimpleServer extends AbstractServer {
                         ParkingListData returnParkings = plist.getParkingList();
                         SafeSendToClient(returnParkings, client);
                     }
+                    case "parking space status" -> { // update parking space status
+                        App.parkinglots.changeParkingStatus(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), args[5]);
+                        System.out.println("update parking in parking lot " + args[1] + "change status to" + args[5] + "\n");
+                        Message arrivalMsg = new Message("Parking space status is updated to " + args[5]);
+                        SafeSendToClient(arrivalMsg, client);
+
+                    }
                 }
             } else if (msgString.startsWith("#request")) {
                 String[] args = (msgString.split(":")[1]).split(",");
