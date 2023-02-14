@@ -61,6 +61,11 @@ public class NewCostumerRegister {
     @FXML
     void registerAttempt(ActionEvent event) throws IOException {
 
+        if((!(InputCheck.checkId(id.getText())))||(!InputCheck.checkEmail(email.getText())))
+        {
+            registerReturn.setText("registration failed, invalid fields");
+            return;
+        }
         SimpleClient myClient = SimpleClient.getClient();
 
         myClient.sendToServer("costumer Register:" + id.getText() + "," + password.getText() + "," + email.getText());

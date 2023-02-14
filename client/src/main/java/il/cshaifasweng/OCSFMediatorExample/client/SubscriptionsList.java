@@ -156,7 +156,7 @@ public class SubscriptionsList {
         assert typeCol != null : "fx:id=\"typeCol\" was not injected: check your FXML file 'SubscriptionsList.fxml'.";
 
         EventBus.getDefault().register(this);
-        //table.setEditable(true);
+        table.setEditable(true);
 
 
         for(HashMap<String, SubscriptionData> subMap : App.costumer.getSubscriptions().values())

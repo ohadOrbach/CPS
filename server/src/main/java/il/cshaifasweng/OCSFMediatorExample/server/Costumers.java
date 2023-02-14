@@ -32,6 +32,7 @@ public class Costumers {
         App.session.flush();
         App.SafeCommit();
         pullCostumersFromDB();
+        or.fullSubscriptions.add(new FullSubscription(123456,or,"123123123",LocalDate.now().minusDays(25)));
     }
 
     public void pullCostumersFromDB() {

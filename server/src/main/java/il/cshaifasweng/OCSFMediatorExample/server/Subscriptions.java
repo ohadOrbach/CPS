@@ -93,12 +93,14 @@ public class Subscriptions {
         if(regularSub!=null)
         {
             end = regularSub.getEnd();
-            regularSub.setEnd(regularSub.getEnd().plusMonths(1));
+            regularSub.setEnd(end.plusMonths(1));
+            session.update(regularSub);
         }
         else
         {
-            end = regularSub.getEnd();
-            fullSub.setEnd(fullSub.getEnd().plusMonths(1));
+            end = fullSub.getEnd();
+            fullSub.setEnd(end.plusMonths(1));
+            session.update(fullSub);
         }
 
         String dateString = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

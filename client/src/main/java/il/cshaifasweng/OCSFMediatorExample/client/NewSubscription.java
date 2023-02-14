@@ -100,13 +100,13 @@ public class NewSubscription {
 
         if((!(InputCheck.checkCarNum(licencePlate.getText())))||(!InputCheck.checkDate(time.getValue())))
         {
-            subResult.setText("registration failed");
+            subResult.setText("registration failed, invalid fields");
             return;
         }
         SimpleClient myClient = SimpleClient.getClient();
         String dateString = time.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String type = "";
-        LocalDate endingDate = LocalDate.now().plusMonths(1);
+        LocalDate endingDate = time.getValue().plusMonths(1);
         if (full.isSelected()) {
             myClient.sendToServer("new subscription full:" + App.costumer.getId() + "," + licencePlate.getText() + "," + dateString);
             type = "full";
