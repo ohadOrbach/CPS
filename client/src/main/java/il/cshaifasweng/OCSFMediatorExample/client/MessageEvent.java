@@ -9,6 +9,11 @@ public class MessageEvent {
         this.message = message;
     }
 
+    public MessageEvent(String message) {
+        assert this.message != null;
+        this.message.setMessage(message);
+    }
+
     public Message getMessage() {
         return message;
     }

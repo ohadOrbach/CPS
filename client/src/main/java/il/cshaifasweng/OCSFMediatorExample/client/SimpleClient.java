@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.*;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
@@ -71,6 +72,9 @@ public class SimpleClient extends AbstractClient {
         } else if (msg.getClass().equals(PricesListToConfirm.class)) {
             Platform.runLater(() -> EventBus.getDefault().
                     post(new ReceivedConfirmaitnDataEvent((PricesListToConfirm) msg)));
+        } else if (msg.getClass().equals(String.class)) {
+            Platform.runLater(() -> EventBus.getDefault().
+                    post(new String((String) msg)));
         } else {
             EventBus.getDefault().post(new MessageEvent((Message) msg));
         }
@@ -179,5 +183,6 @@ public class SimpleClient extends AbstractClient {
             e.printStackTrace();
         }
     }
+
 
 }

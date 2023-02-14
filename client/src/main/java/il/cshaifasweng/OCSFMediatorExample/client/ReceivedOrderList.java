@@ -8,10 +8,8 @@ import java.util.List;
 
 public class ReceivedOrderList {
     private List<OrderData> orderList;
-    private String mode;
 
     public ReceivedOrderList(OrdersListData ordersListData) {
-        this.mode = ordersListData.getMode();
         this.orderList = new ArrayList<>();
         List<OrderData> dataList = ordersListData.getOrdersListData();
         for (OrderData orderData : dataList) {
@@ -21,10 +19,6 @@ public class ReceivedOrderList {
 
     public List<OrderData> getOrderListData() {
         return this.orderList;
-    }
-
-    public String getMode() {
-        return this.mode;
     }
 
     public ArrayList<String> getInfo() {

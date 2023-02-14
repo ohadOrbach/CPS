@@ -4,6 +4,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.CancelOrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrderData;
 import il.cshaifasweng.OCSFMediatorExample.entities.OrdersListData;
 import il.cshaifasweng.OCSFMediatorExample.entities.ParkingLotData;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,9 +71,6 @@ public class CancelOrder {
     // start choice box if its cancel (select the order to cancel).
     @Subscribe
     public void startChoiceBox(ReceivedOrderList event) throws Exception {
-        // if not cancel mode, return (can be also tracking).
-        if(!Objects.equals(event.getMode(), "cancel")){ return; }
-
         List<OrderData> eventList = event.getOrderListData();
         OrdersListData deleteList = new OrdersListData(eventList);
         // init orders vector
@@ -125,8 +123,14 @@ public class CancelOrder {
     @FXML
     void sendCancellation() {
         try{
+            String carNumber = CarNumberTF.getText();
+
+            //Cancel by ID only
+            if(carNumber.isEmpty())
+                carNumber = "-1";
+
             CancelOrderData trackingOrder =
-                    new CancelOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(CarNumberTF.getText()));
+                    new CancelOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(carNumber));
             SimpleClient.getClient().sendToServer(trackingOrder);
         } catch (IOException e) {
             e.printStackTrace();}
@@ -136,6 +140,16 @@ public class CancelOrder {
     @FXML
     public void changeMode(ActionEvent event){
         PrimaryController.ChangeForAll(parent, imMode);
+    }
+
+    // error alert message.
+    @Subscribe
+    public void sendTextError(String msg) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    String.format("%s", msg));
+            alert.show();
+        });
     }
 
 

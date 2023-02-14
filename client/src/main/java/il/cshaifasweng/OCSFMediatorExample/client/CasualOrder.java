@@ -83,29 +83,38 @@ public class CasualOrder {
 
     public boolean testInput() {
         // check time format HH:MM
-        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText()))
-            sendTextError("Incorrect Departure Time, please try again");
+        if (!Pattern.matches("^([0-1][0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText())) {
+            sendTextError("Incorrect Departure Time format, please try again (enter in HH:MM and ONLY numbers)");
+            return false;
+        }
 
         LocalTime parsedTime = LocalTime.parse(DepartureTimeText.getText(), DateTimeFormatter.ofPattern("HH:mm"));
         // test ID - 9 digits.
-        if (!Pattern.matches("[0-9]{9}", IdText.getText()))
-            sendTextError("Incorrect ID, please try again");
+        if (!Pattern.matches("[0-9]{9}", IdText.getText())) {
+            sendTextError("Incorrect ID, please try again (9 digits ONLY)");
+            return false;
+        }
 
             // test car num - only digits
-        else if (!Pattern.matches("[0-9]+", CarNumText.getText()))
-            sendTextError("Incorrect car number, please try again");
+        else if (!Pattern.matches("[0-9]+", CarNumText.getText())) {
+            sendTextError("Incorrect car number, please try again (numbers ONLY)");
+            return false;
+        }
 
             // test email - any chars + @ + dom name
-        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText()))
-            sendTextError("Incorrect Email, please try again");
+        else if (!Pattern.matches("^(.+)@(\\S+)$", EmailText.getText())) {
+            sendTextError("Incorrect Email, please try again (enter (username)@(domain Name..) format");
+            return false;
+        }
 
             // test if leaving time is before now.
-        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now()))
-            sendTextError("Incorrect Departure Time, please try again");
+        else if(parsedTime.isBefore(LocalTime.now()) && leavingData.getValue().equals(LocalDate.now())) {
+            sendTextError("Oh no! The departure time is before now, are you planning time travel?");
+            return false;
+        }
+
         else
             return true;
-
-        return false;
     }
 
 
@@ -125,7 +134,7 @@ public class CasualOrder {
     public void sendTextError(String text) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING,
-                    String.format("Error: %s", text));
+                    String.format("%s", text));
             alert.show();
         });
     }

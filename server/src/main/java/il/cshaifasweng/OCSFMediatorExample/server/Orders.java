@@ -107,26 +107,39 @@ public class Orders {
     }
 
 
-    public OrdersListData trackOrder(TrackingOrderData trackingOrderData) {
+    public Object trackOrder(TrackingOrderData trackingOrderData) {
         OrdersListData trackingOrders = findOrderData(trackingOrderData.getId(), trackingOrderData.getCarNum());
+        if(trackingOrders.getOrdersListData().size() == 0)
+            return "Sorry, no order found.";
         return trackingOrders;
     }
 
 
-    public OrdersListData findCancelOrder(CancelOrderData cancelOrderData) {
+    public Object findCancelOrder(CancelOrderData cancelOrderData) {
         App.SafeStartTransaction();
         OrdersListData cancelOrders = findOrderData(cancelOrderData.getId(), cancelOrderData.getCarNum());
         App.SafeCommit();
+        if(cancelOrders.getOrdersListData().size() == 0)
+            return "Sorry, no order found.";
         return cancelOrders;
     }
 
     public OrdersListData findOrderData(int id, int carNum) {
         List<OrderData> list = new ArrayList<>();
-        System.out.println("in find order data\n");
-        for(ParkingOrder parkingOrder: ordersList){
-            if(parkingOrder.getUserId() == id && parkingOrder.getCarNumber() == carNum)
-                list.add(parkingOrder.getOrderData());
+
+        //if needed to find by ID only
+        if(carNum == -1) {
+            for (ParkingOrder parkingOrder : ordersList) {
+                if (parkingOrder.getUserId() == id)
+                    list.add(parkingOrder.getOrderData());
+            }
+        } else {
+            for (ParkingOrder parkingOrder : ordersList) {
+                if (parkingOrder.getUserId() == id && parkingOrder.getCarNumber() == carNum)
+                    list.add(parkingOrder.getOrderData());
+            }
         }
+        System.out.println(carNum+"\n");
         System.out.println("return list tracking\n");
         System.out.println(list);
         return new OrdersListData(list);

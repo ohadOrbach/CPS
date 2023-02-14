@@ -63,8 +63,15 @@ public class TrackingOrder {
     @FXML
     void sendTracking() {
         try{
+            String carNumber = CarNumberTF.getText();
+
+            //Track by ID only
+            if(carNumber.isEmpty())
+                carNumber = "-1";
+
+            System.out.println("car num is: " + carNumber + "\n");
             TrackingOrderData trackingOrder =
-                    new TrackingOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(CarNumberTF.getText()));
+                    new TrackingOrderData(Integer.parseInt(IdTF.getText()), Integer.parseInt(carNumber));
             SimpleClient.getClient().sendToServer(trackingOrder);
         } catch (IOException e) {
             e.printStackTrace();}
@@ -78,9 +85,6 @@ public class TrackingOrder {
 
     @Subscribe
     public void onTrackingEvent1(ReceivedOrderList orderList) {
-        if (!Objects.equals(orderList.getMode(), "tracking")) {
-            return;
-        }
         ArrayList<String> trackingInfo = orderList.getInfo();
         VBox vBox = new VBox();
         for (String infoStr : trackingInfo){
@@ -92,5 +96,18 @@ public class TrackingOrder {
         choiceStage.setScene(scene);
         choiceStage.show();
         }
+
+
+    // error alert message.
+    @Subscribe
+    public void sendTextError(String msg) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    String.format("%s", msg));
+            alert.show();
+        });
     }
+
+
+}
 

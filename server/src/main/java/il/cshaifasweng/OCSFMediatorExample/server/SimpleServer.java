@@ -205,12 +205,13 @@ public class SimpleServer extends AbstractServer {
         } else if (CancelOrderData.class.equals(msg.getClass())) {
             // find Cancel order - return list of order that mach the id and car num of the client.
             System.out.format("i got a new cancel order data\n");
-            OrdersListData ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
-            ordersListData.setMode("cancel");
+            Object ordersListData = App.orders.findCancelOrder((CancelOrderData) msg);
             SafeSendToClient(ordersListData, client);
-            App.sastisticalInformations.addStastisticalInformationForCancledOrder(ordersListData);
-            //TODO chack if its works
-            App.sastisticalInformations.pullStastisticalInformationFromDB();
+            if(OrdersListData.class.equals(ordersListData.getClass())) {
+                App.sastisticalInformations.addStastisticalInformationForCancledOrder((OrdersListData) ordersListData);
+                //TODO chack if its works
+                App.sastisticalInformations.pullStastisticalInformationFromDB();
+            }
 
 
         } else if (OrdersListData.class.equals(msg.getClass())) {
@@ -228,10 +229,8 @@ public class SimpleServer extends AbstractServer {
 
 
         } else if (TrackingOrderData.class.equals(msg.getClass())) { // Tracking order
-            System.out.format("i got a new tracking data");
-            OrdersListData ordersListData = App.orders.trackOrder((TrackingOrderData) msg);
-            ordersListData.setMode("tracking");
-            System.out.format("i got a new tracking data11");
+            System.out.format("i got a new tracking data\n");
+            Object ordersListData = App.orders.trackOrder((TrackingOrderData) msg);
             SafeSendToClient(ordersListData, client);
 
         } else if (msg.getClass().equals(ReportData.class)) { // Make a report
