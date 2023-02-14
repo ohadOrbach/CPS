@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.greenrobot.eventbus.EventBus;
@@ -84,7 +85,7 @@ public class CasualOrder {
     public boolean testInput() {
         // check time format HH:MM
         if (!Pattern.matches("^([0-1][0-9]|2[0-3]):[0-5][0-9]$", DepartureTimeText.getText())) {
-            sendTextError("Incorrect Departure Time format, please try again (enter in HH:MM and ONLY numbers)");
+            sendTextError("Incorrect Departure Time format, please try again (HH:mm)");
             return false;
         }
 
@@ -130,11 +131,11 @@ public class CasualOrder {
     }
 
 
-    // error alert message.
     public void sendTextError(String text) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING,
-                    String.format("%s", text));
+                    String.format("%s", text), ButtonType.OK);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.show();
         });
     }
@@ -179,6 +180,7 @@ public class CasualOrder {
         CarNumText.clear();
         DepartureTimeText.clear();
         IdText.clear();
+        leavingData.setValue(LocalDate.now());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
@@ -192,7 +194,6 @@ public class CasualOrder {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
-
                 setDisable(empty || date.compareTo(today) < 0 );
             }
         });

@@ -40,8 +40,6 @@ public class InitialWindow {
     void goToKiosk(ActionEvent event) throws IOException {
         App.history.add("kiosk");
         App.setRoot("kiosk");
-
-
     }
 
     @FXML

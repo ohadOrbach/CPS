@@ -109,6 +109,7 @@ public class CancelOrder {
                 SimpleClient.getClient().sendToServer(deleteList);
             } catch (IOException e) {
                 e.printStackTrace();}
+            choiceStage.close();
         });
 
         // show choices to client
