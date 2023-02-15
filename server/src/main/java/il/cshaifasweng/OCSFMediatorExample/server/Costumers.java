@@ -24,8 +24,11 @@ public class Costumers {
     public void generateCostumers() {
         SafeStartTransaction();
         Costumer or = new Costumer(308283886, "ormeir93@gmail.com", "123456789");
-        Costumer amit = new Costumer(123456789, "amit@gmail.com", "123456789");
+        Costumer amit = new Costumer(318883584, "amit@gmail.com", "1");
         Costumer ronit = new Costumer(308432525, "ronitkolka@gmail.com", "123456789");
+        costumers.put(amit.getId(), amit);
+        costumers.put(or.getId(), or);
+        costumers.put(ronit.getId(), ronit);
         App.session.save(or);
         App.session.save(amit);
         App.session.save(ronit);

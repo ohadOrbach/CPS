@@ -93,8 +93,33 @@ public class Orders {
             }
             return "error, we didnt find parking in this ParkingLot and there is no space in other parkingLots";
         }
+
         System.out.println("sending OK msg to client");
-        return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "+order.getExpectedPayment();
+        Costumer val = App.costumers.costumers.get(orderData.getId());
+        //check sub`
+        if(val == null) {
+            return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "
+                    + order.getExpectedPayment();
+        }
+
+        String subType = val.subFoundByOrder(Integer.toString(orderData.getCarNumber()), parkingLot);
+        int day = LocalDateTime.now().getDayOfWeek().getValue();
+        if(subType.equals("regular")) {
+            if (day == 7 || day == 6) {
+                return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "
+                        + order.getExpectedPayment();
+            } else {
+                return "Your order has been successfully received! Thank you and happy parking! Payment: By regular subscription\n";
+            }
+        }
+
+        if(subType.equals("fully")){
+            return "Your order has been successfully received! Thank you and happy parking! Payment: By fully subscription\n";
+        }
+
+        return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "
+                + order.getExpectedPayment();
+
     }
 
     private String findFreeParkingLot(){

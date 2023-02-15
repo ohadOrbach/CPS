@@ -121,4 +121,27 @@ public class Costumer {
 
         return false;
     }
+
+    public String subFoundByOrder(String licencePlate, ParkingLot parkingLot) {
+        //System.out.println("hello");
+        int i = 0;
+        //System.out.println("hello1");
+        for (RegularSubscription rs : this.regularSubscriptions) {
+            // System.out.println("im looking for: "+licencePlate);
+            if (rs.getLicencePlate().equals(licencePlate)) {
+                if (parkingLot.getParkingLotId() == rs.getParkingLot().getParkingLotId()) {
+                    return "regular";
+                }
+            }
+        }
+
+        for (FullSubscription rs : this.fullSubscriptions) {
+            if (rs.getLicencePlate().equals(licencePlate)) {
+                System.out.println(i++);
+                return "fully";
+            }
+        }
+
+        return "non";
+    }
 }
