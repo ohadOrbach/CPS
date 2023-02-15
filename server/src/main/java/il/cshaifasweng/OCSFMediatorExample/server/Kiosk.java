@@ -99,6 +99,13 @@ public class Kiosk {
                     orderData.setStatus(-1);
                     App.session.save(updatedOrder);
                     App.session.flush();
+                    Parking parking = updatedOrder.getParking();
+                    parking.getParkingOrder().remove(updatedOrder);
+                    if(parking.getParkingOrder().size()==0) {
+                        parking.setStatus(0);       //this parking is occupied now
+                    }
+                    App.session.save(parking);
+                    App.session.flush();
                     //add to statistical information, that the client fulfilled his parking order
                     App.sastisticalInformations.addStastisticalInformationForActualOrder(orderData);
                     App.sastisticalInformations.pullStastisticalInformationFromDB();

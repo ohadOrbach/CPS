@@ -95,8 +95,11 @@ public class CostumerMainWindow {
         myClient.sendToServer("logout costumer:" + App.costumer.getId());
         App.costumer = null;
         App.dontShow = false;
-        App.history.remove(App.history.size() - 1);
-        App.setRoot(App.history.get(App.history.size() - 1));
+        App.history.clear();
+        App.history.add("InitialWindow");
+        App.setRoot("InitialWindow");
+
+        //App.setRoot(App.history.get(App.history.size() - 1));
     }
 
     @FXML

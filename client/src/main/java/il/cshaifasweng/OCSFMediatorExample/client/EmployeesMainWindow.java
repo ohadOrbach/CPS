@@ -59,8 +59,12 @@ public class EmployeesMainWindow {
     public void LogOut(ActionEvent event) throws IOException {
         SimpleClient myClient = SimpleClient.getClient();
         myClient.sendToServer("logout employee:"+App.employee.getId());
-        App.history.remove(App.history.size()-1);
-        App.setRoot(App.history.get(App.history.size()-1));
+        App.employee = null;
+        App.history.clear();
+        App.history.add("InitialWindow");
+        App.setRoot("InitialWindow");
+        //App.history.remove(App.history.size()-1);
+        //App.setRoot(App.history.get(App.history.size()-1));
     }
 
 
