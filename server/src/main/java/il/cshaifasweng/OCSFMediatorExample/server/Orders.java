@@ -87,10 +87,25 @@ public class Orders {
 
         App.SafeCommit();
         ordersList.add(order);
-        if(foundParking == false)
-            return "error, we didnt find parking in this ParkingLot";
+        if(foundParking == false) {
+            if(findFreeParkingLot() != null){
+                return "error, we didnt find parking in this ParkingLot, but ParkingLot " + findFreeParkingLot() + " has a free space";
+            }
+            return "error, we didnt find parking in this ParkingLot and there is no space in other parkingLots";
+        }
         System.out.println("sending OK msg to client");
         return "Your order has been successfully received! Thank you and happy parking!\nThe expected Payment is "+order.getExpectedPayment();
+    }
+
+    private String findFreeParkingLot(){
+        for(ParkingLot parkingLot: App.parkinglots.getParkingLots()){
+            for(Parking parking: parkingLot.getParkings()){
+                if(parking.getStatus()==0){
+                    return parkingLot.getName();
+                }
+            }
+        }
+        return null;
     }
 
     public OrderData getOrderData(ParkingOrder order) { return order.getOrderData(); }
