@@ -48,8 +48,10 @@ public class SimpleServer extends AbstractServer {
                 System.out.println("im in update mode \n");
                 switch (args[0]) {
                     case "parking price" -> { // update item price #update:ItemPrice,itemId,newPrice
-                        App.parkingPrices.changePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
-                        App.parkingPrices.pullParkingPrices();
+                        ParkingPricesData temp = App.parkingPrices.askToChangePrice(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+                        ParkingLot temp2 = App.parkingPrices.getParkingLot(Integer.parseInt(args[1]));
+                        App.parkingPricesForConfirmtion.addParkingPricesForConfirmtion(temp, temp2);
+                        App.parkingPricesForConfirmtion.pullPricesConfirm();
                     }
                     case "complaint status" -> {
                         ConnectionToClient c = App.complaints.changeStatus(Integer.parseInt(args[1]));
