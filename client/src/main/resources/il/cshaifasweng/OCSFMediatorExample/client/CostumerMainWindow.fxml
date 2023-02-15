@@ -56,7 +56,7 @@
         </Button>
       <VBox layoutX="212.0" layoutY="141.0" prefHeight="231.0" prefWidth="306.0" spacing="40.0">
          <children>
-              <Button fx:id="button2" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="321.0" text="Join A Subscription!">
+              <Button fx:id="button2" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="321.0" text="Subscription Menu">
                   <styleClass>
                       <String fx:value="secondary-color" />
                       <String fx:value="round-border" />

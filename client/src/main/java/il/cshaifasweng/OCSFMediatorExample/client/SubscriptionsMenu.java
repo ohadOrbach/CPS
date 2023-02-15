@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import static il.cshaifasweng.OCSFMediatorExample.client.PrimaryController.isLightMode;
+
 public class SubscriptionsMenu {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -42,6 +44,8 @@ public class SubscriptionsMenu {
 
     @FXML // fx:id="timeTF"
     private TextField timeTF; // Value injected by FXMLLoader
+
+
 
     @FXML
     void LogOut(ActionEvent event) throws IOException {
@@ -78,6 +82,7 @@ public class SubscriptionsMenu {
         assert mySub != null : "fx:id=\"mySub\" was not injected: check your FXML file 'SubscriptionsMenu.fxml'.";
         assert parent != null : "fx:id=\"parent\" was not injected: check your FXML file 'SubscriptionsMenu.fxml'.";
         assert timeTF != null : "fx:id=\"timeTF\" was not injected: check your FXML file 'SubscriptionsMenu.fxml'.";
+        if(!isLightMode){ PrimaryController.setDarkMode(parent, imMode);}
 
     }
 
