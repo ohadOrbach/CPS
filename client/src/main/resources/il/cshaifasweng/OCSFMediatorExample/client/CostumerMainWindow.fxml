@@ -8,11 +8,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="600.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CostumerMainWindow">
+<AnchorPane fx:id="parent" prefHeight="480.0" prefWidth="800.0" styleClass="primary-color" stylesheets="@../../../../Styles/LightMode.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.CostumerMainWindow">
     <children>
-        <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="59.0" prefWidth="800.0" styleClass="secondary-color" />
+        <ToolBar accessibleRole="MENU" focusTraversable="false" layoutX="-34.0" prefHeight="59.0" prefWidth="839.0" styleClass="secondary-color" />
         <Label layoutX="261.0" layoutY="8.0" styleClass="secondary-color" text="Costumer menu">
             <font>
                 <Font name="Arial Black" size="24.0" />
@@ -53,35 +54,39 @@
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="button1" layoutX="46.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToOrders" prefHeight="47.0" prefWidth="149.0" text="Orders Menu">
-            <styleClass>
-                <String fx:value="secondary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
-            </styleClass>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-        <Button fx:id="button2" layoutX="275.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="182.0" text="Subscriptions Menu">
-            <styleClass>
-                <String fx:value="secondary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
-            </styleClass>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-        <Button fx:id="button3" layoutX="529.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToComplain" prefHeight="47.0" prefWidth="182.0" text="Complain">
-            <styleClass>
-                <String fx:value="secondary-color" />
-                <String fx:value="round-border" />
-                <String fx:value="text-field" />
-            </styleClass>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
+      <VBox layoutX="212.0" layoutY="141.0" prefHeight="231.0" prefWidth="306.0" spacing="40.0">
+         <children>
+              <Button fx:id="button2" mnemonicParsing="false" onAction="#goToSubscriptions" prefHeight="47.0" prefWidth="321.0" text="Join A Subscription!">
+                  <styleClass>
+                      <String fx:value="secondary-color" />
+                      <String fx:value="round-border" />
+                      <String fx:value="text-field" />
+                  </styleClass>
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Button>
+              <Button fx:id="button1" mnemonicParsing="false" onAction="#goToOrders" prefHeight="47.0" prefWidth="311.0" text="Orders Menu">
+                  <styleClass>
+                      <String fx:value="secondary-color" />
+                      <String fx:value="round-border" />
+                      <String fx:value="text-field" />
+                  </styleClass>
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Button>
+              <Button fx:id="button3" mnemonicParsing="false" onAction="#goToComplain" prefHeight="47.0" prefWidth="310.0" text="Complain">
+                  <styleClass>
+                      <String fx:value="secondary-color" />
+                      <String fx:value="round-border" />
+                      <String fx:value="text-field" />
+                  </styleClass>
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Button>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>
