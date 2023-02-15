@@ -53,7 +53,7 @@ public class InitialStaffWindow {
 
     @FXML
     void loginAttempt(ActionEvent event) {
-        if (id.getText().isEmpty() || password.getText().isEmpty()||InputCheck.checkId(id.getText())) {
+        if (id.getText().isEmpty() || password.getText().isEmpty()/*||InputCheck.checkId(id.getText())*/) {
             errorLoginMassage.setText("Error: Invalid fields");
             return;
         }

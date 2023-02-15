@@ -58,8 +58,12 @@ public class Costumers {
             return new CostumerData();
         }
 
+        App.SafeStartTransaction();
         theCostumer.setLogin(true);
         session.update(theCostumer);
+        App.session.save(theCostumer);
+        App.session.flush();
+        App.SafeCommit();
 
         CostumerData costumer = new CostumerData(theCostumer.getId(), theCostumer.getEmail(), theCostumer.getPassword());
 
@@ -116,7 +120,11 @@ public class Costumers {
 
     void logOutCostumer(String id) {
         Costumer costumer = costumers.get(Integer.valueOf(id));
+        App.SafeStartTransaction();
         costumer.setLogin(false);
         session.update(costumer);
+        App.session.save(costumer);
+        App.session.flush();
+        App.SafeCommit();
     }
 }

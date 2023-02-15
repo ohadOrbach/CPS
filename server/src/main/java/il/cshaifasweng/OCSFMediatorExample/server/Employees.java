@@ -74,6 +74,10 @@ public class Employees {
 
         Employee employee = employeesResult.get(0);
         employee.setLogin(true);
+        App.SafeStartTransaction();
+        App.session.save(employee);
+        App.session.flush();
+        App.SafeCommit();
         EmployeeData empData = new EmployeeData(employee.getId(), employee.getPrivateName(), employee.getSureName(), employee.getPassword()
                 , employee.getEmail(), employee.getJob(), employee.getBranch());
         System.out.format("Login Success \n");
@@ -98,6 +102,10 @@ public class Employees {
 
     public void logoutEmployee(String id) {
         employees.get(Integer.valueOf(id)).setLogin(false);
+        App.SafeStartTransaction();
+        App.session.save(employees.get(Integer.valueOf(id)));
+        App.session.flush();
+        App.SafeCommit();
     }
 
     public Employee findEmployeeById(int id) {

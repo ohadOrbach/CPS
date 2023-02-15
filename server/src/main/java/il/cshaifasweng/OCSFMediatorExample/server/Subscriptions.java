@@ -93,15 +93,23 @@ public class Subscriptions {
         LocalDate end;
         if(regularSub!=null)
         {
+            App.SafeStartTransaction();
             end = regularSub.getEnd();
             regularSub.setEnd(end.plusMonths(1));
             session.update(regularSub);
+            App.session.save(regularSub);
+            App.session.flush();
+            App.SafeCommit();
         }
         else
         {
+            App.SafeStartTransaction();
             end = fullSub.getEnd();
             fullSub.setEnd(end.plusMonths(1));
             session.update(fullSub);
+            App.session.save(fullSub);
+            App.session.flush();
+            App.SafeCommit();
         }
 
         String dateString = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
