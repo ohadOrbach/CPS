@@ -128,6 +128,7 @@ public class Kiosk {
                     App.sastisticalInformations.addStastisticalInformationForLateParkingOrder(orderData);
                     App.sastisticalInformations.pullStastisticalInformationFromDB();
                     App.SafeCommit();
+
                     return "We took out your Car successfully! You are late " + noOfMinutes + " minutes to your order.";
                 }
             }
